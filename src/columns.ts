@@ -1,0 +1,29 @@
+export const columns = [{
+  key: "service",
+  title: "Servicio/Área",
+  allowsSorting: true,
+}, {
+  key: "topic",
+  title: "Tema",
+  allowsSorting: true,
+}, {
+  key: "date",
+  title: "Fecha",
+  allowsSorting: true,
+}, {
+  key: "hour",
+  title: "Hora",
+  allowsSorting: true,
+}, {
+  key: "status",
+  title: "Estado",
+  allowsSorting: true,
+}, {
+  key: "view",
+  title: "Ver",
+  align: "center",
+}, {
+  key: "attendance",
+  title: "Asistencia",
+  align: "center",
+}]
