@@ -4,32 +4,36 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 // ui
 import { DevTool } from "@hookform/devtools"
-import schema from "./schema";
-import RHFInput from "./components/RHFInput ";
 import { Button } from "@nextui-org/react";
-import RHFTime from "./components/RHFTime";
-import RHFDate from "./components/RHFDate";
-import { Iform, iRows } from "./vite-env";
-import RHFDualDate from "./components/RHFDualDate";
-import DataTable from "./components/dataTable/DataTable";
-import Panel from "./components/Panel";
+import RHFInput from "../components/RHFInput ";
+import RHFTime from "../components/RHFTime";
+import RHFDate from "../components/RHFDate";
+import RHFDualDate from "../components/RHFDualDate";
+import DataTable from "../components/dataTable/DataTable";
+import Panel from "../components/Panel";
+import Layout from "../components/Layout";
+import RHFSelect from "../components/RHFSelect";
+
+// statics
+import schema from "../static/schema";
+import { columns } from "../static/columns";
+import { fakerRows, fakerUsers } from "../static/faker";
+
+// hooks and types
 import { useEffect, useState } from "react";
-import { fakerRows, fakerUsers } from "./faker";
-import { columns } from "./columns";
-import Layout from "./components/Layout";
-import RHFSelect from "./components/RHFSelect";
+import { IForm } from "../types/app";
 
 const App = () => {
-  const [data, setData] = useState<iRows[]>([]);
+  const [data, setData] = useState<IRows[]>([]);
   const [options, setOptions] = useState<{ id: string, name: string }[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const methods = useForm<Iform>({
+  const methods = useForm<IForm>({
     shouldFocusError: true,
     resolver: yupResolver(schema),
   });
 
-  const onSubmit: SubmitHandler<Iform> = async data => {
+  const onSubmit: SubmitHandler<IForm> = async data => {
     console.log("🚀 ~ Event ~ data:", data)
   }
 
@@ -49,9 +53,9 @@ const App = () => {
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(onSubmit)}>
           <div className="grid grid-cols-3 gap-5">
-            <RHFInput name="input" label="Input" placeholder="Write" />
-            <RHFTime name="time" label="Time" />
-            <RHFDate name="date" label="Date" />
+            <RHFInput name="input" label="Input" placeholder="Write" variant="bordered" color="primary" />
+            <RHFTime name="time" label="Time" color="primary" />
+            <RHFDate name="date" label="Date" color="primary" />
             <RHFDualDate
               startDate={{ name: "date1", label: "Fecha Inicial" }}
               endDate={{ name: "date2", label: "Fecha Final", visibleMonths: 2 }}
