@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { SortDescriptor, TableProps } from "@nextui-org/react";
+import { SortDescriptor, TableColumnProps, TableProps } from "@nextui-org/react";
 import { ReactNode } from "react";
 
 interface ReturnRow {
@@ -13,7 +13,7 @@ interface RenderRow {
   render: ({ value, row }: ReturnRow) => ReactNode;
 }
 
-export interface Props extends TableProps {
+export interface DataTableProps extends TableProps {
   rows: any[];
   columns: any[];
   sortColumn?: SortDescriptor;
@@ -26,4 +26,9 @@ export interface Props extends TableProps {
   cellClass?: string;
   skeletonSize?: number;
   noFilters?: string[];
+}
+
+export interface SkeletonTableProps {
+  size?: number;
+  columns: TableColumnProps<any>[];
 }

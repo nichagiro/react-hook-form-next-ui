@@ -1,10 +1,10 @@
-import { Time } from "@internationalized/date";
-import { CalendarDate } from "@nextui-org/react";
+import { Time, CalendarDate } from "@internationalized/date";
 import * as yup from "yup";
 
 const schema = yup
   .object({
     input: yup.string().required(),
+    // inputR: yup.string().required(),
     date: yup.mixed<CalendarDate>().required(),
     time: yup.mixed<Time>().required(),
     date1: yup.mixed<CalendarDate>().required(),

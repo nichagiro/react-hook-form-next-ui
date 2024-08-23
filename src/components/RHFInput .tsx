@@ -1,27 +1,29 @@
 import { Input, InputProps } from "@nextui-org/react";
-import { Controller, useFormContext } from "react-hook-form";
+import { Controller, RegisterOptions, useFormContext } from "react-hook-form";
 
-interface Props extends InputProps {
+interface RHFInputProps extends InputProps {
   name: string;
+  rules?: RegisterOptions
 }
 
-const RHFInput = (props: Props) => {
+const RHFInput = ({ defaultValue = "", rules, name, ...props }: RHFInputProps) => {
   const { control } = useFormContext<{ [key: string]: string }>();
 
   return (
     <Controller
       control={control}
-      name={props.name}
-      defaultValue={props.defaultValue ?? ""}
+      defaultValue={defaultValue}
+      name={name}
+      rules={rules}
       render={({ field, formState: { errors } }) => (
         <Input
           {...field}
           {...props}
           onValueChange={field.onChange}
-          isInvalid={Boolean(errors[props.name])}
-          errorMessage={errors[props.name] ? errors[props.name]?.message : ""}
+          isInvalid={Boolean(errors[name])}
+          errorMessage={errors[name] ? errors[name]?.message : ""}
           classNames={{
-            input: errors[props.name] ? "placeholder:text-red-500" : ""
+            input: errors[name] ? "placeholder:text-red-500" : ""
           }}
         />
       )}

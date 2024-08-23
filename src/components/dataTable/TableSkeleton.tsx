@@ -1,16 +1,7 @@
-import {
-  Table, TableHeader, TableColumn, TableBody,
-  TableRow, TableCell, Skeleton,
-  TableColumnProps
-} from "@nextui-org/react";
+import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Skeleton } from "@nextui-org/react";
+import { SkeletonTableProps } from "./types";
 
-interface Props {
-  size?: number;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  columns: TableColumnProps<any>[];
-}
-
-const TableSkeleton = ({ size, columns }: Props) => {
+const TableSkeleton = ({ size, columns }: SkeletonTableProps) => {
   return (
     <Table aria-label="Tabla de resultados">
       <TableHeader>

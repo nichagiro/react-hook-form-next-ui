@@ -1,24 +1,26 @@
 import { TimeInput, TimeInputProps, TimeInputValue } from "@nextui-org/react";
-import { Controller, useFormContext } from "react-hook-form";
-
-interface Props extends TimeInputProps {
+import { Controller, RegisterOptions, useFormContext } from "react-hook-form";
+interface RHFTimeProps extends TimeInputProps {
   name: string;
+  rules?: RegisterOptions;
 }
 
-const RHFTime = (props: Props) => {
-  const { control } = useFormContext<{ [key: string]: TimeInputValue }>();
+const RHFTime = ({ name, rules, defaultValue, ...props }: RHFTimeProps) => {
+  const { control } = useFormContext<{ [key: string]: TimeInputValue | null }>();
 
   return (
     <Controller
       control={control}
-      name={props.name}
+      name={name}
+      rules={rules}
+      defaultValue={defaultValue}
       render={({ field, formState: { errors } }) => (
         <TimeInput
           {...field}
-          {...props}          
-          value={field.value ?? null}
-          isInvalid={Boolean(errors[props.name])}
-          errorMessage={errors[props.name] ? errors[props.name]?.message : ""}
+          {...props}
+          value={field.value}
+          isInvalid={Boolean(errors[name])}
+          errorMessage={errors[name] ? errors[name]?.message : ""}
         />
       )}
     />

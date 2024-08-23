@@ -21,7 +21,7 @@ export const fakerRows = (): iRows[] => Array.from({ length: 20 }, () => ({
 
 
 export const fakerUsers = () => Array.from({ length: 20 }, () => ({
-  id: faker.string.nanoid(),
-  name: faker.person.firstName()
+  key: faker.string.nanoid(),
+  label: faker.person.firstName()
 }))
 

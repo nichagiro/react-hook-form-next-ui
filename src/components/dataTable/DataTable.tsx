@@ -13,13 +13,13 @@ import useDebounce from "../../hooks/useDebounce";
 
 // ui and types
 import TableSkeleton from "./TableSkeleton";
-import { Props } from "./types";
+import { DataTableProps } from "./types";
 
 
 const DataTable = ({
   rows, columns, sortColumn, renderRow, showFilter = true, loading, skeletonSize, selectionMode,
   showHandlePaginate = true, onSelect, defaultPaginateNumber = 10, cellClass, noFilters, ...props
-}: Props) => {
+}: DataTableProps) => {
 
 
   const [filterValue, setFilterValue] = useState("");

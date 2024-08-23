@@ -1,24 +1,27 @@
-import { CalendarDate, DatePicker, DatePickerProps } from "@nextui-org/react";
-import { Controller, useFormContext } from "react-hook-form";
+import { DatePicker, DatePickerProps, DateValue } from "@nextui-org/react";
+import { Controller, RegisterOptions, useFormContext } from "react-hook-form";
 
-interface Props extends DatePickerProps {
+interface RHFDateProps extends DatePickerProps {
   name: string;
+  rules?: RegisterOptions
 }
 
-const RHFDate = (props: Props) => {
-  const { control } = useFormContext<{ [key: string]: CalendarDate }>();
+const RHFDate = ({ name, rules, defaultValue = null, ...props }: RHFDateProps) => {
+  const { control } = useFormContext<{ [key: string]: DateValue | null }>();
 
   return (
     <Controller
       control={control}
-      name={props.name}
+      name={name}
+      rules={rules}
+      defaultValue={defaultValue}
       render={({ field, formState: { errors } }) => (
         <DatePicker
           {...field}
           {...props}
-          value={field.value ?? null}
-          errorMessage={errors[props.name] ? errors[props.name]?.message : ""}
-          isInvalid={Boolean(errors[props.name])}
+          value={field.value}
+          errorMessage={errors[name] ? errors[name]?.message : ""}
+          isInvalid={Boolean(errors[name])}
         />
       )}
     />

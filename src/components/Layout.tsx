@@ -1,14 +1,13 @@
 import { ReactNode } from "react"
 import { Icolor } from "../types/global"
 
-type Props = {
+type LayoutProps = {
   children: ReactNode,
   title: string,
   color?: Icolor,
 }
 
-const Layout: React.FC<Props> = ({ children, title, color = "primary" }) => {
-
+const Layout = ({ children, title, color = "primary" }: LayoutProps) => {
   return (
     <>
       <header className={`bg-${color} w-full text-center text-white py-5`}>

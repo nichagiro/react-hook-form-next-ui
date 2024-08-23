@@ -1,33 +1,38 @@
 import { Select, SelectItem, SelectProps } from "@nextui-org/react"
-import { Controller, useFormContext } from "react-hook-form"
+import { Controller, RegisterOptions, useFormContext } from "react-hook-form"
 
-interface Data {
-  id: string | number,
-  name: string
+interface DataOptionsRHFSelect {
+  key: string | number,
+  label: string
 }
 
-interface Props extends Omit<SelectProps, "children"> {
-  data: Data[];
+interface RHFSelectProps extends Omit<SelectProps, "children"> {
+  data: DataOptionsRHFSelect[];
   name: string;
+  rules?: RegisterOptions;
+  defaultOptions?: string;
 }
 
-const RHFSelect = (props: Props) => {
+const RHFSelect = ({ name, data, rules, defaultOptions = "", ...props }: RHFSelectProps) => {
   const { control } = useFormContext<{ [key: string]: string }>();
 
   return (
     <Controller
       control={control}
-      name={props.name}
+      rules={rules}
+      name={name}
+      defaultValue={defaultOptions}
       render={({ field, formState: { errors } }) => (
         <Select
           {...field}
           {...props}
-          items={props.data}
-          selectedKeys={field.value ? [field.value] : []}
-          errorMessage={errors[props.name] ? errors[props.name]?.message : ""}
-          isInvalid={Boolean(errors[props.name])}
+          items={data}
+          selectedKeys={new Set(field.value ? field.value.split(",") : [])}
+          errorMessage={errors[name] ? errors[name]?.message : ""}
+          isInvalid={Boolean(errors[name])}
+          onSelectionChange={e => console.log(2, e)}
         >
-          {item => <SelectItem key={item.id}>{item.name}</SelectItem>}
+          {item => <SelectItem key={item.key}>{item.label}</SelectItem>}
         </Select>
       )}
     />
