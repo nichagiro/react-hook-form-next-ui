@@ -49,13 +49,14 @@ const App = () => {
   }, [methods])
 
   return (
-    <Layout title="REACT HOOK FORM + NEXTUI">
+    <Layout title="REACT HOOK FORM + NEXTUI" color="primary">
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(onSubmit)}>
           <div className="grid grid-cols-3 gap-5">
             <RHFInput name="input" label="Input" placeholder="Write" variant="bordered" color="primary" />
             <RHFTime name="time" label="Time" color="primary" />
-            <RHFDate name="date" label="Date" color="primary" />
+            <RHFDate name="dat3e" label="Dat3e" color="primary" />
+            <RHFDate name="date" label="Date" color="success" />
             <RHFDualDate
               startDate={{ name: "date1", label: "Fecha Inicial" }}
               endDate={{ name: "date2", label: "Fecha Final", visibleMonths: 2 }}

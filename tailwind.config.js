@@ -1,5 +1,7 @@
 import { nextui } from '@nextui-org/react';
 
+const { teal } = require('tailwindcss/colors');
+
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
@@ -10,5 +12,17 @@ export default {
   theme: {
     extend: {},
   },
-  plugins: [nextui()]
+  plugins: [nextui({
+    themes: {
+      light: {
+        colors: {
+          primary: {
+            ...teal,
+            DEFAULT: teal["500"],  // Tailwind amber[500]
+            foreground: "#000000",  // Cambia el color del texto si lo deseas
+          },
+        },
+      },
+    },
+  })]
 }

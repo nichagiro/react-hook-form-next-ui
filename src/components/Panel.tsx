@@ -1,20 +1,22 @@
 import { Card, CardBody, CardHeader, Divider } from "@nextui-org/react"
 import { ReactNode } from "react";
+import { Icolor } from "../types/global";
 
 interface Panel {
   title: string;
   children: ReactNode;
+  color?: Icolor;
 }
 
-const Panel = (props: Panel) => {
+const Panel = ({ title, color = "primary", children }: Panel) => {
   return (
     <Card className="mb-5">
-      <CardHeader className="px-5 bg-teal-500 text-white">
-        {props.title}
+      <CardHeader className={`bg-${color} px-5 text-white`}>
+        {title}
       </CardHeader>
       <Divider />
       <CardBody className="p-5">
-        {props.children}
+        {children}
       </CardBody>
     </Card>
   )

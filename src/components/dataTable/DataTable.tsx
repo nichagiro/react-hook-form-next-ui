@@ -18,12 +18,12 @@ import { Props } from "./types";
 
 const DataTable = ({
   rows, columns, sortColumn, renderRow, showFilter = true, loading, skeletonSize, selectionMode,
-  showHandlePaginate = true, onSelect, defaultPaginateNumber, cellClass, noFilters, ...props
+  showHandlePaginate = true, onSelect, defaultPaginateNumber = 10, cellClass, noFilters, ...props
 }: Props) => {
 
 
   const [filterValue, setFilterValue] = useState("");
-  const [rowsPerPage, setRowsPerPage] = useState(defaultPaginateNumber ?? 10);
+  const [rowsPerPage, setRowsPerPage] = useState(defaultPaginateNumber);
   const [page, setPage] = useState<number>(1);
   const [selectedKeys, setSelectedKeys] = useState<Selection>(new Set());
   const [sortDescriptor, setSortDescriptor] = useState<SortDescriptor>(sortColumn ?? {});
