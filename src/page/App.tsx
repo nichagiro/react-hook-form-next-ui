@@ -125,8 +125,8 @@ const App = () => {
                 placeholder="Seleccione..."
                 isLoading={loading}
                 data={options}
-                selectionMode="multiple"
-                defaultOptions="928"
+                selectionMode="single"
+                // defaultOptions="928"
               />
               <RHFTextArea name="area" label="textArea" placeholder="escriba en el textArea" rules={{ required: { message: "obligado pape", value: true } }} />
             </div>
