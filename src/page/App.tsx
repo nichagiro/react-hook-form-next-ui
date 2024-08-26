@@ -102,6 +102,7 @@ const App = () => {
             <div className="grid grid-cols-3 gap-5">
               <RHFInput name="input" label="Input" placeholder="Write" variant="bordered" color="warning" />
               <RHFTime name="time" label="Time" color="primary" defaultValue={new Time(10, 10)} />
+              <RHFTime name="time2" label="Time2" color="secondary" />
               <RHFDate name="dat3" label="Dat3e" color="primary" />
               <RHFDate name="date" label="Date" color="success" rules={{ required: { value: true, message: "Campo Requerido" } }} />
               <RHFDualDate

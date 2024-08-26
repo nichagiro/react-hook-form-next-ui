@@ -13,7 +13,7 @@ const RHFTime = ({ name, rules, defaultValue, ...props }: RHFTimeProps) => {
       control={control}
       name={name}
       rules={rules}
-      defaultValue={defaultValue}
+      defaultValue={defaultValue ?? null}
       render={({ field, formState: { errors } }) => (
         <TimeInput
           {...field}
