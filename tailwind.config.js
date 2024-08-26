@@ -19,7 +19,7 @@ export default {
           primary: {
             ...teal,
             DEFAULT: teal["500"],  // Tailwind amber[500]
-            foreground: "#000000",  // Cambia el color del texto si lo deseas
+            foreground: "white",  // Cambia el color del texto si lo deseas
           },
         },
       },

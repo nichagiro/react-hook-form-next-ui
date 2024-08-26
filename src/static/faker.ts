@@ -11,12 +11,12 @@ interface iRows {
 }
 
 export const fakerRows = (): iRows[] => Array.from({ length: 20 }, () => ({
-  date: moment(faker.date.anytime()).format("YYYY-MM-DD"),
-  hour: moment(faker.date.anytime()).format("YYYY-MM-DD"),
-  id: faker.string.nanoid(),
   service: faker.person.jobArea(),
+  topic: faker.commerce.department(),
+  hour: moment(faker.date.anytime()).format("YYYY-MM-DD"),
+  date: moment(faker.date.anytime()).format("YYYY-MM-DD"),
   status: faker.helpers.arrayElement(["Activo", "Todos"]),
-  topic: faker.commerce.department()
+  id: faker.string.nanoid(),
 }))
 
 

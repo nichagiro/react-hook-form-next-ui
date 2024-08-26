@@ -1,5 +1,8 @@
 import { Time, CalendarDate } from "@internationalized/date";
-import * as yup from "yup";
+import yup from "../utils/yup";
+import { dualDateValidate } from "../helpers/yup/validation";
+
+const { endDateRule, startDateRule } = dualDateValidate("date1", "date2");
 
 const schema = yup
   .object({
@@ -7,8 +10,8 @@ const schema = yup
     // inputR: yup.string().required(),
     date: yup.mixed<CalendarDate>().required(),
     time: yup.mixed<Time>().required(),
-    date1: yup.mixed<CalendarDate>().required(),
-    date2: yup.mixed<CalendarDate>().required(),
+    date1: startDateRule.required(),
+    date2: endDateRule.required(),
     select: yup.string().required(),
   }).required();
 

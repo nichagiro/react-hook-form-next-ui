@@ -2,23 +2,24 @@
 
 import { SortDescriptor, TableColumnProps, TableProps } from "@nextui-org/react";
 import { ReactNode } from "react";
+import { Ivariant } from "../../types/global";
 
 interface ReturnRow {
   value: string;
-  row?: unknown
+  row?: unknown;
 }
 
-interface RenderRow {
-  key: string;
-  render: ({ value, row }: ReturnRow) => ReactNode;
+interface Columns extends Omit<TableColumnProps<any>, "children"> {
+  export?: boolean;
+  renderRow?:  ({ value, row }: ReturnRow) => ReactNode;
 }
 
-export interface DataTableProps extends TableProps {
+export interface DataTableProps extends TableProps {  
+  download?: boolean;
   rows: any[];
-  columns: any[];
+  columns: Columns[];
   sortColumn?: SortDescriptor;
   loading?: boolean;
-  renderRow?: RenderRow[];
   showFilter?: boolean;
   showHandlePaginate?: boolean;
   onSelect?: (row: unknown) => void;
@@ -26,9 +27,11 @@ export interface DataTableProps extends TableProps {
   cellClass?: string;
   skeletonSize?: number;
   noFilters?: string[];
+  variantInputSearch?: Ivariant;
+  keyRow?: string;
 }
 
 export interface SkeletonTableProps {
   size?: number;
-  columns: TableColumnProps<any>[];
+  columns: Columns[];
 }

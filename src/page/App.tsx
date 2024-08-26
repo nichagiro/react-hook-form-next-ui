@@ -24,7 +24,7 @@ import { useEffect, useState } from "react";
 import { IForm } from "../types/app";
 
 // utils
-import { CalendarDate, today, getLocalTimeZone, Time } from "@internationalized/date";
+import { CalendarDate, Time } from "@internationalized/date";
 
 
 const App = () => {
@@ -40,6 +40,7 @@ const App = () => {
   const onSubmit: SubmitHandler<IForm> = async data => {
     console.log("🚀 ~ Event ~ data:", data)
   }
+
 
   useEffect(() => {
     const rows = fakerRows();
@@ -62,7 +63,7 @@ const App = () => {
       methods.setValue("input", "test auto lorem", { shouldValidate: true })
       // methods.setValue("select", "928,10", { shouldValidate: true })
       methods.setValue("date", new CalendarDate(1997, 9, 28))
-      methods.setValue("date1", today(getLocalTimeZone()))
+      // methods.setValue("date1", today(getLocalTimeZone()))
       methods.setValue("time", new Time(14, 28))
     }, 1000)
   }, [methods])
@@ -98,9 +99,9 @@ const App = () => {
           </Panel>
           <Panel title="FORM WITH SCHEMA">
             <div className="grid grid-cols-3 gap-5">
-              <RHFInput name="input" label="Input" placeholder="Write" variant="bordered" color="primary" />
+              <RHFInput name="input" label="Input" placeholder="Write" variant="bordered" color="warning" />
               <RHFTime name="time" label="Time" color="primary" defaultValue={new Time(10, 10)} />
-              <RHFDate name="dat3e" label="Dat3e" color="primary" />
+              <RHFDate name="dat3" label="Dat3e" color="primary" />
               <RHFDate name="date" label="Date" color="success" rules={{ required: { value: true, message: "Campo Requerido" } }} />
               <RHFDualDate
                 startDate={{
@@ -126,8 +127,9 @@ const App = () => {
                 defaultOptions="928"
               />
             </div>
-            <div className="my-8">
+            <div className="my-8 gap-5 flex">
               <Button type="submit">Click</Button>
+              <Button onClick={() => methods.reset()} color="danger">reset</Button>
             </div>
           </Panel >
           <Panel title="Table Component" >
@@ -135,14 +137,18 @@ const App = () => {
               selectionMode="multiple"
               onSelect={row => console.log(row)}
               rows={data}
+              color="danger"
               loading={loading}
-              columns={columns}
-              renderRow={[{
+              columns={[...columns, {
                 key: "view",
-                render: () => <>view Component</>
+                title: "Ver",
+                export: false,
+                renderRow: () => <>View Component</>
               }, {
                 key: "attendance",
-                render: () => "attendanceString"
+                title: "Asistencia",
+                export: false,
+                renderRow: () => <>Attendance Component</>
               }]}
             />
           </Panel>

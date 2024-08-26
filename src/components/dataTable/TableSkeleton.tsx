@@ -7,7 +7,7 @@ const TableSkeleton = ({ size, columns }: SkeletonTableProps) => {
       <TableHeader>
         {columns.map((column) =>
           <TableColumn {...columns} key={column.key}>
-            {column.children}
+            {column.title}
           </TableColumn>
         )}
       </TableHeader>

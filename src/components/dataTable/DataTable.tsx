@@ -6,10 +6,12 @@ import {
 
 // hooks
 import { ChangeEvent, useCallback, useMemo, useState } from 'react';
+import useDebounce from "../../helpers/hooks/useDebounce";
 
-// uitls, hooks
+// uitls and icons
 import moment from "moment";
-import useDebounce from "../../hooks/useDebounce";
+import { toExcelExport } from "../../helpers/docs/toExcel";
+import { ExcelIcon } from "../../icons/ExcelIcon";
 
 // ui and types
 import TableSkeleton from "./TableSkeleton";
@@ -17,10 +19,10 @@ import { DataTableProps } from "./types";
 
 
 const DataTable = ({
-  rows, columns, sortColumn, renderRow, showFilter = true, loading, skeletonSize, selectionMode,
-  showHandlePaginate = true, onSelect, defaultPaginateNumber = 10, cellClass, noFilters, ...props
+  rows, columns, sortColumn, showFilter = true, loading, color, keyRow = "id",
+  skeletonSize, selectionMode, variantInputSearch, showHandlePaginate = true,
+  onSelect, defaultPaginateNumber = 10, cellClass, noFilters, download, ...props
 }: DataTableProps) => {
-
 
   const [filterValue, setFilterValue] = useState("");
   const [rowsPerPage, setRowsPerPage] = useState(defaultPaginateNumber);
@@ -39,15 +41,15 @@ const DataTable = ({
     let data: any[] = [];
 
     if (selectionMode === "single") {
-      data = rows.find(item => item.id === [...row][0]);
+      data = rows.find(item => item[keyRow] === [...row][0]);
     } else if (row === "all") {
       data = rows;
     } else {
-      data = rows.filter(item => [...row].includes(item.id)); //multi
+      data = rows.filter(item => [...row].includes(item[keyRow])); //multi
     }
 
     return onSelect(data);
-  }, [onSelect, rows, selectionMode])
+  }, [onSelect, rows, selectionMode, keyRow])
 
   const filteredItems: any[] = useMemo(() => {
     let data = [...rows];
@@ -137,17 +139,41 @@ const DataTable = ({
   }, []);
 
   const renderCell = useCallback((item: any, columnKey: string) => {
-    const data = renderRow?.find(item => item.key === columnKey)
+    const data = columns.find(item => item.key === columnKey)!;
 
-    if (data) {
-      return data.render({
+    if (data.renderRow) {
+      return data.renderRow({
         value: item[columnKey],
         row: item
       })
     }
 
     return <p title={item[columnKey] as string}> {item[columnKey] as string} </p>
-  }, [renderRow]);
+  }, [columns]);
+
+  const toExport = useCallback(() => {
+    const dataExport = columns.filter(col => col.export).map(item => item.key)
+
+    const data = rows.map(item => {
+      const values: Record<string, number> = {}
+
+      Object.keys(item).forEach(param => {
+        if (dataExport.includes(param)) {
+          values[param] = typeof item[param] === "boolean"
+            ? item[param] ? "Activo" : "Inactivo"
+            : item[param]
+        }
+      })
+      return values
+    })
+
+    toExcelExport({
+      data,
+      name: "DataTableExcel",
+      columns: columns.filter(item => item.export).map(col => col.title?.toString() ?? ""),
+    })
+
+  }, [columns, rows])
 
   const bottomContent = useMemo(() => {
     return (
@@ -169,7 +195,6 @@ const DataTable = ({
           isCompact
           showControls
           showShadow
-          color="primary"
           page={page}
           total={pages}
           onChange={setPage}
@@ -193,16 +218,27 @@ const DataTable = ({
           {
             showFilter &&
             <Input
-              color="primary"
+              color={"primary"}
               id="input-serch-table"
               isClearable
-              variant="bordered"
+              variant={variantInputSearch}
               className="w-full sm:max-w-[44%]"
               placeholder="Buscar..."
               value={filterValue}
               onClear={() => onClear()}
               onValueChange={onSearchChange}
             />
+          }
+          {
+            download &&
+            <Button
+              type="button"
+              color={color}
+              onClick={() => toExport()}
+              startContent={<ExcelIcon size={6} />}
+            >
+              Descargar
+            </Button>
           }
         </div>
         <div className="flex justify-between items-center">
@@ -227,7 +263,10 @@ const DataTable = ({
         </div>
       </div>
     );
-  }, [filterValue, rows.length, onClear, onRowsPerPageChange, onSearchChange, rowsPerPage, showFilter, showHandlePaginate]);
+  }, [
+    filterValue, rows.length, onClear, onRowsPerPageChange, variantInputSearch, download,
+    onSearchChange, rowsPerPage, showFilter, showHandlePaginate, color, toExport,
+  ]);
 
   return (
     <>
@@ -246,23 +285,24 @@ const DataTable = ({
           onSelectionChange={handleSelect}
           selectionMode={selectionMode}
         >
-          <TableHeader columns={columns}>
-            {column => <TableColumn {...column} key={column.key} />}
+          <TableHeader columns={columns} >
+            {column => <TableColumn  {...column} className={`text-${color}`} children={undefined} key={column.key} />}
           </TableHeader>
           <TableBody emptyContent="No hay datos." items={dataRow}>
             {
               item =>
-                <TableRow key={item.id}>
-                  {(columnKey) =>
-                    <TableCell className={cellClass ?? "whitespace-nowrap overflow-hidden overflow-ellipsis max-w-[150px]"}>
-                      {renderCell(item, columnKey as string)}
-                    </TableCell>}
+                <TableRow key={item[keyRow]}>
+                  {
+                    columnKey =>
+                      <TableCell className={cellClass ?? "whitespace-nowrap overflow-hidden overflow-ellipsis max-w-[150px]"}>
+                        {renderCell(item, columnKey as string)}
+                      </TableCell>
+                  }
                 </TableRow>
             }
           </TableBody>
         </Table>}
     </>
-
   )
 };
 
