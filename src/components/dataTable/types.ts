@@ -26,7 +26,6 @@ export interface DataTableProps extends TableProps {
   defaultPaginateNumber?: 5 | 10 | 15;
   cellClass?: string;
   skeletonSize?: number;
-  noFilters?: string[];
   variantInputSearch?: Ivariant;
   keyRow?: string;
 }

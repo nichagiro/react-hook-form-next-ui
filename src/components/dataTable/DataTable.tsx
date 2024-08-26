@@ -21,7 +21,7 @@ import { DataTableProps } from "./types";
 const DataTable = ({
   rows, columns, sortColumn, showFilter = true, loading, color, keyRow = "id",
   skeletonSize, selectionMode, variantInputSearch, showHandlePaginate = true,
-  onSelect, defaultPaginateNumber = 10, cellClass, noFilters, download, ...props
+  onSelect, defaultPaginateNumber = 10, cellClass, download, ...props
 }: DataTableProps) => {
 
   const [filterValue, setFilterValue] = useState("");
@@ -59,7 +59,7 @@ const DataTable = ({
         Object.values(item as string | number).some((value, index) => {
           const param = Object.keys(item)[index];
 
-          if (noFilters?.includes(param)) {
+          if (!columns.map(col=>col.key).includes(param)) {
             return false;
           }
 
@@ -74,7 +74,7 @@ const DataTable = ({
       );
     }
     return data;
-  }, [filterValue, hasSearchFilter, rows, noFilters]);
+  }, [filterValue, hasSearchFilter, rows]);
 
   const pages = Math.ceil(filteredItems.length / rowsPerPage) || 1;
 
