@@ -17,7 +17,7 @@ export default defineConfig({
         'react-dom',
         'react-hook-form',
         '@nextui-org/react',
-        'framer-motion'
+        'framer-motion',
       ],
       output: {
         globals: {

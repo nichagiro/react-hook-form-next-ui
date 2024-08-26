@@ -6,3 +6,6 @@ export { default as RHFDualDate } from './components/RHFDualDate';
 export { default as RHFInput } from './components/RHFInput ';
 export { default as RHFSelect } from './components/RHFSelect';
 export { default as RHFTime } from './components/RHFTime';
+
+export { default as yup } from './utils/yup';
+export * as validation from './helpers/yup/dates';

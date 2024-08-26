@@ -1,17 +1,19 @@
 {
   "name": "react-hook-form-next-ui",
   "type": "module",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "keywords": [
     "nextui",
     "react-hook-form",
     "react-hook-form-next-ui",
-    "react-components"
+    "react-components",
+    "components-react",
+    "nextui-components-rhf"
   ],
   "author": "Nicolas Chamorro Giron",
-  "description": "Componentes React con React Hook Form y NextUI",
+  "description": "React Components with React Hook Form and NextUI",
   "license": "MIT",
   "files": [
     "dist"
@@ -43,7 +45,6 @@
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-hook-form": "^7.0.0",
-    "vite-plugin-dts": "^4.0.3",
     "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz",
     "yup": "^1.4.0"
   },
@@ -64,6 +65,7 @@
     "tailwindcss": "^3.4.10",
     "typescript": "^5.5.3",
     "typescript-eslint": "^8.0.1",
-    "vite": "^5.4.1"
+    "vite": "^5.4.1",
+    "vite-plugin-dts": "^4.0.3"
   }
 }

@@ -1,6 +1,6 @@
 import { Time, CalendarDate } from "@internationalized/date";
 import yup from "../utils/yup";
-import { dualDateValidate } from "../helpers/yup/validation";
+import { dualDateValidate } from "../helpers/yup/dates";
 
 const { endDateRule, startDateRule } = dualDateValidate("date1", "date2");
 
