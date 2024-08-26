@@ -6,5 +6,6 @@ export interface IForm {
   select: string;
   date1: CalendarDate;
   date2: CalendarDate;
+  area: string;
 }
 

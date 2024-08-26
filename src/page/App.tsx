@@ -25,6 +25,7 @@ import { IForm } from "../types/app";
 
 // utils
 import { CalendarDate, Time } from "@internationalized/date";
+import RHFTextArea from "../components/RHFTextArea";
 
 
 const App = () => {
@@ -60,7 +61,7 @@ const App = () => {
 
     setTimeout(() => {
       setLoading(false);
-      methods.setValue("input", "test auto lorem", { shouldValidate: true })
+      methods.setValue("area", "test auto lorem", { shouldValidate: true })
       // methods.setValue("select", "928,10", { shouldValidate: true })
       methods.setValue("date", new CalendarDate(1997, 9, 28))
       // methods.setValue("date1", today(getLocalTimeZone()))
@@ -126,6 +127,7 @@ const App = () => {
                 selectionMode="multiple"
                 defaultOptions="928"
               />
+              <RHFTextArea name="area" label="textArea" placeholder="escriba en el textArea" />
             </div>
             <div className="my-8 gap-5 flex">
               <Button type="submit">Click</Button>

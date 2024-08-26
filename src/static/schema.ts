@@ -13,6 +13,7 @@ const schema = yup
     date1: startDateRule.required(),
     date2: endDateRule.required(),
     select: yup.string().required(),
+    area: yup.string().required()
   }).required();
 
 export default schema

@@ -1,5 +1,6 @@
 import { ReactNode } from "react"
 import { Icolor } from "../types/global"
+import { Divider } from "@nextui-org/react"
 
 type LayoutProps = {
   children: ReactNode,
@@ -15,6 +16,7 @@ const Layout = ({ children, title, color = "primary" }: LayoutProps) => {
           {title}
         </h1>
       </header>
+      <Divider />
       <main className="p-5 2xl:px-16 2xl:py-5 mx-auto">
         {children}
       </main>
