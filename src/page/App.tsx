@@ -127,7 +127,7 @@ const App = () => {
                 selectionMode="multiple"
                 defaultOptions="928"
               />
-              <RHFTextArea name="area" label="textArea" placeholder="escriba en el textArea" />
+              <RHFTextArea name="area" label="textArea" placeholder="escriba en el textArea" rules={{ required: { message: "obligado pape", value: true } }} />
             </div>
             <div className="my-8 gap-5 flex">
               <Button type="submit">Click</Button>

@@ -23,7 +23,7 @@ const RHFTextArea = ({ defaultValue = "", rules, name, ...props }: RHFTextAreaPr
           isInvalid={Boolean(errors[name])}
           errorMessage={errors[name] ? errors[name]?.message : ""}
           classNames={{
-            input: errors[name] ? "placeholder:text-red-500" : ""
+            input: errors[name] ? "placeholder:text-danger" : ""
           }}
         />
       )}
