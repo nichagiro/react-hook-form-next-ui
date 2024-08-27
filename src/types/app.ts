@@ -1,12 +1,12 @@
-import { CalendarDate, TimeInputValue } from "@nextui-org/react";
+import { DateValue, TimeInputValue } from "@nextui-org/react";
 
 export interface IForm {
   input: string;
-  date: CalendarDate;
+  date: DateValue;
   time: TimeInputValue;
   select: string;
-  date1: CalendarDate;
-  date2: CalendarDate;
+  date1: DateValue;
+  date2: DateValue;
   area: string;
   dualtime1: TimeInputValue;
   dualtime2: TimeInputValue;

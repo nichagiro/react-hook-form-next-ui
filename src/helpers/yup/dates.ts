@@ -1,8 +1,8 @@
-import { CalendarDate, TimeInputValue } from "@nextui-org/react";
+import { DateValue, TimeInputValue } from "@nextui-org/react";
 import yup from "../../utils/yup";
 
 export const dualDateValidate = (startDate: string, endDate: string) => {
-  const startDateRule = yup.mixed<CalendarDate>().test(
+  const startDateRule = yup.mixed<DateValue>().test(
     'Menor',
     'Este campo debe ser menor a la fecha final',
     (value, context) => {
@@ -12,7 +12,7 @@ export const dualDateValidate = (startDate: string, endDate: string) => {
       return days <= 0
     }).notRequired();
 
-  const endDateRule = yup.mixed<CalendarDate>().test(
+  const endDateRule = yup.mixed<DateValue>().test(
     'Mayor',
     'Este campo debe ser mayor a la fecha inicial',
     (value, context) => {

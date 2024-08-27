@@ -1,6 +1,6 @@
 import yup from "../utils/yup";
 import { dualDateValidate, dualTimeValidate } from "../helpers/yup/dates";
-import { CalendarDate, TimeInputValue } from "@nextui-org/react";
+import { DateValue, TimeInputValue } from "@nextui-org/react";
 
 const { endDateRule, startDateRule } = dualDateValidate("date1", "date2");
 const { endTimeRule, startTimeRule } = dualTimeValidate("dualtime1", "dualtime2")
@@ -8,8 +8,7 @@ const { endTimeRule, startTimeRule } = dualTimeValidate("dualtime1", "dualtime2"
 const schema = yup
   .object({
     input: yup.string().required(),
-    // inputR: yup.string().required(),
-    date: yup.mixed<CalendarDate>().required(),
+    date: yup.mixed<DateValue>().required(),
     time: yup.mixed<TimeInputValue>().required(),
     date1: startDateRule.required(),
     date2: endDateRule.required(),
