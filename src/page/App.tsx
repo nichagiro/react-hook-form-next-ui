@@ -26,6 +26,7 @@ import { IForm } from "../types/app";
 // utils
 import { CalendarDate, Time } from "@internationalized/date";
 import RHFTextArea from "../components/RHFTextArea";
+import RHFDualTime from "../components/RHFDualTime";
 
 
 const App = () => {
@@ -61,11 +62,11 @@ const App = () => {
 
     setTimeout(() => {
       setLoading(false);
-      methods.setValue("area", "test auto lorem", { shouldValidate: true })
+      // methods.setValue("area", "test auto lorem", { shouldValidate: true })
       // methods.setValue("select", "928,10", { shouldValidate: true })
-      methods.setValue("date", new CalendarDate(1997, 9, 28))
+      // methods.setValue("date", new CalendarDate(1997, 9, 28))
       // methods.setValue("date1", today(getLocalTimeZone()))
-      methods.setValue("time", new Time(14, 28))
+      // methods.setValue("time", new Time(14, 28))
     }, 1000)
   }, [methods])
 
@@ -126,9 +127,13 @@ const App = () => {
                 isLoading={loading}
                 data={options}
                 selectionMode="single"
-                // defaultOptions="928"
+              // defaultOptions="928"
               />
               <RHFTextArea name="area" label="textArea" placeholder="escriba en el textArea" rules={{ required: { message: "obligado pape", value: true } }} />
+              <RHFDualTime
+                startTime={{ name: "dualtime1", label: "d-time-1", rules: { required: { value: true, message: "que espaldita la mia" } } }}
+                endTime={{ name: "dualtime2", label: "d-time-2" }}
+              />
             </div>
             <div className="my-8 gap-5 flex">
               <Button type="submit">Click</Button>
