@@ -1,4 +1,4 @@
-import { Autocomplete, AutocompleteItem, InputProps } from "@nextui-org/react"
+import { Autocomplete, AutocompleteItem, AutocompleteProps } from "@nextui-org/react"
 import { Controller, RegisterOptions, useFormContext } from "react-hook-form";
 
 interface DataOptionsRHFAutocomplete {
@@ -6,10 +6,11 @@ interface DataOptionsRHFAutocomplete {
   label: string
 }
 
-interface RHFAutocompleteProps extends Omit<InputProps, "validate"> {
+interface RHFAutocompleteProps extends Omit<AutocompleteProps, "children"> {
   name: string;
   rules?: RegisterOptions;
   data: DataOptionsRHFAutocomplete[];
+  defaultValue?: string
 }
 
 const RHFAutocomplete = ({ defaultValue, name, data, rules, ...props }: RHFAutocompleteProps) => {
@@ -36,10 +37,15 @@ const RHFAutocomplete = ({ defaultValue, name, data, rules, ...props }: RHFAutoc
             }
           }}
         >
-          {(item) => <AutocompleteItem key={item.key}>{item.label}</AutocompleteItem>}
+          {
+            data.map((item) => (
+              <AutocompleteItem key={item.key} value={item.key}>
+                {item.label}
+              </AutocompleteItem>
+            ))
+          }
         </Autocomplete>
-      )
-      }
+      )}
     />
   )
 }

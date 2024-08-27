@@ -140,6 +140,7 @@ const App = () => {
                 label="Autocomplete"
                 placeholder="Autocomplete"
                 data={options}
+                disabledKeys={"928"}
                 rules={{ required: { value: true, message: "uyy zona" } }}
               />
             </div>
