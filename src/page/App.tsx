@@ -27,6 +27,7 @@ import { IForm } from "../types/app";
 import { CalendarDate, Time } from "@internationalized/date";
 import RHFTextArea from "../components/RHFTextArea";
 import RHFDualTime from "../components/RHFDualTime";
+import RHFAutocomplete from "../components/RHFAutocomplete";
 
 
 const App = () => {
@@ -63,7 +64,7 @@ const App = () => {
     setTimeout(() => {
       setLoading(false);
       // methods.setValue("area", "test auto lorem", { shouldValidate: true })
-      // methods.setValue("select", "928,10", { shouldValidate: true })
+      // methods.setValue("autocomplete", "928", { shouldValidate: true })
       // methods.setValue("date", new CalendarDate(1997, 9, 28))
       // methods.setValue("date1", today(getLocalTimeZone()))
       // methods.setValue("time", new Time(14, 28))
@@ -133,6 +134,13 @@ const App = () => {
               <RHFDualTime
                 startTime={{ name: "dualtime1", label: "d-time-1", rules: { required: { value: true, message: "que espaldita la mia" } } }}
                 endTime={{ name: "dualtime2", label: "d-time-2" }}
+              />
+              <RHFAutocomplete
+                name="autocomplete"
+                label="Autocomplete"
+                placeholder="Autocomplete"
+                data={options}
+                rules={{ required: { value: true, message: "uyy zona" } }}
               />
             </div>
             <div className="my-8 gap-5 flex">

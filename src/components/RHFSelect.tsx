@@ -2,7 +2,7 @@ import { Select, SelectItem, SelectProps } from "@nextui-org/react"
 import { Controller, RegisterOptions, useFormContext } from "react-hook-form"
 
 interface DataOptionsRHFSelect {
-  key: string | number,
+  key: string,
   label: string
 }
 

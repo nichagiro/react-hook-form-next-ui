@@ -16,6 +16,7 @@ const schema = yup
     area: yup.string().required(),
     dualtime1: startTimeRule.required(),
     dualtime2: endTimeRule.required(),
+    autocomplete: yup.string().required(),
   }).required();
 
 export default schema

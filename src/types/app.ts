@@ -10,5 +10,6 @@ export interface IForm {
   area: string;
   dualtime1: TimeInputValue;
   dualtime2: TimeInputValue;
+  autocomplete: string
 }
 
