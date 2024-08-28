@@ -3,25 +3,22 @@ import {
   Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Pagination,
   Button, Input, SortDescriptor, Selection
 } from "@nextui-org/react";
+import TableSkeleton from "./TableSkeleton";
 
 // hooks
 import { ChangeEvent, useCallback, useMemo, useState } from 'react';
 import useDebounce from "../../helpers/hooks/useDebounce";
 
-// uitls and icons
+// uitls and types
 import moment from "moment";
 import { toExcelExport } from "../../helpers/docs/toExcel";
-import { ExcelIcon } from "../../icons/ExcelIcon";
-
-// ui and types
-import TableSkeleton from "./TableSkeleton";
 import { DataTableProps } from "./types";
 
 
 const DataTable = ({
-  rows, columns, sortColumn, showFilter = true, loading, color, keyRow = "id",
-  skeletonSize, selectionMode, variantInputSearch, showHandlePaginate = true,
-  onSelect, defaultPaginateNumber = 10, cellClass, download, ...props
+  rows, columns, sortColumn, showFilter = true, loading, keyRow = "id",
+  skeletonSize, selectionMode, inputSearch, showHandlePaginate = true, buttonExcelExport,
+  onSelect, defaultPaginateNumber = 10, cellClass, excelExport, ...props
 }: DataTableProps) => {
 
   const [filterValue, setFilterValue] = useState("");
@@ -59,7 +56,7 @@ const DataTable = ({
         Object.values(item as string | number).some((value, index) => {
           const param = Object.keys(item)[index];
 
-          if (!columns.map(col=>col.key).includes(param)) {
+          if (!columns.map(col => col.key).includes(param)) {
             return false;
           }
 
@@ -74,7 +71,7 @@ const DataTable = ({
       );
     }
     return data;
-  }, [filterValue, hasSearchFilter, rows]);
+  }, [filterValue, hasSearchFilter, rows, columns]);
 
   const pages = Math.ceil(filteredItems.length / rowsPerPage) || 1;
 
@@ -198,6 +195,7 @@ const DataTable = ({
           page={page}
           total={pages}
           onChange={setPage}
+          color={props.color}
         />
         <div className="hidden sm:flex w-[30%] justify-end gap-2">
           <Button isDisabled={pages === 1} size="sm" variant="flat" onPress={onPreviousPage}>
@@ -209,7 +207,7 @@ const DataTable = ({
         </div>
       </div>
     );
-  }, [page, pages, onNextPage, onPreviousPage, selectedKeys, selectionMode]);
+  }, [page, pages, onNextPage, onPreviousPage, selectedKeys, selectionMode, props.color]);
 
   const topContent = useMemo(() => {
     return (
@@ -218,26 +216,23 @@ const DataTable = ({
           {
             showFilter &&
             <Input
-              color={"primary"}
-              id="input-serch-table"
-              isClearable
-              variant={variantInputSearch}
-              className="w-full sm:max-w-[44%]"
-              placeholder="Buscar..."
+              {...inputSearch}
+              className={inputSearch?.className ?? "w-full sm:max-w-[44%]"}
+              placeholder={inputSearch?.placeholder ?? "Buscar..."}
               value={filterValue}
               onClear={() => onClear()}
               onValueChange={onSearchChange}
+              isClearable
             />
           }
           {
-            download &&
+            (excelExport || buttonExcelExport) &&
             <Button
+              {...buttonExcelExport}
               type="button"
-              color={color}
               onClick={() => toExport()}
-              startContent={<ExcelIcon size={6} />}
             >
-              Descargar
+              {buttonExcelExport?.name ?? "Descargar"}
             </Button>
           }
         </div>
@@ -264,8 +259,8 @@ const DataTable = ({
       </div>
     );
   }, [
-    filterValue, rows.length, onClear, onRowsPerPageChange, variantInputSearch, download,
-    onSearchChange, rowsPerPage, showFilter, showHandlePaginate, color, toExport,
+    filterValue, rows.length, onClear, onRowsPerPageChange, excelExport, inputSearch,
+    onSearchChange, rowsPerPage, showFilter, showHandlePaginate, toExport, buttonExcelExport
   ]);
 
   return (
@@ -286,7 +281,7 @@ const DataTable = ({
           selectionMode={selectionMode}
         >
           <TableHeader columns={columns} >
-            {column => <TableColumn  {...column} className={`text-${color}`} children={undefined} key={column.key} />}
+            {column => <TableColumn  {...column} children={undefined} key={column.key} />}
           </TableHeader>
           <TableBody emptyContent="No hay datos." items={dataRow}>
             {

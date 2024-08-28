@@ -28,12 +28,14 @@ import { CalendarDate, Time } from "@internationalized/date";
 import RHFTextArea from "../components/RHFTextArea";
 import RHFDualTime from "../components/RHFDualTime";
 import RHFAutocomplete from "../components/RHFAutocomplete";
+import Modal from "../components/Modal";
 
 
 const App = () => {
   const [data, setData] = useState<IRows[]>([]);
   const [options, setOptions] = useState<{ key: string, label: string }[]>([]);
   const [loading, setLoading] = useState(true);
+  const [modal, setModal] = useState(false);
 
   const methods = useForm<IForm>({
     shouldFocusError: true,
@@ -73,9 +75,49 @@ const App = () => {
 
   return (
     <Layout title="REACT HOOK FORM + NEXTUI" color="primary">
+      <Modal
+        display={modal}
+        title="Tabla de resultados"
+        size="5xl"
+        onCancel={() => setModal(false)}
+        acceptButton={{
+          name: "YEAH",
+          onClick: () => console.log("clic in accept button"),
+          color: "danger"
+        }}
+        cancelButton={{
+          name: "cancelar",
+          variant: "light",
+          color: "danger"
+        }}
+      >
+        <DataTable
+          selectionMode="multiple"
+          onSelect={row => console.log(row)}
+          rows={data}
+          color="danger"
+          loading={loading}
+          columns={[...columns, {
+            key: "view",
+            title: "Ver",
+            export: false,
+            renderRow: () => <>View Component</>
+          }, {
+            key: "attendance",
+            title: "Asistencia",
+            export: false,
+            renderRow: () => <>Attendance Component</>
+          }]}
+        />
+      </Modal>
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(onSubmit)}>
           <Panel title="FORM WITHOUT SCHEMA">
+            <div className="mb-5">
+              <Button color="secondary" onClick={() => setModal(true)}>
+                Modal
+              </Button>
+            </div>
             <div className="flex gap-5">
               <RHFInput
                 name="inputR"
@@ -151,21 +193,25 @@ const App = () => {
           </Panel >
           <Panel title="Table Component" >
             <DataTable
+              inputSearch={{ variant: "bordered", color: "warning" }}
+              buttonExcelExport={{ name: "toExcel", color: "danger" }}
+              color="primary"
               selectionMode="multiple"
               onSelect={row => console.log(row)}
               rows={data}
-              color="danger"
               loading={loading}
               columns={[...columns, {
                 key: "view",
                 title: "Ver",
                 export: false,
-                renderRow: () => <>View Component</>
+                renderRow: () => <>View Component</>,
+                className:"text-danger"
               }, {
                 key: "attendance",
                 title: "Asistencia",
                 export: false,
-                renderRow: () => <>Attendance Component</>
+                renderRow: () => <>Attendance Component</>,
+                className:"text-danger"
               }]}
             />
           </Panel>

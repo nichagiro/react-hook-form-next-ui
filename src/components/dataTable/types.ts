@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { SortDescriptor, TableColumnProps, TableProps } from "@nextui-org/react";
+import { ButtonProps, InputProps, SortDescriptor, TableColumnProps, TableProps } from "@nextui-org/react";
 import { ReactNode } from "react";
-import { Ivariant } from "../../types/global";
 
 interface ReturnRow {
   value: string;
@@ -11,11 +10,13 @@ interface ReturnRow {
 
 interface Columns extends Omit<TableColumnProps<any>, "children"> {
   export?: boolean;
-  renderRow?:  ({ value, row }: ReturnRow) => ReactNode;
+  renderRow?: ({ value, row }: ReturnRow) => ReactNode;
 }
 
-export interface DataTableProps extends TableProps {  
-  download?: boolean;
+export interface DataTableProps extends TableProps {
+  buttonExcelExport?: Omit<ButtonProps, "onClick">;
+  inputSearch?: InputProps;
+  excelExport?: boolean;
   rows: any[];
   columns: Columns[];
   sortColumn?: SortDescriptor;
@@ -26,7 +27,6 @@ export interface DataTableProps extends TableProps {
   defaultPaginateNumber?: 5 | 10 | 15;
   cellClass?: string;
   skeletonSize?: number;
-  variantInputSearch?: Ivariant;
   keyRow?: string;
 }
 
