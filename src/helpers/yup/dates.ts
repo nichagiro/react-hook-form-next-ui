@@ -10,7 +10,7 @@ export const dualDateValidate = (startDate: string, endDate: string) => {
       if (!field || !value) return true;
       const days = value.compare(field);
       return days <= 0
-    }).notRequired();
+    });
 
   const endDateRule = yup.mixed<DateValue>().test(
     'Mayor',
@@ -20,7 +20,7 @@ export const dualDateValidate = (startDate: string, endDate: string) => {
       if (!field || !value) return true;
       const days = value.compare(field)
       return days >= 0
-    }).notRequired()
+    })
 
   return { startDateRule, endDateRule }
 }
@@ -35,7 +35,7 @@ export const dualTimeValidate = (startTime: string, endTime: string) => {
       if (!field || !value) return true;
       const days = value.compare(field);
       return days <= 0
-    }).notRequired();
+    });
 
   const endTimeRule = yup.mixed<TimeInputValue>().test(
     'Mayor',
@@ -45,7 +45,7 @@ export const dualTimeValidate = (startTime: string, endTime: string) => {
       if (!field || !value) return true;
       const days = value.compare(field)
       return days >= 0
-    }).notRequired()
+    })
 
   return { startTimeRule, endTimeRule }
 }
