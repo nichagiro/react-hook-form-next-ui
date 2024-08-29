@@ -19,7 +19,6 @@ const RHFTextArea = ({ defaultValue = "", rules, name, ...props }: RHFTextAreaPr
         <Textarea
           {...field}
           {...props}
-          onValueChange={field.onChange}
           isInvalid={Boolean(errors[name])}
           errorMessage={errors[name] ? errors[name]?.message : ""}
           classNames={{

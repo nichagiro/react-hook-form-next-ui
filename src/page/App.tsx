@@ -65,8 +65,10 @@ const App = () => {
 
     setTimeout(() => {
       setLoading(false);
-      // methods.setValue("area", "test auto lorem", { shouldValidate: true })
-      // methods.setValue("autocomplete", "928", { shouldValidate: true })
+      methods.setValue("area", "test auto lorem", { shouldValidate: true })
+      methods.setValue("autocomplete", "928", { shouldValidate: true })
+      methods.setValue("select", "10", { shouldValidate: true })
+      methods.setValue("input", "446545604650", { shouldValidate: true })
       // methods.setValue("date", new CalendarDate(1997, 9, 28))
       // methods.setValue("date1", today(getLocalTimeZone()))
       // methods.setValue("time", new Time(14, 28))
@@ -144,7 +146,14 @@ const App = () => {
           </Panel>
           <Panel title="FORM WITH SCHEMA">
             <div className="grid grid-cols-3 gap-5">
-              <RHFInput name="input" label="Input" placeholder="Write" variant="bordered" color="warning" />
+              <RHFInput
+                name="input"
+                label="Input"
+                placeholder="Write"
+                variant="bordered"
+                color="warning"
+                onValueChange={e => console.log(e)}
+              />
               <RHFTime name="time" label="Time" color="primary" defaultValue={new Time(10, 10)} />
               <RHFTime name="time2" label="Time2" color="secondary" />
               <RHFDate name="dat3" label="Dat3e" color="primary" />
@@ -169,10 +178,16 @@ const App = () => {
                 placeholder="Seleccione..."
                 isLoading={loading}
                 data={options}
-                selectionMode="single"
+                onSelectionChange={e => console.log([...e][0] ?? "")}
               // defaultOptions="928"
               />
-              <RHFTextArea name="area" label="textArea" placeholder="escriba en el textArea" rules={{ required: { message: "obligado pape", value: true } }} />
+              <RHFTextArea
+                name="area"
+                label="textArea"
+                placeholder="escriba en el textArea"
+                rules={{ required: { message: "obligado pape", value: true } }}
+                onValueChange={e => console.log(e)}
+              />
               <RHFDualTime
                 startTime={{ name: "dualtime1", label: "d-time-1", rules: { required: { value: true, message: "que espaldita la mia" } } }}
                 endTime={{ name: "dualtime2", label: "d-time-2" }}
@@ -184,6 +199,7 @@ const App = () => {
                 data={options}
                 disabledKeys={"928"}
                 rules={{ required: { value: true, message: "uyy zona" } }}
+                onSelectionChange={e => console.log(e)}
               />
             </div>
             <div className="my-8 gap-5 flex">
@@ -205,13 +221,13 @@ const App = () => {
                 title: "Ver",
                 export: false,
                 renderRow: () => <>View Component</>,
-                className:"text-danger"
+                className: "text-danger"
               }, {
                 key: "attendance",
                 title: "Asistencia",
                 export: false,
                 renderRow: () => <>Attendance Component</>,
-                className:"text-danger"
+                className: "text-danger"
               }]}
             />
           </Panel>

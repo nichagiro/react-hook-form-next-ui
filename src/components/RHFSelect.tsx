@@ -30,7 +30,6 @@ const RHFSelect = ({ name, data, rules, defaultOptions = "", ...props }: RHFSele
           selectedKeys={new Set(field.value ? field.value.split(",") : [])}
           errorMessage={errors[name] ? errors[name]?.message : ""}
           isInvalid={Boolean(errors[name])}
-          onSelectionChange={field.onChange}
         >
           {item => <SelectItem key={item.key}>{item.label}</SelectItem>}
         </Select>

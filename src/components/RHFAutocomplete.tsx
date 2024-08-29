@@ -13,8 +13,14 @@ interface RHFAutocompleteProps extends Omit<AutocompleteProps, "children"> {
   defaultValue?: string
 }
 
-const RHFAutocomplete = ({ defaultValue, name, data, rules, ...props }: RHFAutocompleteProps) => {
+const RHFAutocomplete = ({ onSelectionChange, defaultValue, name, data, rules, ...props }: RHFAutocompleteProps) => {
   const { control } = useFormContext<{ [key: string]: string }>();
+
+  const onChange = (e: string | number | null) => {
+    if (onSelectionChange) {
+      onSelectionChange(e)
+    }
+  }
 
   return (
     <Controller
@@ -28,7 +34,7 @@ const RHFAutocomplete = ({ defaultValue, name, data, rules, ...props }: RHFAutoc
           {...props}
           selectedKey={field.value ?? ""}
           defaultItems={data}
-          onSelectionChange={field.onChange}
+          onSelectionChange={e => { field.onChange(e); onChange(e) }}
           isInvalid={Boolean(errors[name])}
           errorMessage={errors[name] ? errors[name]?.message : ""}
           inputProps={{
