@@ -162,14 +162,15 @@ const App = () => {
                 startDate={{
                   name: "date1",
                   label: "Fecha Inicial",
-                  rules: { required: { value: true, message: "Campo Requerido" } }
+                  rules: { required: { value: true, message: "Campo Requerido" } },
+                  defaultValue: new CalendarDate(2024, 8, 1)
                 }}
                 endDate={{
                   name: "date2",
                   label: "Fecha Final",
                   visibleMonths: 2,
                   rules: { required: { value: true, message: "Campo Requerido" } },
-                  defaultValue: new CalendarDate(2000, 12, 24)
+                  defaultValue: new CalendarDate(2024, 8, 31)
                 }}
               />
               <RHFSelect
@@ -189,8 +190,11 @@ const App = () => {
                 onValueChange={e => console.log(e)}
               />
               <RHFDualTime
-                startTime={{ name: "dualtime1", label: "d-time-1", rules: { required: { value: true, message: "que espaldita la mia" } } }}
-                endTime={{ name: "dualtime2", label: "d-time-2" }}
+                startTime={{
+                  name: "dualtime1", label: "d-time-1", hourCycle: 12,
+                  rules: { required: { value: true, message: "que espaldita la mia" } }
+                }}
+                endTime={{ name: "dualtime2", label: "d-time-2", hourCycle: 12 }}
               />
               <RHFAutocomplete
                 name="autocomplete"

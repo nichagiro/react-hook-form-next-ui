@@ -2,8 +2,19 @@ import yup from "../utils/yup";
 import { dualDateValidate, dualTimeValidate } from "../helpers/yup/dates";
 import { DateValue, TimeInputValue } from "@nextui-org/react";
 
-const { endDateRule, startDateRule } = dualDateValidate("date1", "date2");
-const { endTimeRule, startTimeRule } = dualTimeValidate("dualtime1", "dualtime2")
+const { endDateRule, startDateRule } = dualDateValidate({
+  startDate: "date1",
+  endDate: "date2",
+  range: 2,
+  type: "months",
+});
+
+const { endTimeRule, startTimeRule } = dualTimeValidate({
+  endTime: "dualtime2",
+  startTime: "dualtime1",
+  range: 1,
+  type: "minutes"
+})
 
 const schema = yup
   .object({
