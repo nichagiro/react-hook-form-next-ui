@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { ButtonProps, InputProps, SortDescriptor, TableColumnProps, TableProps } from "@nextui-org/react";
+import { ButtonProps, InputProps, SortDescriptor, TableProps, TableColumnProps } from "@nextui-org/react";
 import { ReactNode } from "react";
 
 interface ReturnRow {
   value: string;
-  row?: unknown;
+  row: unknown;
 }
 
 interface Columns extends Omit<TableColumnProps<any>, "children"> {
