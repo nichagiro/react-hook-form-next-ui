@@ -1,7 +1,7 @@
 {
   "name": "react-hook-form-next-ui",
   "type": "module",
-  "version": "1.0.22",
+  "version": "1.0.23",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "keywords": [
