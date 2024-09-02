@@ -213,6 +213,7 @@ const App = () => {
           </Panel >
           <Panel title="Table Component" >
             <DataTable
+              sortDescriptor={{ column: "service", direction: "ascending" }}
               inputSearch={{ variant: "bordered", color: "warning" }}
               buttonExcelExport={{ name: "toExcel", color: "danger" }}
               color="primary"

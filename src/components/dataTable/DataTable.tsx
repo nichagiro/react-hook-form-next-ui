@@ -16,8 +16,8 @@ import { DataTableProps } from "./types";
 
 
 const DataTable = ({
-  rows, columns, sortColumn, showFilter = true, loading, keyRow = "id",
-  skeletonSize, selectionMode, inputSearch, showHandlePaginate = true, buttonExcelExport,
+  rows, columns, showFilter = true, loading, keyRow = "id", buttonExcelExport,
+  skeletonSize, selectionMode, inputSearch, showHandlePaginate = true,
   onSelect, defaultPaginateNumber = 10, cellClass, excelExport, ...props
 }: DataTableProps) => {
 
@@ -25,7 +25,7 @@ const DataTable = ({
   const [rowsPerPage, setRowsPerPage] = useState(defaultPaginateNumber);
   const [page, setPage] = useState<number>(1);
   const [selectedKeys, setSelectedKeys] = useState<Selection>(new Set());
-  const [sortDescriptor, setSortDescriptor] = useState<SortDescriptor>(sortColumn ?? {});
+  const [sortDescriptor, setSortDescriptor] = useState<SortDescriptor>(props.sortDescriptor ?? {});
 
   const searchText = useDebounce(filterValue, 500);
 

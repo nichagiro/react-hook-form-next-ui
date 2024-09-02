@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { ButtonProps, InputProps, SortDescriptor, TableProps, TableColumnProps } from "@nextui-org/react";
+import { ButtonProps, InputProps, TableProps, TableColumnProps } from "@nextui-org/react";
 import { ReactNode } from "react";
 
 interface ReturnRow {
@@ -19,7 +19,6 @@ export interface DataTableProps extends TableProps {
   excelExport?: boolean;
   rows: any[];
   columns: Columns[];
-  sortColumn?: SortDescriptor;
   loading?: boolean;
   showFilter?: boolean;
   showHandlePaginate?: boolean;
