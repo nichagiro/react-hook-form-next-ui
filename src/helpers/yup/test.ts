@@ -22,7 +22,7 @@ export const testDualDate = ({ context, name, type, value }: TestDualDateProps) 
 }
 
 export const testDateMinMax = ({ value, date, type }: TestDateRangeProps) => {
-  if (!value) return true;
+  if (!value || !date) return true;
 
   const timeValue = parseDate(date);
   const days = value.compare(timeValue);

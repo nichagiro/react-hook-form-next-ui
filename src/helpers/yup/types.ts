@@ -23,13 +23,13 @@ export interface DualTimeValidateProps {
 }
 
 export interface DateMinMaxValueProps {
-  minDate: string;
-  maxDate: string;
+  minDate?: string;
+  maxDate?: string;
 }
 
 export interface TestDateRangeProps {
   value: DateValue | undefined;
-  date: string;
+  date: string | undefined;
   type: "min" | "max"
 }
 

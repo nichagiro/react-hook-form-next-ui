@@ -28,14 +28,14 @@ export const dualDateValidate = ({
     then: schema => schema.test(
       'Max Date',
       `Fecha maxima ${moment(maxStartDate).format("DD/MM/YYYY")}`,
-      value => testDateMinMax({ value, date: maxStartDate!, type: "max" })
+      value => testDateMinMax({ value, date: maxStartDate, type: "max" })
     )
   }).when([], {
     is: minStartDate,
     then: schema => schema.test(
       'Min Date',
       `Fecha minima ${moment(minStartDate).format("DD/MM/YYYY")}`,
-      value => testDateMinMax({ value, date: minStartDate!, type: "min" })
+      value => testDateMinMax({ value, date: minStartDate, type: "min" })
     )
   });
 
@@ -58,14 +58,14 @@ export const dualDateValidate = ({
     then: schema => schema.test(
       'Max Date',
       `Fecha maxima ${moment(maxEndDate).format("DD/MM/YYYY")}`,
-      value => testDateMinMax({ value, date: maxEndDate!, type: "max" })
+      value => testDateMinMax({ value, date: maxEndDate, type: "max" })
     )
   }).when([], {
     is: minEndDate,
     then: schema => schema.test(
       'Min Date',
       `Fecha minima ${moment(minEndDate).format("DD/MM/YYYY")}`,
-      value => testDateMinMax({ value, date: minEndDate!, type: "min" })
+      value => testDateMinMax({ value, date: minEndDate, type: "min" })
     )
   });
 
