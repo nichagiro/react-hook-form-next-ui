@@ -1,25 +1,34 @@
 import yup from "../utils/yup";
-import { dualDateValidate, dualTimeValidate } from "../helpers/yup/dates";
-import { DateValue, TimeInputValue } from "@nextui-org/react";
+import { dateMinMaxValidate, dualDateValidate, dualTimeValidate } from "../helpers/yup/dates";
+import { TimeInputValue } from "@nextui-org/react";
 
 const { endDateRule, startDateRule } = dualDateValidate({
   startDate: "date1",
   endDate: "date2",
   range: 2,
   type: "months",
+  maxEndDate: "2024-09-03",
+  minEndDate: "2024-09-01",
+  maxStartDate: "2024-09-04",
+  minStartDate: "2024-08-18"
 });
 
 const { endTimeRule, startTimeRule } = dualTimeValidate({
   endTime: "dualtime2",
   startTime: "dualtime1",
   range: 1,
-  type: "minutes"
+  type: "hours",
+})
+
+const rangeValue = dateMinMaxValidate({
+  maxDate: "2024-09-03",
+  minDate: "2024-09-01"
 })
 
 const schema = yup
   .object({
     input: yup.string().required(),
-    date: yup.mixed<DateValue>().required(),
+    date: rangeValue.required(),
     time: yup.mixed<TimeInputValue>().required(),
     date1: startDateRule.required(),
     date2: endDateRule.required(),

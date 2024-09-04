@@ -191,10 +191,10 @@ const App = () => {
               />
               <RHFDualTime
                 startTime={{
-                  name: "dualtime1", label: "d-time-1", hourCycle: 12,
+                  name: "dualtime1", label: "d-time-1", hourCycle: 24,
                   rules: { required: { value: true, message: "que espaldita la mia" } }
                 }}
-                endTime={{ name: "dualtime2", label: "d-time-2", hourCycle: 12 }}
+                endTime={{ name: "dualtime2", label: "d-time-2", hourCycle: 24 }}
               />
               <RHFAutocomplete
                 name="autocomplete"
