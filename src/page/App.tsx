@@ -30,6 +30,7 @@ import RHFDualTime from "../components/RHFDualTime";
 import RHFAutocomplete from "../components/RHFAutocomplete";
 import Modal from "../components/Modal";
 
+const defaultRows = "all";
 
 const App = () => {
   const [data, setData] = useState<IRows[]>([]);
@@ -51,8 +52,6 @@ const App = () => {
     const rows = fakerRows();
     const options = fakerUsers();
 
-    setData(rows);
-
     setOptions([{
       key: "928",
       label: "Nicolas"
@@ -65,6 +64,16 @@ const App = () => {
 
     setTimeout(() => {
       setLoading(false);
+      setData([{
+        service: "AAA",
+        topic: "SexTopic",
+        hour: "15:40",
+        date: "2024-10-10",
+        status: "Activo",
+        id: "28",
+      },
+      ...rows
+      ]);
       methods.setValue("area", "test auto lorem", { shouldValidate: true })
       methods.setValue("autocomplete", "928", { shouldValidate: true })
       methods.setValue("select", "10", { shouldValidate: true })
@@ -213,6 +222,8 @@ const App = () => {
           </Panel >
           <Panel title="Table Component" >
             <DataTable
+              defaultSelectedKeys={defaultRows}
+              defaultPaginateNumber={15}
               sortDescriptor={{ column: "service", direction: "ascending" }}
               inputSearch={{ variant: "bordered", color: "warning" }}
               buttonExcelExport={{ name: "toExcel", color: "danger" }}

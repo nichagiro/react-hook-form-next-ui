@@ -6,18 +6,19 @@ import {
 import TableSkeleton from "./TableSkeleton";
 
 // hooks
-import { ChangeEvent, useCallback, useMemo, useState } from 'react';
+import { ChangeEvent, useCallback, useEffect, useMemo, useState } from 'react';
 import useDebounce from "../../helpers/hooks/useDebounce";
 
 // uitls and types
 import moment from "moment";
 import { toExcelExport } from "../../helpers/docs/toExcel";
 import { DataTableProps } from "./types";
+import { faker } from "@faker-js/faker";
 
 
 const DataTable = ({
-  rows, columns, showFilter = true, loading, keyRow = "id", buttonExcelExport,
-  skeletonSize, selectionMode, inputSearch, showHandlePaginate = true,
+  rows, columns, showFilter = true, loading, keyRow = "id", buttonExcelExport, exportName,
+  skeletonSize, selectionMode, inputSearch, showHandlePaginate = true, defaultSelectedKeys,
   onSelect, defaultPaginateNumber = 10, cellClass, excelExport, ...props
 }: DataTableProps) => {
 
@@ -26,6 +27,7 @@ const DataTable = ({
   const [page, setPage] = useState<number>(1);
   const [selectedKeys, setSelectedKeys] = useState<Selection>(new Set());
   const [sortDescriptor, setSortDescriptor] = useState<SortDescriptor>(props.sortDescriptor ?? {});
+  const [load, setLoad] = useState(false);
 
   const searchText = useDebounce(filterValue, 500);
 
@@ -41,12 +43,32 @@ const DataTable = ({
       data = rows.find(item => item[keyRow] === [...row][0]);
     } else if (row === "all") {
       data = rows;
+      setSelectedKeys(new Set(rows.map(item => item[keyRow]))); //for bug nextUI
     } else {
       data = rows.filter(item => [...row].includes(item[keyRow])); //multi
     }
 
     return onSelect(data);
   }, [onSelect, rows, selectionMode, keyRow])
+
+  useEffect(() => {
+    if (!load) return setLoad(true);
+
+    let selection: Selection = new Set();
+
+    if (defaultSelectedKeys === "all") {
+      selection = "all";
+    } else {
+      if (defaultSelectedKeys && [...defaultSelectedKeys].length > 0) {
+        const data = rows.map(item => item[keyRow]);
+        const selecteds = [...defaultSelectedKeys].filter(item => data.includes(item))
+        selection = new Set(selecteds);
+      }
+    }
+
+    handleSelect(selection);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [defaultSelectedKeys, rows, keyRow])
 
   const filteredItems: any[] = useMemo(() => {
     let data = [...rows];
@@ -166,11 +188,11 @@ const DataTable = ({
 
     toExcelExport({
       data,
-      name: "DataTableExcel",
+      name: exportName ?? faker.string.uuid(),
       columns: columns.filter(item => item.export).map(col => col.title?.toString() ?? ""),
     })
 
-  }, [columns, rows])
+  }, [columns, rows, exportName])
 
   const bottomContent = useMemo(() => {
     return (

@@ -17,6 +17,7 @@ export interface DataTableProps extends TableProps {
   buttonExcelExport?: Omit<ButtonProps, "onClick">;
   inputSearch?: InputProps;
   excelExport?: boolean;
+  exportName?: string;
   rows: any[];
   columns: Columns[];
   loading?: boolean;
