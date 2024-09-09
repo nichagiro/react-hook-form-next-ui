@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Pagination,
-  Button, Input, SortDescriptor, Selection
+  Button, Input, SortDescriptor, Selection,
 } from "@nextui-org/react";
 import TableSkeleton from "./TableSkeleton";
 
 // hooks
-import { ChangeEvent, useCallback, useEffect, useMemo, useState } from 'react';
+import { ChangeEvent, HTMLAttributes, useCallback, useEffect, useMemo, useState } from 'react';
 import useDebounce from "../../helpers/hooks/useDebounce";
 
 // uitls and types
@@ -14,7 +14,8 @@ import moment from "moment";
 import { toExcelExport } from "../../helpers/docs/toExcel";
 import { DataTableProps } from "./types";
 import { faker } from "@faker-js/faker";
-
+import PlusIcon from "../../icons/PlusIcon";
+import MinusIcon from "../../icons/MinusIcon";
 
 const DataTable = ({
   rows, columns, showFilter = true, loading, keyRow = "id", buttonExcelExport, exportName,
@@ -160,15 +161,99 @@ const DataTable = ({
   const renderCell = useCallback((item: any, columnKey: string) => {
     const data = columns.find(item => item.key === columnKey)!;
 
+    // formatter row
     if (data.renderRow) {
-      return data.renderRow({
-        value: item[columnKey],
-        row: item
+      return (
+        <>
+          <div>
+            {data.renderRow({
+              value: item[columnKey],
+              row: item
+            })}
+          </div>
+          {
+            item.subRows && item.subRows.length > 0 &&
+            <div data-row-key={item[keyRow]} style={{ display: "none" }}>
+              {item.subRows.map((sub: any, index: number) =>
+                data.renderRow &&
+                <div key={index}>
+                  {data.renderRow({
+                    value: sub[columnKey],
+                    row: sub
+                  })}
+                </div>
+              )}
+            </div>
+          }
+        </>
+      )
+    }
+
+    // handle show icon expand and collapse
+    const onClick = () => {
+      const subRows = document.querySelectorAll(`div[data-row-key="${item[keyRow]}"]`);
+      subRows.forEach(element => {
+        const div = element as HTMLAttributes<HTMLDivElement>
+        if (!div || !div.style) return
+
+        const value = div.style.display
+        div.style.display = value === "none" ? "block" : "none";
+
+        const expand = document.querySelector(`span[data-icon-expand-table="${item[keyRow]}"]`) as HTMLAttributes<HTMLDivElement>;
+        const collapse = document.querySelector(`span[data-icon-collapse-table="${item[keyRow]}"]`) as HTMLAttributes<HTMLDivElement>;
+
+        if (!expand || !expand.style || !collapse || !collapse.style) return
+
+        expand.style.display = value !== "none" ? "block" : "none";
+        collapse.style.display = value === "none" ? "block" : "none";
       })
     }
 
-    return <p title={item[columnKey] as string}> {item[columnKey] as string} </p>
-  }, [columns]);
+    return (
+      <>
+        <p title={item[columnKey] as string}>
+          {
+            item.subRows && item.subRows.length > 0 && columns[0].key === columnKey &&
+            <>
+              <Button
+                type="button"
+                onClick={onClick} size="sm"
+                isIconOnly
+                className="bg-transparent"
+                style={{
+                  marginLeft: "-11px",
+                  marginTop: "-12px",
+                  marginBottom: "-6px"
+                }}>
+                <span data-icon-expand-table={item[keyRow]} className="text-emerald-500">
+                  <PlusIcon />
+                </span>
+                <span data-icon-collapse-table={item[keyRow]} style={{ display: "none" }} className="text-rose-500">
+                  <MinusIcon />
+                </span>
+              </Button>          
+            </>
+          }
+
+          {item[columnKey]}
+        </p>
+        {
+          item.subRows && item.subRows.length > 0 &&
+          <div data-row-key={item[keyRow]} style={{ display: "none" }}>
+            {item.subRows.map((value: any, index: number) => (
+              <p
+                title={value[columnKey]}
+                key={index}
+                className={columns[0].key === columnKey ? "ps-5" : ""}
+              >
+                {value[columnKey] as string}
+              </p>
+            ))}
+          </div>
+        }
+      </>
+    )
+  }, [columns, keyRow]);
 
   const toExport = useCallback(() => {
     const dataExport = columns.filter(col => col.export).map(item => item.key)
@@ -302,7 +387,7 @@ const DataTable = ({
           onSelectionChange={handleSelect}
           selectionMode={selectionMode}
         >
-          <TableHeader columns={columns} >
+          <TableHeader columns={columns}>
             {column => <TableColumn  {...column} children={undefined} key={column.key} />}
           </TableHeader>
           <TableBody emptyContent="No hay datos." items={dataRow}>
@@ -310,7 +395,7 @@ const DataTable = ({
               item =>
                 <TableRow key={item[keyRow]}>
                   {
-                    columnKey =>
+                    (columnKey) =>
                       <TableCell className={cellClass ?? "whitespace-nowrap overflow-hidden overflow-ellipsis max-w-[150px]"}>
                         {renderCell(item, columnKey as string)}
                       </TableCell>
@@ -324,9 +409,6 @@ const DataTable = ({
 };
 
 export default DataTable;
-
-
-
 
 
 

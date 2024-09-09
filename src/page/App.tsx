@@ -30,7 +30,7 @@ import RHFDualTime from "../components/RHFDualTime";
 import RHFAutocomplete from "../components/RHFAutocomplete";
 import Modal from "../components/Modal";
 
-const defaultRows = "all";
+const defaultRows: string[] = [""];
 
 const App = () => {
   const [data, setData] = useState<IRows[]>([]);
@@ -50,7 +50,10 @@ const App = () => {
 
   useEffect(() => {
     const rows = fakerRows();
+    console.log("🚀 ~ useEffect ~ rows:", rows)
     const options = fakerUsers();
+
+    setData(rows);
 
     setOptions([{
       key: "928",
@@ -64,16 +67,6 @@ const App = () => {
 
     setTimeout(() => {
       setLoading(false);
-      setData([{
-        service: "AAA",
-        topic: "SexTopic",
-        hour: "15:40",
-        date: "2024-10-10",
-        status: "Activo",
-        id: "28",
-      },
-      ...rows
-      ]);
       methods.setValue("area", "test auto lorem", { shouldValidate: true })
       methods.setValue("autocomplete", "928", { shouldValidate: true })
       methods.setValue("select", "10", { shouldValidate: true })
@@ -223,6 +216,7 @@ const App = () => {
           <Panel title="Table Component" >
             <DataTable
               defaultSelectedKeys={defaultRows}
+              isStriped
               defaultPaginateNumber={15}
               sortDescriptor={{ column: "service", direction: "ascending" }}
               inputSearch={{ variant: "bordered", color: "warning" }}
@@ -233,17 +227,17 @@ const App = () => {
               rows={data}
               loading={loading}
               columns={[...columns, {
-                key: "view",
-                title: "Ver",
-                export: false,
-                renderRow: () => <>View Component</>,
-                className: "text-danger"
-              }, {
-                key: "attendance",
-                title: "Asistencia",
-                export: false,
-                renderRow: () => <>Attendance Component</>,
-                className: "text-danger"
+                key: "fake",
+                title: "Render",
+                className: "text-danger",
+                renderRow: ({ row }) => {
+                  const { status } = row as IRows
+                  return (
+                    <p className={`text-white ${status === "Activo" ? "bg-success" : "bg-danger"} w-16 rounded text-center my-0.5 p-0`}>
+                      {status}
+                    </p>
+                  )
+                }
               }]}
             />
           </Panel>

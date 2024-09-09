@@ -7,4 +7,5 @@ interface IRows {
   date: string;
   hour: string;
   status: string;
+  sub?: IRows[]
 }

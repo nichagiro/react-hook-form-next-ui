@@ -21,7 +21,7 @@ export const columns = [{
   title: "Hora",
   allowsSorting: false,
   className: "text-danger",
-  // allowsResizing: true,
+  allowsResizing: true,
 }, {
   key: "status",
   title: "Estado",
