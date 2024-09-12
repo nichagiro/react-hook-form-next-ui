@@ -37,6 +37,7 @@ const schema = yup
     dualtime1: startTimeRule.required(),
     dualtime2: endTimeRule.required(),
     autocomplete: yup.string().required(),
+    radios: yup.string().required()
   }).required();
 
 export default schema

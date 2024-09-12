@@ -29,6 +29,7 @@ import RHFTextArea from "../components/RHFTextArea";
 import RHFDualTime from "../components/RHFDualTime";
 import RHFAutocomplete from "../components/RHFAutocomplete";
 import Modal from "../components/Modal";
+import RHFRadioGroup from "../components/RHFRadioGroup";
 
 const defaultRows: string[] = [""];
 
@@ -68,6 +69,7 @@ const App = () => {
     setTimeout(() => {
       setLoading(false);
       methods.setValue("area", "test auto lorem", { shouldValidate: true })
+      methods.setValue("radios", "2", { shouldValidate: true })
       methods.setValue("autocomplete", "928", { shouldValidate: true })
       methods.setValue("select", "10", { shouldValidate: true })
       methods.setValue("input", "446545604650", { shouldValidate: true })
@@ -206,6 +208,11 @@ const App = () => {
                 disabledKeys={"928"}
                 rules={{ required: { value: true, message: "uyy zona" } }}
                 onSelectionChange={e => console.log(e)}
+              />
+              <RHFRadioGroup
+                data={[{ key: "1", label: "Nicolas" }, { key: "2", label: "Angela" }]}
+                radioGroup={{ label: "Elementos Relacionados?", orientation: "horizontal", name: "radios", onValueChange: value => console.log(value) }}
+                rules={{ required: { message: "mmmmmjuu", value: true } }}
               />
             </div>
             <div className="my-8 gap-5 flex">
