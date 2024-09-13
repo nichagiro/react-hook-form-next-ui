@@ -1,15 +1,15 @@
 import { DateValue, TimeInputValue } from "@nextui-org/react";
-import yup from "../../utils/yup";
-import moment from "moment";
 import { DateMinMaxValueProps, DualDateValidateProps, DualTimeValidateProps } from "./types";
 import { getErrorNameRange, testDateMinMax, testDualDate, testDualDateRange, testDualTimeRange } from "./test";
+import { mixed } from "yup"
+import { format } from "@formkit/tempo";
 
 export const dualDateValidate = ({
   endDate, startDate, range = 0, type, maxEndDate,
   maxStartDate, minEndDate, minStartDate
 }: DualDateValidateProps) => {
 
-  const startDateRule = yup.mixed<DateValue>().test(
+  const startDateRule = mixed<DateValue>().test(
     'Menor',
     'Este campo debe ser menor a la fecha final',
     (value, context) => testDualDate({ value, context, name: endDate, type: "min" })
@@ -27,19 +27,19 @@ export const dualDateValidate = ({
     is: maxStartDate,
     then: schema => schema.test(
       'Max Date',
-      `Fecha maxima ${moment(maxStartDate).format("DD/MM/YYYY")}`,
+      `Fecha maxima ${format(maxStartDate!, "DD/MM/YYYY")}`,
       value => testDateMinMax({ value, date: maxStartDate, type: "max" })
     )
   }).when([], {
     is: minStartDate,
     then: schema => schema.test(
       'Min Date',
-      `Fecha minima ${moment(minStartDate).format("DD/MM/YYYY")}`,
+      `Fecha minima ${format(minStartDate!, "DD/MM/YYYY")}`,
       value => testDateMinMax({ value, date: minStartDate, type: "min" })
     )
   });
 
-  const endDateRule = yup.mixed<DateValue>().test(
+  const endDateRule = mixed<DateValue>().test(
     'Mayor',
     'Este campo debe ser mayor a la fecha inicial',
     (value, context) => testDualDate({ value, context, name: startDate, type: "max" })
@@ -57,14 +57,14 @@ export const dualDateValidate = ({
     is: maxEndDate,
     then: schema => schema.test(
       'Max Date',
-      `Fecha maxima ${moment(maxEndDate).format("DD/MM/YYYY")}`,
+      `Fecha maxima ${format(maxEndDate!, "DD/MM/YYYY")}`,
       value => testDateMinMax({ value, date: maxEndDate, type: "max" })
     )
   }).when([], {
     is: minEndDate,
     then: schema => schema.test(
       'Min Date',
-      `Fecha minima ${moment(minEndDate).format("DD/MM/YYYY")}`,
+      `Fecha minima ${format(minEndDate!, "DD/MM/YYYY")}`,
       value => testDateMinMax({ value, date: minEndDate, type: "min" })
     )
   });
@@ -73,19 +73,19 @@ export const dualDateValidate = ({
 }
 
 export const dateMinMaxValidate = ({ minDate, maxDate }: DateMinMaxValueProps) => {
-  return yup.mixed<DateValue>().test(
+  return mixed<DateValue>().test(
     'Min Date',
-    `Fecha minima ${moment(minDate).format("DD/MM/YYYY")}`,
+    `Fecha minima ${format(minDate!, "DD/MM/YYYY")}`,
     value => testDateMinMax({ value, date: minDate, type: "min" })
   ).test(
     'Max Date',
-    `Fecha maxima ${moment(maxDate).format("DD/MM/YYYY")}`,
+    `Fecha maxima ${format(maxDate!, "DD/MM/YYYY")}`,
     value => testDateMinMax({ value, date: maxDate, type: "max" })
   )
 }
 
 export const dualTimeValidate = ({ endTime, startTime, range = 0, type }: DualTimeValidateProps) => {
-  const startTimeRule = yup.mixed<TimeInputValue>().test(
+  const startTimeRule = mixed<TimeInputValue>().test(
     'Menor',
     'Este campo debe ser menor a la hora final',
     (value, context) => testDualDate({ value, context, name: endTime, type: "min" })
@@ -101,9 +101,9 @@ export const dualTimeValidate = ({ endTime, startTime, range = 0, type }: DualTi
     )
   });
 
-  const endTimeRule = yup.mixed<TimeInputValue>().test(
+  const endTimeRule = mixed<TimeInputValue>().test(
     'Mayor',
-    'Este campo debe ser mayor a la hora final',
+    'Este campo debe ser mayor a la hora inicial',
     (value, context) => testDualDate({ value, context, name: startTime, type: "max" })
   ).when([], {
     is: range && range > 0 && type,

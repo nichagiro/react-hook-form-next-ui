@@ -1,5 +1,5 @@
 import { DateValue, TimeInputValue } from "@nextui-org/react";
-import yup from "../../utils/yup";
+import { TestContext } from "yup";
 
 export type TypeRangeDateValue = "days" | "months" | "years";
 export type TypeRangeTimeValue = "hours" | "minutes";
@@ -35,7 +35,7 @@ export interface TestDateRangeProps {
 
 export interface TestDualDateProps {
   value: DateValue | TimeInputValue | undefined;
-  context: yup.TestContext
+  context: TestContext
   name: string;
   type: "min" | "max";
 }

@@ -1,4 +1,6 @@
-export const columns = [{
+import { ColumnsTableProps } from "../components/dataTable/types";
+
+export const columns: ColumnsTableProps[] = [{
   key: "service",
   title: "Servicio/Área",
   allowsSorting: true,
@@ -16,6 +18,7 @@ export const columns = [{
   allowsSorting: true,
   export: true,
   className: "text-danger",
+  dateFormat: "DD/MM/YYYY",
 }, {
   key: "hour",
   title: "Hora",
@@ -28,4 +31,17 @@ export const columns = [{
   allowsSorting: true,
   export: true,
   className: "text-danger",
+}, {
+  key: "fake",
+  title: "Render",
+  className: "text-danger",
+  renderRow: ({ row }) => {
+    const { status } = row as IRows
+    return (
+      <p className={`text-white ${status === "Activo" ? "bg-success" : "bg-danger"} w-16 rounded text-center my-0.5 p-0`}>
+        {status}
+      </p>
+    )
+  }
 }]
+

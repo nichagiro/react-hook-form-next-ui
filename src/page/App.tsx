@@ -51,7 +51,6 @@ const App = () => {
 
   useEffect(() => {
     const rows = fakerRows();
-    console.log("🚀 ~ useEffect ~ rows:", rows)
     const options = fakerUsers();
 
     setData(rows);
@@ -103,17 +102,7 @@ const App = () => {
           rows={data}
           color="danger"
           loading={loading}
-          columns={[...columns, {
-            key: "view",
-            title: "Ver",
-            export: false,
-            renderRow: () => <>View Component</>
-          }, {
-            key: "attendance",
-            title: "Asistencia",
-            export: false,
-            renderRow: () => <>Attendance Component</>
-          }]}
+          columns={columns}
         />
       </Modal>
       <FormProvider {...methods}>
@@ -233,19 +222,7 @@ const App = () => {
               onSelect={row => console.log(row)}
               rows={data}
               loading={loading}
-              columns={[...columns, {
-                key: "fake",
-                title: "Render",
-                className: "text-danger",
-                renderRow: ({ row }) => {
-                  const { status } = row as IRows
-                  return (
-                    <p className={`text-white ${status === "Activo" ? "bg-success" : "bg-danger"} w-16 rounded text-center my-0.5 p-0`}>
-                      {status}
-                    </p>
-                  )
-                }
-              }]}
+              columns={columns}
             />
           </Panel>
         </form>

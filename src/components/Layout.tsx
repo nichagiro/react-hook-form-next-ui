@@ -2,13 +2,13 @@ import { ReactNode } from "react"
 import { Icolor } from "../types/global"
 import { Divider } from "@nextui-org/react"
 
-type LayoutProps = {
+type RHFNextUiLayoutProps = {
   children: ReactNode,
   title: string,
   color?: Icolor,
 }
 
-const Layout = ({ children, title, color = "primary" }: LayoutProps) => {
+const Layout = ({ children, title, color = "primary" }: RHFNextUiLayoutProps) => {
   return (
     <>
       <header className={`bg-${color} w-full text-center text-white py-5`}>

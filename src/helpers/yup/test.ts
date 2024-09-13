@@ -1,16 +1,31 @@
-import moment from "moment";
-import { parseDate } from '@internationalized/date';
 import { TestDateRangeProps, TestDualDateProps, TestDualDateRangeProps, TypeRangeDateValue, TypeRangeTimeValue } from "./types";
+import { diffDays, diffHours, diffMonths, diffSeconds, diffYears, isAfter, isEqual, parse } from '@formkit/tempo';
 
 export const testDualDateRange = ({ value, context, name, range, rangeDate, type }: TestDualDateRangeProps) => {
   const field = context.parent[name];
   if (!field || !value || !range || range === 0 || !rangeDate) return true;
 
-  const end = moment(type == "min" ? field.toString() : value.toString());
-  const start = moment(type == "max" ? field.toString() : value.toString());
-  const diff = end.diff(start, rangeDate, true);
+  const end = parse(type == "min" ? field.toString() : value.toString());
+  const start = parse(type == "max" ? field.toString() : value.toString());
 
-  return diff <= range
+  let diff;
+
+  switch (rangeDate) {
+    case "days":
+      diff = diffDays(end, start)
+      break;
+    case "months":
+      diff = diffMonths(end, start)
+      break;
+    case "years":
+      diff = diffYears(end, start)
+      break;
+    default:
+      diff = 0;
+      break;
+  }
+
+  return diff < range
 }
 
 export const testDualDate = ({ context, name, type, value }: TestDualDateProps) => {
@@ -24,20 +39,40 @@ export const testDualDate = ({ context, name, type, value }: TestDualDateProps) 
 export const testDateMinMax = ({ value, date, type }: TestDateRangeProps) => {
   if (!value || !date) return true;
 
-  const timeValue = parseDate(date);
-  const days = value.compare(timeValue);
-  return type === "min" ? days >= 0 : days <= 0
+  let fieldDate;
+  let valueDate;
+
+  try {
+    fieldDate = parse(date);
+    valueDate = parse(value.toString());
+  } catch { return false }
+
+  if (isEqual(valueDate, fieldDate)) return true
+
+  const diff = isAfter(valueDate, fieldDate);
+
+  return type === "min" ? diff : !diff
 }
 
 export const testDualTimeRange = ({ value, context, name, range, rangeDate, type }: TestDualDateRangeProps) => {
   const field = context.parent[name];
   if (!field || !value || !range || range === 0 || !rangeDate) return true;
 
-  const start = moment(type == "max" ? field.toString() : value.toString(), ["HH:mm", "hh:mm"]);
-  const end = moment(type == "min" ? field.toString() : value.toString(), ["HH:mm", "hh:mm"]);
-  const diff = end.diff(start, rangeDate, true);
+  const dateValue = value.toString();
+  const dateField = field.toString();
 
-  return diff <= range
+  const start = parse(type == "max" ? dateField : dateValue, "HH:mm:ss");
+  const end = parse(type == "min" ? dateField : dateValue, "HH:mm:ss");
+
+  let diff = 0;
+
+  if (rangeDate === "hours") {
+    diff = diffHours(end, start)
+  } else {
+    diff = diffSeconds(end, start)
+  }
+
+  return diff < range
 }
 
 export const getErrorNameRange = (type: TypeRangeDateValue | TypeRangeTimeValue | undefined, range: number): string => {

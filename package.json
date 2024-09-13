@@ -1,16 +1,19 @@
 {
   "name": "react-hook-form-next-ui",
   "type": "module",
-  "version": "1.1.1",
-  "main": "./dist/index.cjs",
+  "version": "1.1.2",
+  "main": "./dist/index.js",
   "module": "./dist/index.js",
   "keywords": [
+    "tailwind react components",
     "nextui",
-    "react-hook-form",
     "react-hook-form-next-ui",
     "react-components",
     "components-react",
-    "nextui-components-rhf"
+    "nextui-components-rhf",
+    "RHF",
+    "react-hook-form",
+    "React Hook Form"
   ],
   "author": "Nicolas Chamorro Giron",
   "description": "React Components with React Hook Form and NextUI",
@@ -20,8 +23,7 @@
   ],
   "exports": {
     ".": {
-      "import": "./dist/index.js",
-      "require": "./dist/index.umd.cjs"
+      "import": "./dist/index.js"
     }
   },
   "scripts": {
@@ -38,10 +40,10 @@
     "react-hook-form": "^7.0.0"
   },
   "dependencies": {
+    "@formkit/tempo": "^0.1.2",
     "@hookform/resolvers": "^3.9.0",
     "@nextui-org/react": "^2.4.6",
     "framer-motion": "^11.0.0",
-    "moment": "^2.30.1",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-hook-form": "^7.0.0",
@@ -66,6 +68,6 @@
     "typescript": "^5.5.3",
     "typescript-eslint": "^8.0.1",
     "vite": "^5.4.1",
-    "vite-plugin-dts": "^4.0.3"
+    "vite-plugin-dts": "^4.2.1"
   }
 }

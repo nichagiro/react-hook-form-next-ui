@@ -10,12 +10,11 @@ import { ChangeEvent, HTMLAttributes, useCallback, useEffect, useMemo, useState 
 import useDebounce from "../../helpers/hooks/useDebounce";
 
 // uitls and types
-import moment from "moment";
 import { toExcelExport } from "../../helpers/docs/toExcel";
 import { DataTableProps } from "./types";
-import { faker } from "@faker-js/faker";
 import PlusIcon from "../../icons/PlusIcon";
 import MinusIcon from "../../icons/MinusIcon";
+import { isAfter, parse } from "@formkit/tempo";
 
 const DataTable = ({
   rows, columns, showFilter = true, loading, keyRow = "id", buttonExcelExport, exportName,
@@ -103,13 +102,15 @@ const DataTable = ({
       let first = a[sortDescriptor.column as string | number];
       let second = b[sortDescriptor.column as string | number];
 
-      const formats = ['DD/MM/YYYY', 'YYYY-MM-DD', 'DD/MM/YYYY HH:mm', 'YYYY-MM-DD HH:mm'];
-      const startDate = moment(first, formats, true)
-      const endDate = moment(second, formats, true)
+      const column = columns.find(item => item.key === sortDescriptor.column)
 
-      if (startDate.isValid() && endDate.isValid()) {
-        first = moment(startDate).format("x");
-        second = moment(endDate).format("x");
+      if (column?.dateFormat) {
+        const startDate = parse(first, column.dateFormat);
+        const endDate = parse(second, column.dateFormat);
+        const afterDate = isAfter(startDate, endDate);
+
+        first = afterDate ? 1 : 0
+        second = !afterDate ? 1 : 0
       }
 
       if (first === second) return 0;
@@ -118,7 +119,7 @@ const DataTable = ({
 
       return sortDescriptor.direction === "descending" ? -cmp : cmp;
     });
-  }, [sortDescriptor, filteredItems]);
+  }, [sortDescriptor, filteredItems, columns]);
 
   const dataRow = useMemo(() => {
     const start = (page - 1) * rowsPerPage;
@@ -231,7 +232,7 @@ const DataTable = ({
                 <span data-icon-collapse-table={item[keyRow]} style={{ display: "none" }} className="text-rose-500">
                   <MinusIcon />
                 </span>
-              </Button>          
+              </Button>
             </>
           }
 
@@ -273,7 +274,7 @@ const DataTable = ({
 
     toExcelExport({
       data,
-      name: exportName ?? faker.string.uuid(),
+      name: exportName ?? new Date().toISOString(),
       columns: columns.filter(item => item.export).map(col => col.title?.toString() ?? ""),
     })
 

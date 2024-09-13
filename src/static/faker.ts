@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { faker } from '@faker-js/faker';
-import moment from 'moment';
+import { format } from '@formkit/tempo';
 
 interface iRows {
   id: string;
@@ -17,8 +17,8 @@ export const fakerRows = (): iRows[] => Array.from({ length: 20 }, () => {
   const data: iRows = {
     service: faker.person.jobArea(),
     topic: faker.commerce.department(),
-    hour: moment(faker.date.anytime()).format("YYYY-MM-DD"),
-    date: moment(faker.date.anytime()).format("YYYY-MM-DD"),
+    hour: format(faker.date.anytime(),'HH:mm'),
+    date:format(faker.date.anytime(),'DD/MM/YYYY'),
     status: faker.helpers.arrayElement(["Activo", "Inactivo"]),
     id: faker.string.nanoid(),
   }
@@ -27,8 +27,8 @@ export const fakerRows = (): iRows[] => Array.from({ length: 20 }, () => {
     data.subRows = Array.from({ length: faker.helpers.rangeToNumber({ min: 5, max: 10 }) }, () => ({
       service: faker.person.jobArea(),
       topic: faker.commerce.department(),
-      hour: moment(faker.date.anytime()).format("YYYY-MM-DD"),
-      date: moment(faker.date.anytime()).format("YYYY-MM-DD"),
+      hour: format(faker.date.anytime(),'HH:mm'),
+      date: format(faker.date.anytime(),'DD/MM/YYYY'),
       status: faker.helpers.arrayElement(["Activo", "Inactivo"]),
       id: faker.string.nanoid(),
     }))
@@ -41,4 +41,5 @@ export const fakerUsers = () => Array.from({ length: 20 }, () => ({
   key: faker.string.nanoid(),
   label: faker.person.firstName()
 }))
+
 

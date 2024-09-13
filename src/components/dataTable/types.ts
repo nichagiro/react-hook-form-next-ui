@@ -1,16 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { ButtonProps, InputProps, TableProps, TableColumnProps } from "@nextui-org/react";
 import { ReactNode } from "react";
+import { IdateFormats } from "../../types/global";
 
-interface ReturnRow {
+interface ReturnRowTable {
   value: string;
-  row: unknown;
+  row: any;
 }
 
-interface Columns extends Omit<TableColumnProps<any>, "children"> {
+export interface ColumnsTableProps extends Omit<TableColumnProps<any>, "children"> {
   export?: boolean;
-  renderRow?: ({ value, row }: ReturnRow) => ReactNode;
+  dateFormat?: IdateFormats;
+  renderRow?: ({ value, row }: ReturnRowTable) => ReactNode;
 }
 
 export interface DataTableProps extends TableProps {
@@ -19,7 +20,7 @@ export interface DataTableProps extends TableProps {
   excelExport?: boolean;
   exportName?: string;
   rows: any[];
-  columns: Columns[];
+  columns: ColumnsTableProps[];
   loading?: boolean;
   showFilter?: boolean;
   showHandlePaginate?: boolean;
@@ -32,5 +33,5 @@ export interface DataTableProps extends TableProps {
 
 export interface SkeletonTableProps {
   size?: number;
-  columns: Columns[];
+  columns: ColumnsTableProps[];
 }
