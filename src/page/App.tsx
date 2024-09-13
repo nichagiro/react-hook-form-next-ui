@@ -199,8 +199,9 @@ const App = () => {
                 onSelectionChange={e => console.log(e)}
               />
               <RHFRadioGroup
+                name="radios"
                 data={[{ key: "1", label: "Nicolas" }, { key: "2", label: "Angela" }]}
-                radioGroup={{ label: "Elementos Relacionados?", orientation: "horizontal", name: "radios", onValueChange: value => console.log(value) }}
+                radioGroup={{ label: "Elementos Relacionados?", orientation: "horizontal", onValueChange: value => console.log(value) }}
                 rules={{ required: { message: "mmmmmjuu", value: true } }}
               />
             </div>

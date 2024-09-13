@@ -1,6 +1,5 @@
 import { Controller, RegisterOptions, useFormContext } from "react-hook-form";
 import { RadioGroup, Radio, RadioGroupProps, RadioProps } from "@nextui-org/react";
-import { useMemo } from "react";
 
 interface RHFRadioGroupDataProps {
   key: string;
@@ -9,21 +8,22 @@ interface RHFRadioGroupDataProps {
 
 interface RHFRadioGroupProps {
   radio?: RadioProps;
-  radioGroup: RadioGroupProps;
+  radioGroup?: RadioGroupProps;
   data: RHFRadioGroupDataProps[];
   rules?: RegisterOptions;
+  name: string;
+  defaultValue?: string;
 }
 
-const RHFRadioGroup = ({ radio, radioGroup, data, rules }: RHFRadioGroupProps) => {
+const RHFRadioGroup = ({ radio, radioGroup, data, rules, name, defaultValue }: RHFRadioGroupProps) => {
   const { control } = useFormContext<{ [key: string]: string }>();
-  const name = useMemo(() => radioGroup.name ?? "radioGroup", [radioGroup.name])
 
   return (
     <Controller
       control={control}
       rules={rules}
       name={name}
-      defaultValue={radioGroup.defaultValue ?? ""}
+      defaultValue={defaultValue ?? ""}
       render={({ field, formState: { errors } }) => (
         <RadioGroup
           {...radioGroup}
