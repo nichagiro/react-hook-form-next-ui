@@ -1,4 +1,3 @@
-import { utils, writeFile } from 'xlsx'
 interface ToExcelExportProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: any[];
@@ -8,6 +7,7 @@ interface ToExcelExportProps {
 
 export async function toExcelExport({ data, columns = [], name }: ToExcelExportProps): Promise<void> {
   try {
+    const { utils, writeFile } = await import('xlsx');
     const worksheet = utils.json_to_sheet(data);
     utils.sheet_add_aoa(worksheet, [columns]);
 
