@@ -1,3 +1,4 @@
+import React from "react";
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Skeleton } from "@nextui-org/react";
 import { SkeletonTableProps } from "./types";
 

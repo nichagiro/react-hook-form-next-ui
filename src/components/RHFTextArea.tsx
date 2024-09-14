@@ -1,3 +1,4 @@
+import React from "react";
 import { Textarea, TextAreaProps } from "@nextui-org/react";
 import { Controller, RegisterOptions, useFormContext } from "react-hook-form";
 

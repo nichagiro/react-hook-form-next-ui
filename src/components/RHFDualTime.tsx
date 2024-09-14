@@ -1,5 +1,5 @@
 import { TimeInput, TimeInputProps, TimeInputValue } from "@nextui-org/react";
-import { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import { Controller, RegisterOptions, useFormContext, useWatch } from "react-hook-form";
 
 interface RHFTimeProps extends TimeInputProps {

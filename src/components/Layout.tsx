@@ -1,4 +1,4 @@
-import { ReactNode } from "react"
+import React, { ReactNode } from "react"
 import { Icolor } from "../types/global"
 import { Divider } from "@nextui-org/react"
 

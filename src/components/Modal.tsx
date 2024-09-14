@@ -4,7 +4,7 @@ import {
   ButtonProps
 } from "@nextui-org/react";
 
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 interface ButtonModalFooter extends Omit<ButtonProps, "onClick"> {
   onClick: () => void | Promise<void>;

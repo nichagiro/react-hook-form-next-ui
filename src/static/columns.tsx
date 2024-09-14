@@ -1,3 +1,4 @@
+import React from "react";
 import { ColumnsTableProps } from "../components/dataTable/types";
 
 export const columns: ColumnsTableProps[] = [{

@@ -1,5 +1,5 @@
 import { Card, CardBody, CardHeader, Divider } from "@nextui-org/react"
-import { ReactNode } from "react";
+import React, { ReactNode } from "react";
 import { Icolor } from "../types/global";
 
 interface RHFNextUiPanelProps {

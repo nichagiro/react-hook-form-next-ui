@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import React from "react";
+
 import {
   Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Pagination,
   Button, Input, SortDescriptor, Selection,
@@ -105,12 +107,17 @@ const DataTable = ({
       const column = columns.find(item => item.key === sortDescriptor.column)
 
       if (column?.dateFormat) {
-        const startDate = parse(first, column.dateFormat);
-        const endDate = parse(second, column.dateFormat);
-        const afterDate = isAfter(startDate, endDate);
+        try {
+          const startDate = parse(first, column.dateFormat);
+          const endDate = parse(second, column.dateFormat);
+          const afterDate = isAfter(startDate, endDate);
+          first = afterDate ? 1 : 0
+          second = !afterDate ? 1 : 0
+          
+        } catch (error) {
+          console.warn("You need @formkit/tempo", error)
+        }
 
-        first = afterDate ? 1 : 0
-        second = !afterDate ? 1 : 0
       }
 
       if (first === second) return 0;

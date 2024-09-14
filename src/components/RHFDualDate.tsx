@@ -1,5 +1,5 @@
 import { DatePicker, DatePickerProps, DateValue } from "@nextui-org/react"
-import { useEffect, useMemo } from "react"
+import React, { useEffect, useMemo } from "react"
 import { Controller, RegisterOptions, useFormContext, useWatch } from "react-hook-form"
 
 interface RHFNextUiDate extends DatePickerProps {
@@ -14,7 +14,7 @@ interface RHFDualDateProps {
 
 const RHFDualDate = ({ startDate, endDate }: RHFDualDateProps) => {
   const { control, trigger, getValues, formState } = useFormContext<{ [key: string]: DateValue | null }>();
-  
+
   const startName = useMemo(() => startDate.name, [startDate.name])
   const endName = useMemo(() => endDate.name, [endDate.name])
 
