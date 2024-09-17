@@ -41,8 +41,8 @@ const RHFDualTime = ({ startTime, endTime }: RHFDualTimeProps) => {
         defaultValue={startTime.defaultValue ?? null}
         render={({ field, formState: { errors } }) => (
           <TimeInput
-            {...field}
             {...startTime}
+            {...field}
             value={field.value}
             isInvalid={Boolean(errors[startName])}
             errorMessage={errors[startName] ? errors[startName]?.message : ""}
@@ -56,8 +56,8 @@ const RHFDualTime = ({ startTime, endTime }: RHFDualTimeProps) => {
         defaultValue={endTime.defaultValue ?? null}
         render={({ field, formState: { errors } }) => (
           <TimeInput
-            {...field}
             {...endTime}
+            {...field}
             value={field.value}
             isInvalid={Boolean(errors[endName])}
             errorMessage={errors[endName] ? errors[endName]?.message : ""}

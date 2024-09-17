@@ -25,8 +25,8 @@ const RHFSelect = ({ name, data, rules, defaultOptions = "", ...props }: RHFSele
       defaultValue={defaultOptions}
       render={({ field, formState: { errors } }) => (
         <Select
-          {...field}
           {...props}
+          {...field}
           items={data}
           selectedKeys={new Set(field.value ? field.value.split(",") : [])}
           errorMessage={errors[name] ? errors[name]?.message : ""}

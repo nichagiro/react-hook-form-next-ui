@@ -9,7 +9,7 @@ interface RHFInputProps extends InputProps {
 
 const RHFInput = ({ defaultValue = "", rules, name, ...props }: RHFInputProps) => {
   const { control } = useFormContext<{ [key: string]: string }>();
-  
+
   return (
     <Controller
       control={control}
@@ -18,8 +18,8 @@ const RHFInput = ({ defaultValue = "", rules, name, ...props }: RHFInputProps) =
       rules={rules}
       render={({ field, formState: { errors } }) => (
         <Input
-          {...field}
           {...props}
+          {...field}
           isInvalid={Boolean(errors[name])}
           errorMessage={errors[name] ? errors[name]?.message : ""}
           classNames={{

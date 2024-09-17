@@ -17,8 +17,8 @@ const RHFTime = ({ name, rules, defaultValue, ...props }: RHFTimeProps) => {
       defaultValue={defaultValue ?? null}
       render={({ field, formState: { errors } }) => (
         <TimeInput
-          {...field}
           {...props}
+          {...field}
           value={field.value}
           isInvalid={Boolean(errors[name])}
           errorMessage={errors[name] ? errors[name]?.message : ""}

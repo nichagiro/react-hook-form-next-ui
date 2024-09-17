@@ -42,7 +42,7 @@ const DataTable = ({
     let data: any[] = [];
 
     if (selectionMode === "single") {
-      data = rows.find(item => item[keyRow] === [...row][0]);
+      data = rows.find(item => item[keyRow] == [...row][0]);
     } else if (row === "all") {
       data = rows;
       setSelectedKeys(new Set(rows.map(item => item[keyRow]))); //for bug nextUI

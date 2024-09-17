@@ -14,7 +14,7 @@ interface RHFRadioGroupProps extends RadioGroupProps {
   name: string;
 }
 
-const RHFRadioGroup = ({ radio,  data, rules, name, defaultValue, ...props }: RHFRadioGroupProps) => {
+const RHFRadioGroup = ({ radio, data, rules, name, defaultValue, ...props }: RHFRadioGroupProps) => {
   const { control } = useFormContext<{ [key: string]: string }>();
 
   return (
@@ -25,8 +25,8 @@ const RHFRadioGroup = ({ radio,  data, rules, name, defaultValue, ...props }: RH
       defaultValue={defaultValue ?? ""}
       render={({ field, formState: { errors } }) => (
         <RadioGroup
-          {...props}
           {...field}
+          {...props}
           isInvalid={Boolean(errors[name])}
           errorMessage={errors[name] ? errors[name]?.message : ""}
         >

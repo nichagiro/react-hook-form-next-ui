@@ -18,8 +18,8 @@ const RHFDate = ({ name, rules, defaultValue = null, ...props }: RHFDateProps) =
       defaultValue={defaultValue}
       render={({ field, formState: { errors } }) => (
         <DatePicker
-          {...field}
-          {...props}
+        {...props}
+        {...field}
           value={field.value}
           errorMessage={errors[name] ? errors[name]?.message : ""}
           isInvalid={Boolean(errors[name])}

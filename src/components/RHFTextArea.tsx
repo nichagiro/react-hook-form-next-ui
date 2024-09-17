@@ -18,8 +18,8 @@ const RHFTextArea = ({ defaultValue = "", rules, name, ...props }: RHFTextAreaPr
       rules={rules}
       render={({ field, formState: { errors } }) => (
         <Textarea
-          {...field}
           {...props}
+          {...field}
           isInvalid={Boolean(errors[name])}
           errorMessage={errors[name] ? errors[name]?.message : ""}
           classNames={{

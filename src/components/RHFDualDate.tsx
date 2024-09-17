@@ -41,8 +41,8 @@ const RHFDualDate = ({ startDate, endDate }: RHFDualDateProps) => {
         defaultValue={startDate.defaultValue ?? null}
         render={({ field, formState: { errors } }) => (
           <DatePicker
-            {...field}
             {...startDate}
+            {...field}
             value={field.value}
             errorMessage={errors[startName] ? errors[startName]?.message : ""}
             isInvalid={Boolean(errors[startName])}
@@ -56,8 +56,8 @@ const RHFDualDate = ({ startDate, endDate }: RHFDualDateProps) => {
         defaultValue={endDate.defaultValue ?? null}
         render={({ field, formState: { errors } }) => (
           <DatePicker
-            {...field}
             {...endDate}
+            {...field}
             value={field.value}
             errorMessage={errors[endName] ? errors[endName]?.message : ""}
             isInvalid={Boolean(errors[endName])}

@@ -31,8 +31,8 @@ const RHFAutocomplete = ({ onSelectionChange, defaultValue, name, data, rules, .
       rules={rules}
       render={({ field, formState: { errors } }) => (
         <Autocomplete
-          {...field}
           {...props}
+          {...field}
           selectedKey={field.value ?? ""}
           defaultItems={data}
           onSelectionChange={e => { field.onChange(e); onChange(e) }}

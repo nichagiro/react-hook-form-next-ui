@@ -24,7 +24,7 @@ export interface DataTableProps extends TableProps {
   loading?: boolean;
   showFilter?: boolean;
   showHandlePaginate?: boolean;
-  onSelect?: (row: unknown) => void;
+  onSelect?: (row: any) => void;
   defaultPaginateNumber?: 5 | 10 | 15;
   cellClass?: string;
   skeletonSize?: number;
