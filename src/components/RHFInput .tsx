@@ -7,7 +7,7 @@ interface RHFInputProps extends InputProps {
   rules?: RegisterOptions
 }
 
-const RHFInput = ({ defaultValue = "", rules, name, ...props }: RHFInputProps) => {
+const RHFInput = ({ defaultValue = "", rules, name, classNames, ...props }: RHFInputProps) => {
   const { control } = useFormContext<{ [key: string]: string }>();
 
   return (
@@ -22,8 +22,9 @@ const RHFInput = ({ defaultValue = "", rules, name, ...props }: RHFInputProps) =
           {...field}
           isInvalid={Boolean(errors[name])}
           errorMessage={errors[name] ? errors[name]?.message : ""}
-          classNames={{
-            input: errors[name] ? "placeholder:text-danger" : ""
+          classNames={{            
+            ...classNames,
+            input: `${classNames?.input || ""} ${errors[name] ? "placeholder:text-danger" : ""}`
           }}
         />
       )}

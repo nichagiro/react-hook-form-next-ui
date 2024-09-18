@@ -147,6 +147,7 @@ const App = () => {
                 variant="bordered"
                 color="warning"
                 onValueChange={e => console.log(e)}
+                classNames={{ input: "text-end" }}
               />
               <RHFTime name="time" label="Time" color="primary" defaultValue={new Time(10, 10)} />
               <RHFTime name="time2" label="Time2" color="secondary" />

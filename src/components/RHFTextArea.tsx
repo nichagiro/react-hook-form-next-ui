@@ -7,7 +7,7 @@ interface RHFTextAreaProps extends TextAreaProps {
   rules?: RegisterOptions
 }
 
-const RHFTextArea = ({ defaultValue = "", rules, name, ...props }: RHFTextAreaProps) => {
+const RHFTextArea = ({ defaultValue = "", rules, name, classNames, ...props }: RHFTextAreaProps) => {
   const { control } = useFormContext<{ [key: string]: string }>();
 
   return (
@@ -23,7 +23,8 @@ const RHFTextArea = ({ defaultValue = "", rules, name, ...props }: RHFTextAreaPr
           isInvalid={Boolean(errors[name])}
           errorMessage={errors[name] ? errors[name]?.message : ""}
           classNames={{
-            input: errors[name] ? "placeholder:text-danger" : ""
+            ...classNames,
+            input: `${classNames?.input || ""} ${errors[name] ? "placeholder:text-danger" : ""}`
           }}
         />
       )}
