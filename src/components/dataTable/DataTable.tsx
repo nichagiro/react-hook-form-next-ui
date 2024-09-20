@@ -271,9 +271,7 @@ const DataTable = ({
 
       Object.keys(item).forEach(param => {
         if (dataExport.includes(param)) {
-          values[param] = typeof item[param] === "boolean"
-            ? item[param] ? "Activo" : "Inactivo"
-            : item[param]
+          values[param] = item[param]
         }
       })
       return values
