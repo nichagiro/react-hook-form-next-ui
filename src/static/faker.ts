@@ -16,7 +16,7 @@ interface iRows {
 export const fakerRows = (): iRows[] => Array.from({ length: 20 }, () => {
   const data: iRows = {
     service: faker.person.jobArea(),
-    topic: faker.commerce.department(),
+    topic: faker.lorem.paragraphs(),
     hour: format(faker.date.anytime(),'HH:mm'),
     date:format(faker.date.anytime(),'DD/MM/YYYY'),
     status: faker.helpers.arrayElement(["Activo", "Inactivo"]),

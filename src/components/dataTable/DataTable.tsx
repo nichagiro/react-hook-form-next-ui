@@ -402,7 +402,7 @@ const DataTable = ({
                 <TableRow key={item[keyRow]}>
                   {
                     (columnKey) =>
-                      <TableCell className={cellClass ?? "whitespace-nowrap overflow-hidden overflow-ellipsis max-w-[150px]"}>
+                      <TableCell className={cellClass}>
                         {renderCell(item, columnKey as string)}
                       </TableCell>
                   }
