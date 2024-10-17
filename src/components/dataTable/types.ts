@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { InputProps, TableProps, TableColumnProps } from "@nextui-org/react";
 import { ReactNode } from "react";
-import { IdateFormats } from "../../types/global";
 
 interface ReturnRowTable {
   value: string;
@@ -9,7 +8,7 @@ interface ReturnRowTable {
 }
 
 export interface ColumnsTableProps extends Omit<TableColumnProps<any>, "children"> {
-  dateFormat?: IdateFormats;
+  dateFormat?: string;
   renderRow?: ({ value, row }: ReturnRowTable) => ReactNode;
 }
 
