@@ -1,18 +1,7 @@
 import React from "react";
-import { Autocomplete, AutocompleteItem, AutocompleteProps } from "@nextui-org/react"
-import { Controller, RegisterOptions, useFormContext } from "react-hook-form";
-
-interface DataOptionsRHFAutocomplete {
-  key: string,
-  label: string
-}
-
-interface RHFAutocompleteProps extends Omit<AutocompleteProps, "children"> {
-  name: string;
-  rules?: RegisterOptions;
-  data: DataOptionsRHFAutocomplete[];
-  defaultValue?: string
-}
+import { Autocomplete, AutocompleteItem } from "@nextui-org/react"
+import { Controller, useFormContext } from "react-hook-form";
+import { RHFAutocompleteProps } from "../types/global";
 
 const RHFAutocomplete = ({ onSelectionChange, defaultValue, name, data, rules, ...props }: RHFAutocompleteProps) => {
   const { control } = useFormContext<{ [key: string]: string }>();

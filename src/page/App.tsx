@@ -32,7 +32,7 @@ import Modal from "../components/Modal";
 import RHFRadioGroup from "../components/RHFRadioGroup";
 import React from "react";
 
-const defaultRows: string[] = [""];
+const defaultRows: string[] = ["1", "5", "10"];
 
 const App = () => {
   const [data, setData] = useState<IRows[]>([]);
@@ -216,18 +216,24 @@ const App = () => {
           </Panel >
           <Panel title="Table Component" >
             <DataTable
-              defaultSelectedKeys={defaultRows}
               isStriped
-              defaultPaginateNumber={15}
+              cellClass="whitespace-nowrap overflow-hidden overflow-ellipsis max-w-[150px]"
+              defaultSelectedKeys={defaultRows}
+              defaultPaginateNumber={5}
               sortDescriptor={{ column: "service", direction: "ascending" }}
               inputSearch={{ variant: "bordered", color: "warning" }}
-              buttonExcelExport={{ name: "toExcel", color: "danger" }}
               color="primary"
               selectionMode="multiple"
               onSelect={row => console.log(row)}
               rows={data}
               loading={loading}
               columns={columns}
+              extraTopContent={
+                <div className="flex gap-x-2">
+                  <Button color="warning">One</Button>
+                  <Button color="danger">Two</Button>
+                </div>
+              }
             />
           </Panel>
         </form>

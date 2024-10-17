@@ -5,19 +5,16 @@ export const columns: ColumnsTableProps[] = [{
   key: "service",
   title: "Servicio/Área",
   allowsSorting: true,
-  export: true,
   className: "text-danger",
 }, {
   key: "topic",
   title: "Tema",
   allowsSorting: true,
-  export: true,
   className: "text-danger",
 }, {
   key: "date",
   title: "Fecha",
   allowsSorting: true,
-  export: true,
   className: "text-danger",
   dateFormat: "DD/MM/YYYY",
 }, {
@@ -30,7 +27,6 @@ export const columns: ColumnsTableProps[] = [{
   key: "status",
   title: "Estado",
   allowsSorting: true,
-  export: true,
   className: "text-danger",
 }, {
   key: "fake",

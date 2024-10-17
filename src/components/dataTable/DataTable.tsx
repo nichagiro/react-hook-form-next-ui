@@ -2,34 +2,36 @@
 import React from "react";
 
 import {
-  Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Pagination,
-  Button, Input, SortDescriptor, Selection,
+  Table, TableHeader, TableColumn, TableBody, TableRow, TableCell,
+  Button, Input, SortDescriptor, Selection, Pagination
 } from "@nextui-org/react";
 import TableSkeleton from "./TableSkeleton";
 
 // hooks
-import { ChangeEvent, HTMLAttributes, useCallback, useEffect, useMemo, useState } from 'react';
+import { ChangeEvent, HTMLAttributes, useCallback, useMemo, useState } from 'react';
 import useDebounce from "../../helpers/hooks/useDebounce";
 
-// uitls and types
-import { toExcelExport } from "../../helpers/docs/toExcel";
-import { DataTableProps } from "./types";
-import PlusIcon from "../../icons/PlusIcon";
-import MinusIcon from "../../icons/MinusIcon";
+// uitls
 import { isAfter, parse } from "@formkit/tempo";
 
+// icons
+import PlusIcon from "../../icons/PlusIcon";
+import MinusIcon from "../../icons/MinusIcon";
+
+// types
+import { DataTableProps } from "./types";
+
 const DataTable = ({
-  rows, columns, showFilter = true, loading, keyRow = "id", buttonExcelExport, exportName,
-  skeletonSize, selectionMode, inputSearch, showHandlePaginate = true, defaultSelectedKeys,
-  onSelect, defaultPaginateNumber = 10, cellClass, excelExport, ...props
+  rows, columns, showFilter = true, loading, keyRow = "id", defaultSelectedKeys = [],
+  skeletonSize, selectionMode, inputSearch, showHandlePaginate = true, extraTopContent,
+  onSelect, defaultPaginateNumber = 10, cellClass, ...props
 }: DataTableProps) => {
 
   const [filterValue, setFilterValue] = useState("");
   const [rowsPerPage, setRowsPerPage] = useState(defaultPaginateNumber);
   const [page, setPage] = useState<number>(1);
-  const [selectedKeys, setSelectedKeys] = useState<Selection>(new Set());
+  const [selectedKeys, setSelectedKeys] = useState<Selection>(new Set(defaultSelectedKeys));
   const [sortDescriptor, setSortDescriptor] = useState<SortDescriptor>(props.sortDescriptor ?? {});
-  const [load, setLoad] = useState(false);
 
   const searchText = useDebounce(filterValue, 500);
 
@@ -52,25 +54,6 @@ const DataTable = ({
 
     return onSelect(data);
   }, [onSelect, rows, selectionMode, keyRow])
-
-  useEffect(() => {
-    if (!load) return setLoad(true);
-
-    let selection: Selection = new Set();
-
-    if (defaultSelectedKeys === "all") {
-      selection = "all";
-    } else {
-      if (defaultSelectedKeys && [...defaultSelectedKeys].length > 0) {
-        const data = rows.map(item => item[keyRow]);
-        const selecteds = [...defaultSelectedKeys].filter(item => data.includes(item))
-        selection = new Set(selecteds);
-      }
-    }
-
-    handleSelect(selection);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [defaultSelectedKeys, rows, keyRow])
 
   const filteredItems: any[] = useMemo(() => {
     let data = [...rows];
@@ -113,9 +96,9 @@ const DataTable = ({
           const afterDate = isAfter(startDate, endDate);
           first = afterDate ? 1 : 0
           second = !afterDate ? 1 : 0
-          
+
         } catch (error) {
-          console.warn("You need @formkit/tempo", error)
+          console.warn("date format is not correct", error)
         }
 
       }
@@ -224,9 +207,10 @@ const DataTable = ({
             item.subRows && item.subRows.length > 0 && columns[0].key === columnKey &&
             <>
               <Button
-                type="button"
-                onClick={onClick} size="sm"
                 isIconOnly
+                type="button"
+                onClick={onClick}
+                size="sm"
                 className="bg-transparent"
                 style={{
                   marginLeft: "-11px",
@@ -263,41 +247,15 @@ const DataTable = ({
     )
   }, [columns, keyRow]);
 
-  const toExport = useCallback(() => {
-    const dataExport = columns.filter(col => col.export).map(item => item.key)
-
-    const data = rows.map(item => {
-      const values: Record<string, number> = {}
-
-      Object.keys(item).forEach(param => {
-        if (dataExport.includes(param)) {
-          values[param] = item[param]
-        }
-      })
-      return values
-    })
-
-    toExcelExport({
-      data,
-      name: exportName ?? new Date().toISOString(),
-      columns: columns.filter(item => item.export).map(col => col.title?.toString() ?? ""),
-    })
-
-  }, [columns, rows, exportName])
-
   const bottomContent = useMemo(() => {
     return (
       <div className="py-2 px-2 flex justify-between items-center">
         <span className="w-[30%] text-small text-default-400">
-          {
-            selectionMode !== "none" && ([...selectedKeys].length > 0 || selectedKeys === "all") &&
+          {[...selectedKeys].length > 0 &&
             <>
-              {selectedKeys !== "all" && [...selectedKeys].length}
-              {
-                selectedKeys === "all"
-                  ? "Todos los datos seleccionados"
-                  : [...selectedKeys].length === 1 ? " dato seleccionado" : " datos seleccionados"
-              }
+              {`${[...selectedKeys].length} ${[...selectedKeys].length === 1
+                ? "dato seleccionado"
+                : "datos seleccionados"}`}
             </>
           }
         </span>
@@ -318,9 +276,9 @@ const DataTable = ({
             Siguiente
           </Button>
         </div>
-      </div>
+      </div >
     );
-  }, [page, pages, onNextPage, onPreviousPage, selectedKeys, selectionMode, props.color]);
+  }, [page, pages, onNextPage, onPreviousPage, selectedKeys, props.color]);
 
   const topContent = useMemo(() => {
     return (
@@ -338,16 +296,7 @@ const DataTable = ({
               isClearable
             />
           }
-          {
-            (excelExport || buttonExcelExport) &&
-            <Button
-              {...buttonExcelExport}
-              type="button"
-              onClick={() => toExport()}
-            >
-              {buttonExcelExport?.name ?? "Descargar"}
-            </Button>
-          }
+          {extraTopContent}
         </div>
         <div className="flex justify-between items-center">
           <span className="text-default-400 text-small">
@@ -372,8 +321,8 @@ const DataTable = ({
       </div>
     );
   }, [
-    filterValue, rows.length, onClear, onRowsPerPageChange, excelExport, inputSearch,
-    onSearchChange, rowsPerPage, showFilter, showHandlePaginate, toExport, buttonExcelExport
+    filterValue, rows.length, onClear, onRowsPerPageChange, inputSearch,
+    onSearchChange, rowsPerPage, showFilter, showHandlePaginate, extraTopContent
   ]);
 
   return (

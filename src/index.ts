@@ -16,5 +16,7 @@ export * as yupEs from './locales/yup';
 export * as validation from './helpers/yup/dates';
 
 export type { ColumnsTableProps } from './components/dataTable/types';
+export type { RHFAutocompleteProps, RHFSelectProps } from './types/global';
+
 
 

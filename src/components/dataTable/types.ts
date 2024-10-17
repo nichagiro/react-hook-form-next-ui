@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ButtonProps, InputProps, TableProps, TableColumnProps } from "@nextui-org/react";
+import { InputProps, TableProps, TableColumnProps } from "@nextui-org/react";
 import { ReactNode } from "react";
 import { IdateFormats } from "../../types/global";
 
@@ -9,16 +9,13 @@ interface ReturnRowTable {
 }
 
 export interface ColumnsTableProps extends Omit<TableColumnProps<any>, "children"> {
-  export?: boolean;
   dateFormat?: IdateFormats;
   renderRow?: ({ value, row }: ReturnRowTable) => ReactNode;
 }
 
 export interface DataTableProps extends TableProps {
-  buttonExcelExport?: Omit<ButtonProps, "onClick">;
   inputSearch?: InputProps;
-  excelExport?: boolean;
-  exportName?: string;
+  extraTopContent?: ReactNode;
   rows: any[];
   columns: ColumnsTableProps[];
   loading?: boolean;
