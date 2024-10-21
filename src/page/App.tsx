@@ -108,7 +108,7 @@ const App = () => {
       </Modal>
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(onSubmit)}>
-          <Panel title="FORM WITHOUT SCHEMA">
+          <Panel title="FORM WITHOUT SCHEMA" collapse>
             <div className="mb-5">
               <Button color="secondary" onClick={() => setModal(true)}>
                 Modal
