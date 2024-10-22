@@ -219,7 +219,8 @@ const App = () => {
               isStriped
               cellClass="whitespace-nowrap overflow-hidden overflow-ellipsis max-w-[150px]"
               defaultSelectedKeys={defaultRows}
-              defaultPaginateNumber={5}
+              defaultPaginateNumber={10}
+              optionsPaginateNumber={[5,7,10]}
               sortDescriptor={{ column: "service", direction: "ascending" }}
               inputSearch={{ variant: "bordered", color: "warning" }}
               color="primary"

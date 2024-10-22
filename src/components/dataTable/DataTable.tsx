@@ -22,13 +22,13 @@ import MinusIcon from "../../icons/MinusIcon";
 import { DataTableProps } from "./types";
 
 const DataTable = ({
-  rows, columns, showFilter = true, loading, keyRow = "id", defaultSelectedKeys = [],
+  rows, columns, showFilter = true, loading, keyRow = "id", defaultSelectedKeys = [], itemsName,
   skeletonSize, selectionMode, inputSearch, showHandlePaginate = true, extraTopContent,
-  onSelect, defaultPaginateNumber = 10, cellClass, ...props
+  onSelect, defaultPaginateNumber = 10, optionsPaginateNumber = [5, 10, 15], cellClass, ...props
 }: DataTableProps) => {
 
   const [filterValue, setFilterValue] = useState("");
-  const [rowsPerPage, setRowsPerPage] = useState(defaultPaginateNumber);
+  const [rowsPerPage, setRowsPerPage] = useState(optionsPaginateNumber.includes(defaultPaginateNumber) ? defaultPaginateNumber : optionsPaginateNumber[0]);
   const [page, setPage] = useState<number>(1);
   const [selectedKeys, setSelectedKeys] = useState<Selection>(new Set(defaultSelectedKeys));
   const [sortDescriptor, setSortDescriptor] = useState<SortDescriptor>(props.sortDescriptor ?? {});
@@ -253,11 +253,10 @@ const DataTable = ({
         <span className="w-[30%] text-small text-default-400">
           {[...selectedKeys].length > 0 &&
             <>
-              {`${[...selectedKeys].length} ${[...selectedKeys].length === 1
-                ? "dato seleccionado"
-                : "datos seleccionados"}`}
-            </>
-          }
+              {[...selectedKeys].length} {[...selectedKeys].length === 1
+                ? "fila seleccionada"
+                : "filas seleccionadas"}
+            </>}
         </span>
         <Pagination
           isCompact
@@ -300,7 +299,7 @@ const DataTable = ({
         </div>
         <div className="flex justify-between items-center">
           <span className="text-default-400 text-small">
-            Total {rows.length} {rows.length === 1 ? "dato" : "datos"}
+            Total {rows.length} {itemsName ?? "datos"}
           </span>
           {
             showHandlePaginate &&
@@ -311,9 +310,9 @@ const DataTable = ({
                 onChange={onRowsPerPageChange}
                 defaultValue={rowsPerPage}
               >
-                <option value="5">5</option>
-                <option value="10">10</option>
-                <option value="15">15</option>
+                {optionsPaginateNumber.map(number =>
+                  <option key={number} value={number}>{number}</option>
+                )}
               </select>
             </label>
           }
@@ -321,8 +320,9 @@ const DataTable = ({
       </div>
     );
   }, [
-    filterValue, rows.length, onClear, onRowsPerPageChange, inputSearch,
-    onSearchChange, rowsPerPage, showFilter, showHandlePaginate, extraTopContent
+    filterValue, rows.length, onClear, onRowsPerPageChange,
+    inputSearch, extraTopContent, onSearchChange, rowsPerPage,
+    showFilter, showHandlePaginate, optionsPaginateNumber, itemsName
   ]);
 
   return (
