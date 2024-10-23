@@ -8,23 +8,19 @@ import {
 import TableSkeleton from "./TableSkeleton";
 
 // hooks
-import { ChangeEvent, HTMLAttributes, useCallback, useMemo, useState } from 'react';
+import { ChangeEvent, useCallback, useMemo, useState } from 'react';
 import useDebounce from "../../helpers/hooks/useDebounce";
 
 // uitls
 import { isAfter, parse } from "@formkit/tempo";
-
-// icons
-import PlusIcon from "../../icons/PlusIcon";
-import MinusIcon from "../../icons/MinusIcon";
 
 // types
 import { DataTableProps } from "./types";
 
 const DataTable = ({
   rows, columns, showFilter = true, loading, keyRow = "id", defaultSelectedKeys = [], itemsName,
-  skeletonSize, selectionMode, inputSearch, showHandlePaginate = true, extraTopContent,
-  onSelect, defaultPaginateNumber = 10, optionsPaginateNumber = [5, 10, 15], cellClass, ...props
+  selectionMode, inputSearch, showHandlePaginate = true, extraTopContent, cellClass,
+  onSelect, defaultPaginateNumber = 10, optionsPaginateNumber = [5, 10, 15], ...props
 }: DataTableProps) => {
 
   const [filterValue, setFilterValue] = useState("");
@@ -100,7 +96,6 @@ const DataTable = ({
         } catch (error) {
           console.warn("date format is not correct", error)
         }
-
       }
 
       if (first === second) return 0;
@@ -155,97 +150,18 @@ const DataTable = ({
     // formatter row
     if (data.renderRow) {
       return (
-        <>
-          <div>
-            {data.renderRow({
-              value: item[columnKey],
-              row: item
-            })}
-          </div>
-          {
-            item.subRows && item.subRows.length > 0 &&
-            <div data-row-key={item[keyRow]} style={{ display: "none" }}>
-              {item.subRows.map((sub: any, index: number) =>
-                data.renderRow &&
-                <div key={index}>
-                  {data.renderRow({
-                    value: sub[columnKey],
-                    row: sub
-                  })}
-                </div>
-              )}
-            </div>
-          }
-        </>
+        <div>
+          {data.renderRow({
+            value: item[columnKey],
+            row: item
+          })}
+        </div>
       )
     }
 
-    // handle show icon expand and collapse
-    const onClick = () => {
-      const subRows = document.querySelectorAll(`div[data-row-key="${item[keyRow]}"]`);
-      subRows.forEach(element => {
-        const div = element as HTMLAttributes<HTMLDivElement>
-        if (!div || !div.style) return
+    return <p title={item[columnKey] as string}>{item[columnKey]}</p>
 
-        const value = div.style.display
-        div.style.display = value === "none" ? "block" : "none";
-
-        const expand = document.querySelector(`span[data-icon-expand-table="${item[keyRow]}"]`) as HTMLAttributes<HTMLDivElement>;
-        const collapse = document.querySelector(`span[data-icon-collapse-table="${item[keyRow]}"]`) as HTMLAttributes<HTMLDivElement>;
-
-        if (!expand || !expand.style || !collapse || !collapse.style) return
-
-        expand.style.display = value !== "none" ? "block" : "none";
-        collapse.style.display = value === "none" ? "block" : "none";
-      })
-    }
-
-    return (
-      <>
-        <p title={item[columnKey] as string}>
-          {
-            item.subRows && item.subRows.length > 0 && columns[0].key === columnKey &&
-            <>
-              <Button
-                isIconOnly
-                type="button"
-                onClick={onClick}
-                size="sm"
-                className="bg-transparent"
-                style={{
-                  marginLeft: "-11px",
-                  marginTop: "-12px",
-                  marginBottom: "-6px"
-                }}>
-                <span data-icon-expand-table={item[keyRow]} className="text-emerald-500">
-                  <PlusIcon />
-                </span>
-                <span data-icon-collapse-table={item[keyRow]} style={{ display: "none" }} className="text-rose-500">
-                  <MinusIcon />
-                </span>
-              </Button>
-            </>
-          }
-
-          {item[columnKey]}
-        </p>
-        {
-          item.subRows && item.subRows.length > 0 &&
-          <div data-row-key={item[keyRow]} style={{ display: "none" }}>
-            {item.subRows.map((value: any, index: number) => (
-              <p
-                title={value[columnKey]}
-                key={index}
-                className={columns[0].key === columnKey ? "ps-5" : ""}
-              >
-                {value[columnKey] as string}
-              </p>
-            ))}
-          </div>
-        }
-      </>
-    )
-  }, [columns, keyRow]);
+  }, [columns]);
 
   const bottomContent = useMemo(() => {
     return (
@@ -311,7 +227,9 @@ const DataTable = ({
                 defaultValue={rowsPerPage}
               >
                 {optionsPaginateNumber.map(number =>
-                  <option key={number} value={number}>{number}</option>
+                  <option key={number} value={number}>
+                    {number}
+                  </option>
                 )}
               </select>
             </label>
@@ -327,7 +245,7 @@ const DataTable = ({
 
   return (
     <>
-      {loading ? <TableSkeleton columns={columns} size={skeletonSize} /> :
+      {loading ? <TableSkeleton columns={columns} size={rowsPerPage} /> :
         <Table
           {...props}
           isHeaderSticky={true}
@@ -350,7 +268,7 @@ const DataTable = ({
               item =>
                 <TableRow key={item[keyRow]}>
                   {
-                    (columnKey) =>
+                    columnKey =>
                       <TableCell className={cellClass}>
                         {renderCell(item, columnKey as string)}
                       </TableCell>

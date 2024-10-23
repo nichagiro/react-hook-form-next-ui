@@ -16,13 +16,12 @@ export interface DataTableProps extends TableProps {
   columns: ColumnsTableProps[];
   loading?: boolean;
   showFilter?: boolean;
-  showHandlePaginate?: boolean;
   onSelect?: (row: any) => void;
+  showHandlePaginate?: boolean;
   defaultPaginateNumber?: number;
   optionsPaginateNumber?: number[];
   itemsName?: string;
   cellClass?: string;
-  skeletonSize?: number;
   keyRow?: string;
 }
 export interface SkeletonTableProps {
