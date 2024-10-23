@@ -84,8 +84,8 @@ const DataTable = ({
 
   const sortedItems = useMemo(() => {
     return [...filteredItems].sort((a, b) => {
-      let first = a[sortDescriptor.column as string | number];
-      let second = b[sortDescriptor.column as string | number];
+      let first = a[sortDescriptor.column as string | number] ?? "";
+      let second = b[sortDescriptor.column as string | number] ?? "";
 
       const column = columns.find(item => item.key === sortDescriptor.column)
 
