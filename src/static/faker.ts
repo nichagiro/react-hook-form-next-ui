@@ -7,21 +7,22 @@ interface iRows {
   service: string;
   topic: string;
   date: string;
-  hour: string;
+  value: number;
   status: string;
   subRows?: any
 }
 
-export const fakerRows = (): iRows[] => Array.from({ length: 20 }, (_, a) => {
+export const fakerRows = (): iRows[] => Array.from({ length: 500 }, (_, index) => {
+
   const data: iRows = {
     service: faker.person.jobArea(),
     topic: faker.lorem.paragraphs(),
-    hour: format(faker.date.anytime(), 'HH:mm'),
+    value: faker.number.int({ min: 100, max: 100000 }),
     date: format(faker.date.anytime(), 'DD/MM/YYYY'),
     status: faker.helpers.arrayElement(["Activo", "Inactivo"]),
-    id: (a + 1).toString(),
+    id: (index + 1).toString(),
   }
-    
+
   return data
 })
 

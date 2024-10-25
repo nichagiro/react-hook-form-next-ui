@@ -32,7 +32,7 @@ import Modal from "../components/Modal";
 import RHFRadioGroup from "../components/RHFRadioGroup";
 import React from "react";
 
-const defaultRows: string[] = ["1", "5", "10"];
+// const defaultRows: string[] = [];
 
 const App = () => {
   const [data, setData] = useState<IRows[]>([]);
@@ -218,9 +218,9 @@ const App = () => {
             <DataTable
               isStriped
               cellClass="whitespace-nowrap overflow-hidden overflow-ellipsis max-w-[150px]"
-              defaultSelectedKeys={defaultRows}
+              // defaultSelectedKeys={defaultRows}
               defaultPaginateNumber={10}
-              optionsPaginateNumber={[5,7,10]}
+              optionsPaginateNumber={[5, 7, 10]}
               sortDescriptor={{ column: "service", direction: "ascending" }}
               inputSearch={{ variant: "bordered", color: "warning" }}
               color="primary"

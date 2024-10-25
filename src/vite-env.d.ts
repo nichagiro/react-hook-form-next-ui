@@ -5,7 +5,7 @@ interface IRows {
   service: string;
   topic: string;
   date: string;
-  hour: string;
+  value: number;
   status: string;
   sub?: IRows[]
 }

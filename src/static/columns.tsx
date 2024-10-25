@@ -18,11 +18,10 @@ export const columns: ColumnsTableProps[] = [{
   className: "text-danger",
   dateFormat: "DD/MM/YYYY",
 }, {
-  key: "hour",
-  title: "Hora",
-  allowsSorting: false,
+  key: "value",
+  title: "Valor",
+  allowsSorting: true,
   className: "text-danger",
-  allowsResizing: true,
 }, {
   key: "status",
   title: "Estado",
@@ -32,7 +31,7 @@ export const columns: ColumnsTableProps[] = [{
   key: "fake",
   title: "Render",
   className: "text-danger",
-  renderRow: ({ row }) => {
+  format: ({ row }) => {
     const { status } = row as IRows
     return (
       <p className={`text-white ${status === "Activo" ? "bg-success" : "bg-danger"} w-16 rounded text-center my-0.5 p-0`}>

@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { InputProps, TableProps, TableColumnProps } from "@nextui-org/react";
 import { ReactNode } from "react";
-interface ReturnRowTable {
+interface ColumnFormat {
   value: string;
   row: any;
 }
 export interface ColumnsTableProps extends Omit<TableColumnProps<any>, "children"> {
+  format?: ({ value, row }: ColumnFormat) => ReactNode;
   dateFormat?: string;
-  renderRow?: ({ value, row }: ReturnRowTable) => ReactNode;
 }
 export interface DataTableProps extends TableProps {
   inputSearch?: InputProps;

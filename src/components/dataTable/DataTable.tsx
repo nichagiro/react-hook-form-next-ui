@@ -12,7 +12,7 @@ import { ChangeEvent, useCallback, useMemo, useState } from 'react';
 import useDebounce from "../../helpers/hooks/useDebounce";
 
 // uitls
-import { isAfter, parse } from "@formkit/tempo";
+import { parse } from "@formkit/tempo";
 
 // types
 import { DataTableProps } from "./types";
@@ -80,27 +80,35 @@ const DataTable = ({
 
   const sortedItems = useMemo(() => {
     return [...filteredItems].sort((a, b) => {
-      let first = a[sortDescriptor.column as string | number] ?? "";
-      let second = b[sortDescriptor.column as string | number] ?? "";
+      const first: string | number = a[sortDescriptor.column as string | number]
+      const second: string | number = b[sortDescriptor.column as string | number]
+      let cmp: number = 0
 
-      const column = columns.find(item => item.key === sortDescriptor.column)
+      if (!first && !second) return 0;
+      if (!first) return -1;
+      if (!second) return 1;
 
-      if (column?.dateFormat) {
-        try {
-          const startDate = parse(first, column.dateFormat);
-          const endDate = parse(second, column.dateFormat);
-          const afterDate = isAfter(startDate, endDate);
-          first = afterDate ? 1 : 0
-          second = !afterDate ? 1 : 0
-
-        } catch (error) {
-          console.warn("date format is not correct", error)
-        }
+      if (typeof first === "number" && typeof second === "number") {
+        cmp = first - second;
       }
 
-      if (first === second) return 0;
+      if (typeof first === "string" && typeof second === "string") {
+        const column = columns.find(item => item.key === sortDescriptor.column)
 
-      const cmp = first > second ? 1 : -1;
+        if (column?.dateFormat) {
+          try {
+            const startDate = parse(first, column.dateFormat);
+            const endDate = parse(second, column.dateFormat);
+            cmp = startDate > endDate ? 1 : startDate < endDate ? -1 : 0;
+
+          } catch (error) {
+            console.warn("date format is not correct", error)
+          }
+
+        } else {
+          cmp = (first as string).localeCompare(second as string)
+        }
+      }
 
       return sortDescriptor.direction === "descending" ? -cmp : cmp;
     });
@@ -148,10 +156,10 @@ const DataTable = ({
     const data = columns.find(item => item.key === columnKey)!;
 
     // formatter row
-    if (data.renderRow) {
+    if (data.format) {
       return (
         <div>
-          {data.renderRow({
+          {data.format({
             value: item[columnKey],
             row: item
           })}
