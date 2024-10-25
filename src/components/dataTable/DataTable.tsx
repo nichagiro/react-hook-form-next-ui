@@ -80,13 +80,13 @@ const DataTable = ({
 
   const sortedItems = useMemo(() => {
     return [...filteredItems].sort((a, b) => {
-      const first: string | number = a[sortDescriptor.column as string | number]
-      const second: string | number = b[sortDescriptor.column as string | number]
+      const first: string | number | null = a[sortDescriptor.column as string | number]
+      const second: string | number | null = b[sortDescriptor.column as string | number]
       let cmp: number = 0
 
-      if (!first && !second) return 0;
-      if (!first) return -1;
-      if (!second) return 1;
+      if (!first && !second) cmp = 0;
+      if (!first) cmp = -1;
+      if (!second) cmp = 1;
 
       if (typeof first === "number" && typeof second === "number") {
         cmp = first - second;
@@ -95,7 +95,7 @@ const DataTable = ({
       if (typeof first === "string" && typeof second === "string") {
         const column = columns.find(item => item.key === sortDescriptor.column)
 
-        if (column?.dateFormat) {
+        if (first && second && column?.dateFormat) {
           try {
             const startDate = parse(first, column.dateFormat);
             const endDate = parse(second, column.dateFormat);

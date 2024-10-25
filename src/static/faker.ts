@@ -12,7 +12,7 @@ interface iRows {
   subRows?: any
 }
 
-export const fakerRows = (): iRows[] => Array.from({ length: 500 }, (_, index) => {
+export const fakerRows = (): iRows[] => Array.from({ length: 20 }, (_, index) => {
 
   const data: iRows = {
     service: faker.person.jobArea(),
