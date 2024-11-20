@@ -3,7 +3,7 @@
 This library is based on NextUI and React-hook-form. Here you will find form components where we combine these two libraries for easier and faster use. There is also refactoring of components (currently modal and table) for faster and more complete use of all functions.
 
 ## Demo
-[Storybook - Demo](http://www.google.com)
+[Storybook - Demo](https://storybook-rhfnextui.web.app)
 
 ## Install the library
 
