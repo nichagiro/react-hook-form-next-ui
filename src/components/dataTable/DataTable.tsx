@@ -18,7 +18,7 @@ import { parse } from "@formkit/tempo";
 import { DataTableProps } from "./types";
 
 const DataTable = ({
-  rows, columns, showFilter = true, loading, keyRow = "id", defaultSelectedKeys = [], itemsName,
+  rows, columns, showFilter = true, loading = false, keyRow = "id", defaultSelectedKeys = [], itemsName,
   selectionMode, inputSearch, showHandlePaginate = true, extraTopContent, cellClass,
   onSelect, defaultPaginateNumber = 10, optionsPaginateNumber = [5, 10, 15], ...props
 }: DataTableProps) => {

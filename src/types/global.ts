@@ -3,7 +3,7 @@ import { RegisterOptions } from "react-hook-form";
 
 export type Icolor = "danger" | "default" | "primary" | "secondary" | "success" | "warning" | undefined;
 
-interface DataOptionsSelect {
+export interface DataOptionsSelect {
   key: string,
   label: string
 }

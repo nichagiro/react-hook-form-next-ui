@@ -4,7 +4,7 @@ import {
   ButtonProps
 } from "@nextui-org/react";
 
-import React, { useEffect, useState } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 
 interface ButtonModalFooter extends Omit<ButtonProps, "onClick"> {
   onClick: () => void | Promise<void>;
@@ -16,10 +16,11 @@ interface RHFNextUiModalProps extends ModalProps {
   title?: string;
   cancelButton?: Omit<ButtonModalFooter, "onClick">;
   acceptButton?: ButtonModalFooter;
+  children: ReactNode
 }
 
 export default function Modal({
-  display, children, title, onCancel,
+  display = false, children, title, onCancel,
   cancelButton, acceptButton, ...props
 
 }: RHFNextUiModalProps) {

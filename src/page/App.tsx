@@ -5,7 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 // ui
 import { DevTool } from "@hookform/devtools"
 import { Button } from "@nextui-org/react";
-import RHFInput from "../components/RHFInput ";
+import RHFInput from "../components/RHFInput";
 import RHFTime from "../components/RHFTime";
 import RHFDate from "../components/RHFDate";
 import RHFDualDate from "../components/RHFDualDate";

@@ -11,7 +11,7 @@ interface RHFNextUiPanelProps {
   collapse?: boolean;
 }
 
-const Panel = ({ title, color = "primary", children, collapse }: RHFNextUiPanelProps) => {
+const Panel = ({ title, color = "default", children, collapse = false }: RHFNextUiPanelProps) => {
   const [expand, setExpand] = useState(true);
 
   return (

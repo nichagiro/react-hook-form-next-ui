@@ -1,16 +1,11 @@
 import React from "react";
 import { Controller, RegisterOptions, useFormContext } from "react-hook-form";
 import { RadioGroup, Radio, RadioGroupProps, RadioProps } from "@nextui-org/react";
-
-interface RHFRadioGroupDataProps {
-  key: string;
-  label: string
-}
-
+import { DataOptionsSelect } from "../types/global";
 interface RHFRadioGroupProps extends RadioGroupProps {
   rules?: RegisterOptions;
   radio?: RadioProps;
-  data: RHFRadioGroupDataProps[];
+  data: DataOptionsSelect[];
   name: string;
 }
 

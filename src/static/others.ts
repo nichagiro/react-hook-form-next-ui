@@ -1,0 +1,1 @@
+export const COLORS = ["danger", "default", "primary", "secondary", "success", "warning"]
