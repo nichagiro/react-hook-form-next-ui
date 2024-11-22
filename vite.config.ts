@@ -7,7 +7,8 @@ export default defineConfig({
   plugins: [
     dts({
       tsconfigPath: './tsconfig.app.json',
-      rollupTypes: true
+      rollupTypes: true,
+      exclude: ['src/stories/**/*']
     }),
     // analyzer()
   ],

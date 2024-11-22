@@ -1,7 +1,7 @@
 {
   "name": "react-hook-form-next-ui",
   "type": "module",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "keywords": [
@@ -47,7 +47,7 @@
   "devDependencies": {
     "@chromatic-com/storybook": "^3.2.1",
     "@eslint/js": "^9.9.0",
-    "@faker-js/faker": "^8.4.1",
+    "@faker-js/faker": "^9.2.0",
     "@formkit/tempo": "^0.1.2",
     "@hookform/devtools": "^4.3.1",
     "@hookform/resolvers": "^3.9.0",
@@ -64,9 +64,9 @@
     "@types/react-dom": "^18.3.0",
     "autoprefixer": "^10.4.20",
     "eslint": "^9.9.0",
-    "eslint-plugin-react-hooks": "^5.1.0-rc.0",
+    "eslint-plugin-react-hooks": "^5.0.0",
     "eslint-plugin-react-refresh": "^0.4.9",
-    "eslint-plugin-storybook": "^0.10.1",
+    "eslint-plugin-storybook": "^0.11.1",
     "framer-motion": "^11.5.4",
     "globals": "^15.9.0",
     "postcss": "^8.4.41",
@@ -75,10 +75,10 @@
     "react-hook-form": "^7.53.0",
     "storybook": "^8.4.0",
     "tailwindcss": "^3.4.10",
-    "typescript": "^5.5.3",
+    "typescript": "^5.6.3",
     "typescript-eslint": "^8.0.1",
     "vite": "^5.4.1",
-    "vite-bundle-analyzer": "^0.10.6",
+    "vite-bundle-analyzer": "^0.13.1",
     "vite-plugin-dts": "^4.2.1",
     "yup": "^1.4.0"
   },
@@ -86,5 +86,9 @@
     "extends": [
       "plugin:storybook/recommended"
     ]
+  },
+  "dependencies": {
+    "@typescript-eslint/eslint-plugin": "^8.15.0",
+    "@typescript-eslint/parser": "^8.15.0"
   }
 }
