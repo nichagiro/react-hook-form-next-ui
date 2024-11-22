@@ -12,5 +12,7 @@ export interface IForm {
   dualtime2: TimeInputValue;
   autocomplete: string;
   radios: string;
+  checkbox: true,
+  checkboxGroup: string[],
 }
 

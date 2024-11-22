@@ -3,7 +3,7 @@ import { Select, SelectItem } from "@nextui-org/react"
 import { Controller, useFormContext } from "react-hook-form"
 import { RHFSelectProps } from "../types/global";
 
-const RHFSelect = ({ name, data, rules, defaultOptions = "", ...props }: RHFSelectProps) => {
+const RHFSelect = ({ name, data, rules, defaultSelectedKeys, ...props }: RHFSelectProps) => {
   const { control } = useFormContext<{ [key: string]: string }>();
 
   return (
@@ -11,17 +11,21 @@ const RHFSelect = ({ name, data, rules, defaultOptions = "", ...props }: RHFSele
       control={control}
       rules={rules}
       name={name}
-      defaultValue={defaultOptions}
+      defaultValue={defaultSelectedKeys?.toString() ?? undefined}
       render={({ field, formState: { errors } }) => (
         <Select
           {...props}
           {...field}
           items={data}
-          selectedKeys={new Set(field.value ? field.value.split(",") : [])}
-          errorMessage={errors[name] ? errors[name]?.message : ""}
+          selectedKeys={
+            field.value == "all"
+              ? data.map(items => items.key)
+              : field.value ? field.value.split(",") : []
+          }
+          errorMessage={errors[name]?.message || ""}
           isInvalid={Boolean(errors[name])}
         >
-          {item => <SelectItem key={item.key}>{item.label}</SelectItem>}
+          {item => <SelectItem {...item} key={item.key} />}
         </Select>
       )}
     />

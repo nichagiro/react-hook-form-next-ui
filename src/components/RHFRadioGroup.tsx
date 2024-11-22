@@ -1,15 +1,13 @@
 import React from "react";
 import { Controller, RegisterOptions, useFormContext } from "react-hook-form";
 import { RadioGroup, Radio, RadioGroupProps, RadioProps } from "@nextui-org/react";
-import { DataOptionsSelect } from "../types/global";
 interface RHFRadioGroupProps extends RadioGroupProps {
   rules?: RegisterOptions;
-  radio?: RadioProps;
-  data: DataOptionsSelect[];
+  data: RadioProps[];
   name: string;
 }
 
-const RHFRadioGroup = ({ radio, data, rules, name, defaultValue, ...props }: RHFRadioGroupProps) => {
+const RHFRadioGroup = ({ data, rules, name, defaultValue, ...props }: RHFRadioGroupProps) => {
   const { control } = useFormContext<{ [key: string]: string }>();
 
   return (
@@ -25,15 +23,7 @@ const RHFRadioGroup = ({ radio, data, rules, name, defaultValue, ...props }: RHF
           isInvalid={Boolean(errors[name])}
           errorMessage={errors[name] ? errors[name]?.message : ""}
         >
-          {data.map((item, index) => (
-            <Radio
-              {...radio}
-              key={index}
-              value={item.key}
-            >
-              {item.label}
-            </Radio>
-          ))}
+          {data.map((item, index) => <Radio {...item} key={index} />)}
         </RadioGroup>
       )}
     />

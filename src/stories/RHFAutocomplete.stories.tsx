@@ -15,7 +15,7 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const data = fakerUsers()
+const data = fakerUsers().map(item => ({ key: item.key, children: item.label }))
 
 export const Autocomplete: Story = {
   args: {

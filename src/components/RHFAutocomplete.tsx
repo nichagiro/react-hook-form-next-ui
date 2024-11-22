@@ -3,8 +3,8 @@ import { Autocomplete, AutocompleteItem } from "@nextui-org/react"
 import { Controller, useFormContext } from "react-hook-form";
 import { RHFAutocompleteProps } from "../types/global";
 
-const RHFAutocomplete = ({ onSelectionChange, defaultValue, name, data, rules, ...props }: RHFAutocompleteProps) => {
-  const { control } = useFormContext<{ [key: string]: string }>();
+const RHFAutocomplete = ({ onSelectionChange, defaultSelectedKey, name, data, rules, ...props }: RHFAutocompleteProps) => {
+  const { control } = useFormContext<{ [key: string]: string | number }>();
 
   const onChange = (e: string | number | null) => {
     if (onSelectionChange) {
@@ -15,7 +15,7 @@ const RHFAutocomplete = ({ onSelectionChange, defaultValue, name, data, rules, .
   return (
     <Controller
       control={control}
-      defaultValue={defaultValue}
+      defaultValue={defaultSelectedKey}
       name={name}
       rules={rules}
       render={({ field, formState: { errors } }) => (
@@ -33,13 +33,7 @@ const RHFAutocomplete = ({ onSelectionChange, defaultValue, name, data, rules, .
             }
           }}
         >
-          {
-            data.map((item) => (
-              <AutocompleteItem key={item.key} value={item.key}>
-                {item.label}
-              </AutocompleteItem>
-            ))
-          }
+          {data.map((item) => <AutocompleteItem {...item} key={item.key} />)}
         </Autocomplete>
       )}
     />

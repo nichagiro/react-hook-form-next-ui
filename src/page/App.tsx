@@ -31,6 +31,8 @@ import RHFAutocomplete from "../components/RHFAutocomplete";
 import Modal from "../components/Modal";
 import RHFRadioGroup from "../components/RHFRadioGroup";
 import React from "react";
+import RHFCheckbox from "../components/RHFCheckbox";
+import RHFCheckboxGroup from "../components/RHFCheckboxGroup";
 
 // const defaultRows: string[] = [];
 
@@ -48,7 +50,6 @@ const App = () => {
   const onSubmit: SubmitHandler<IForm> = async data => {
     console.log("🚀 ~ Event ~ data:", data)
   }
-
 
   useEffect(() => {
     const rows = fakerRows();
@@ -69,9 +70,9 @@ const App = () => {
     setTimeout(() => {
       setLoading(false);
       methods.setValue("area", "test auto lorem", { shouldValidate: true })
-      methods.setValue("radios", "2", { shouldValidate: true })
-      methods.setValue("autocomplete", "928", { shouldValidate: true })
-      methods.setValue("select", "10", { shouldValidate: true })
+      // methods.setValue("radios", "2", { shouldValidate: true })
+      // methods.setValue("autocomplete", "928", { shouldValidate: true })
+      // methods.setValue("select", "10,928", { shouldValidate: true })
       methods.setValue("input", "446545604650", { shouldValidate: true })
       // methods.setValue("date", new CalendarDate(1997, 9, 28))
       // methods.setValue("date1", today(getLocalTimeZone()))
@@ -115,6 +116,13 @@ const App = () => {
               </Button>
             </div>
             <div className="flex gap-5">
+              <RHFCheckbox name="checkbox" value={"check"}>NICOLAS</RHFCheckbox>
+              <RHFCheckboxGroup
+                name="checkboxGroup"
+                data={options.map(item => ({ children: item.label, value: item.key }))}
+                orientation="horizontal"
+                color="danger"
+                defaultValue={["928"]} />
               <RHFInput
                 name="inputR"
                 label="RULES INPUT"
@@ -173,9 +181,10 @@ const App = () => {
                 label="Select"
                 placeholder="Seleccione..."
                 isLoading={loading}
-                data={options}
-                onSelectionChange={e => console.log([...e][0] ?? "")}
-              // defaultOptions="928"
+                data={options.map(item => ({ key: item.key, children: item.label }))}              
+                onSelectionChange={e => console.log(e)}
+                selectionMode="multiple"
+                defaultSelectedKeys={"all"}
               />
               <RHFTextArea
                 name="area"
@@ -195,18 +204,20 @@ const App = () => {
                 name="autocomplete"
                 label="Autocomplete"
                 placeholder="Autocomplete"
-                data={options}
-                disabledKeys={"928"}
+                data={options.map(item => ({ children: item.label, key: item.key }))}
+                disabledKeys={["10"]}
+                defaultSelectedKey={"928"}
                 rules={{ required: { value: true, message: "uyy zona" } }}
                 onSelectionChange={e => console.log(e)}
               />
               <RHFRadioGroup
                 name="radios"
-                data={[{ key: "1", label: "Nicolas" }, { key: "2", label: "Angela" }]}
+                data={options.map(item => ({ value: item.key, children: item.label }))}
                 label="Elementos Relacionados?"
                 orientation="horizontal"
                 onValueChange={value => console.log(value)}
                 rules={{ required: { message: "mmmmmjuu", value: true } }}
+                defaultValue={"928"}
               />
             </div>
             <div className="my-8 gap-5 flex">

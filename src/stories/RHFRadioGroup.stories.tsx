@@ -14,11 +14,16 @@ export const RadioGroup: Story = {
   args: {
     name: "radioField",
     data: [{
-      key: "1",
-      label: "Radio1"
+      value: "1",
+      children: "Radio1",
+      color: "danger"
     }, {
-      key: "2",
-      label: "Radio2"
-    }],   
+      value: "2",
+      children: "Radio2"
+    }, {
+      value: "3",
+      children: "Radio2",
+      isDisabled: true
+    }],
   },
 };
