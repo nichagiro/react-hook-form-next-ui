@@ -1,0 +1,193 @@
+import { Meta, Canvas } from "@storybook/blocks";
+
+<Meta title="Helpers/YupSchema" />
+
+# Yup Schema Helpers
+
+This documentation provides an overview of custom helpers for validating dates and times, as well as their integration with `yup`.
+
+## Summary
+
+This set of utilities includes:
+
+- **`dateMinMaxValidate`**: Validates a date within a minimum and maximum range.
+- **`dualDateValidate`**: Generates rules to validate date pairs (start and end) with range restrictions.
+- **`dualTimeValidate`**: Validates time pairs (start and end) with range restrictions.
+
+---
+
+## `dateMinMaxValidate` Properties
+
+<table style={{ width: "100%", borderCollapse: "collapse", margin: "20px 0" }}>
+  <thead>
+    <tr>
+      <th style={{ border: "1px solid #ddd", padding: "8px" }}>Property</th>
+      <th style={{ border: "1px solid #ddd", padding: "8px" }}>Type</th>
+      <th style={{ border: "1px solid #ddd", padding: "8px" }}>Required</th>
+      <th style={{ border: "1px solid #ddd", padding: "8px" }}>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>maxDate</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>string</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>No</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>The maximum allowed date (ISO format).</td>
+    </tr>
+    <tr>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>minDate</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>string</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>No</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>The minimum allowed date (ISO format).</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+## `dualDateValidate` Properties
+
+<table style={{ width: "100%", borderCollapse: "collapse", margin: "20px 0" }}>
+  <thead>
+    <tr>
+      <th style={{ border: "1px solid #ddd", padding: "8px" }}>Property</th>
+      <th style={{ border: "1px solid #ddd", padding: "8px" }}>Type</th>
+      <th style={{ border: "1px solid #ddd", padding: "8px" }}>Required</th>
+      <th style={{ border: "1px solid #ddd", padding: "8px" }}>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>startDate</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>string</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>Yes</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>The field name for the start date.</td>
+    </tr>
+    <tr>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>endDate</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>string</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>Yes</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>The field name for the end date.</td>
+    </tr>
+    <tr>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>range</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>number</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>No</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>The maximum allowed range between dates.</td>
+    </tr>
+    <tr>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>type</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>string</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>No</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>The range unit (e.g., "days", "months", "years").</td>
+    </tr>
+    <tr>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>maxEndDate</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>string</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>No</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>The maximum allowed date (ISO format).</td>
+    </tr>
+    <tr>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>minEndDate</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>string</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>No</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>The minimum allowed date (ISO format).</td>
+    </tr>
+    <tr>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>maxStartDate</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>string</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>No</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>The maximum allowed date (ISO format).</td>
+    </tr>
+    <tr>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>minStartDate</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>string</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>No</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>The minimum allowed date (ISO format).</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+## `dualTimeValidate` Properties
+
+<table style={{ width: "100%", borderCollapse: "collapse", margin: "20px 0" }}>
+  <thead>
+    <tr>
+      <th style={{ border: "1px solid #ddd", padding: "8px" }}>Property</th>
+      <th style={{ border: "1px solid #ddd", padding: "8px" }}>Type</th>
+      <th style={{ border: "1px solid #ddd", padding: "8px" }}>Required</th>
+      <th style={{ border: "1px solid #ddd", padding: "8px" }}>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>startTime</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>string</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>Yes</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>The field name for the start time.</td>
+    </tr>
+    <tr>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>endTime</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>string</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>Yes</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>The field name for the end time.</td>
+    </tr>
+    <tr>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>range</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>number</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>No</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>The maximum allowed range between times.</td>
+    </tr>
+    <tr>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>type</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>string</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>No</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>The range unit (e.g., "hours", "minutes").</td>
+    </tr>
+  </tbody>
+</table>
+
+
+## Example
+
+```js
+import * as yup  from "yup";
+import { dateMinMaxValidate, dualDateValidate, dualTimeValidate } from "../helpers/yup/dates";
+
+const { endDateRule, startDateRule } = dualDateValidate({
+  startDate: "date1",
+  endDate: "date2",
+  range: 2,
+  type: "months",
+  maxEndDate: "2024-09-28",
+  minEndDate: "2024-09-01",
+  maxStartDate: "2024-09-28",
+  minStartDate: "2024-09-01"
+});
+
+const { endTimeRule, startTimeRule } = dualTimeValidate({
+  endTime: "dualtime2",
+  startTime: "dualtime1",
+  range: 1,
+  type: "hours",
+})
+
+const rangeValue = dateMinMaxValidate({
+  maxDate: "2024-09-05",
+  minDate: "2024-09-02"
+})
+
+const schema = yup
+  .object({
+    date: rangeValue.required(),
+    date1: startDateRule.required(),
+    date2: endDateRule.required(),
+    dualtime1: startTimeRule.required(),
+    dualtime2: endTimeRule.required(),
+  }).required();
+
+export default schema
+```
+

@@ -31,7 +31,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 
-const ExtraTopContent = () => <Button color='danger'>Downoload  </Button>
+const ExtraTopContent = () => <Button color='danger'>Downoload</Button>
 
 const OptionsPaginateNumber = [1, 3, 5]
 
