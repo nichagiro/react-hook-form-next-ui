@@ -16,8 +16,5 @@ export { default as Modal } from './components/Modal';
 
 export * as validation from './helpers/yup/dates';
 
-export type { ColumnsTableProps } from './components/dataTable/types';
-export type { RHFAutocompleteProps, RHFSelectProps } from './types/global';
-
 
 

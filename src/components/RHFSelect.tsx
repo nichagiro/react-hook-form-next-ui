@@ -1,7 +1,12 @@
 import React from "react";
-import { Select, SelectItem } from "@nextui-org/react"
-import { Controller, useFormContext } from "react-hook-form"
-import { RHFSelectProps } from "../types/global";
+import { Select, SelectItem, SelectItemProps, SelectProps } from "@nextui-org/react"
+import { Controller, RegisterOptions, useFormContext } from "react-hook-form"
+
+interface RHFSelectProps extends Omit<SelectProps, "children"> {
+  name: string;
+  rules?: RegisterOptions;
+  data: SelectItemProps[];
+}
 
 const RHFSelect = ({ name, data, rules, defaultSelectedKeys, ...props }: RHFSelectProps) => {
   const { control } = useFormContext<{ [key: string]: string }>();

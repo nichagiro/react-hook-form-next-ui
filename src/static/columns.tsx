@@ -1,7 +1,6 @@
 import React from "react";
-import { ColumnsTableProps } from "../components/dataTable/types";
 
-export const columns: ColumnsTableProps[] = [{
+export const columns = [{
   key: "service",
   title: "Servicio/Área",
   allowsSorting: true,
@@ -31,8 +30,8 @@ export const columns: ColumnsTableProps[] = [{
   key: "fake",
   title: "Render",
   className: "text-danger",
-  format: ({ row }) => {
-    const { status } = row as IRows
+  format: ({ row }: { row: IRows }) => {
+    const { status } = row
     return (
       <p className={`text-white ${status === "Activo" ? "bg-success" : "bg-danger"} w-16 rounded text-center my-0.5 p-0`}>
         {status}

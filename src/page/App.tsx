@@ -70,6 +70,7 @@ const App = () => {
     setTimeout(() => {
       setLoading(false);
       methods.setValue("area", "test auto lorem", { shouldValidate: true })
+      methods.setValue("checkbox", true, { shouldValidate: true })
       // methods.setValue("radios", "2", { shouldValidate: true })
       // methods.setValue("autocomplete", "928", { shouldValidate: true })
       // methods.setValue("select", "10,928", { shouldValidate: true })
@@ -181,7 +182,7 @@ const App = () => {
                 label="Select"
                 placeholder="Seleccione..."
                 isLoading={loading}
-                data={options.map(item => ({ key: item.key, children: item.label }))}              
+                data={options.map(item => ({ key: item.key, children: item.label }))}
                 onSelectionChange={e => console.log(e)}
                 selectionMode="multiple"
                 defaultSelectedKeys={"all"}
