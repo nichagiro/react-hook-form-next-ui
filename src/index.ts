@@ -12,7 +12,6 @@ export { default as RHFAutocomplete } from './components/RHFAutocomplete';
 export { default as RHFRadioGroup } from './components/RHFRadioGroup';
 export { default as Modal } from './components/Modal';
 
-export * as yupEs from './locales/yup';
 export * as validation from './helpers/yup/dates';
 
 export type { ColumnsTableProps } from './components/dataTable/types';
