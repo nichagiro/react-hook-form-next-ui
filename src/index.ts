@@ -10,6 +10,8 @@ export { default as RHFDualTime } from './components/RHFDualTime';
 export { default as RHFTextArea } from './components/RHFTextArea';
 export { default as RHFAutocomplete } from './components/RHFAutocomplete';
 export { default as RHFRadioGroup } from './components/RHFRadioGroup';
+export { default as RHFCheckbox } from './components/RHFCheckbox';
+export { default as RHFCheckboxGroup } from './components/RHFCheckboxGroup';
 export { default as Modal } from './components/Modal';
 
 export * as validation from './helpers/yup/dates';
