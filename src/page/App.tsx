@@ -183,9 +183,10 @@ const App = () => {
                 placeholder="Seleccione..."
                 isLoading={loading}
                 data={options.map(item => ({ key: item.key, children: item.label }))}
+                // data={[{ key: "sds", children: "sas" }]}
                 onSelectionChange={e => console.log(e)}
-                selectionMode="multiple"
-                defaultSelectedKeys={"all"}
+                selectionMode="single"
+                // defaultSelectedKeys={"all"}
               />
               <RHFTextArea
                 name="area"

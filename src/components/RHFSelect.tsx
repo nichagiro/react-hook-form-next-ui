@@ -23,9 +23,7 @@ const RHFSelect = ({ name, data, rules, defaultSelectedKeys, ...props }: RHFSele
           {...field}
           items={data}
           selectedKeys={
-            field.value == "all"
-              ? data.map(items => items.key)
-              : field.value ? field.value.split(",") : []
+            field.value ? field.value.split(",") : []
           }
           errorMessage={errors[name]?.message || ""}
           isInvalid={Boolean(errors[name])}
