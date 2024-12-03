@@ -183,11 +183,14 @@ const App = () => {
                 placeholder="Seleccione..."
                 isLoading={loading}
                 data={options.map(item => ({ key: item.key, children: item.label }))}
-                // data={[{ key: "sds", children: "sas" }]}
                 onSelectionChange={e => console.log(e)}
-                selectionMode="single"
-                // defaultSelectedKeys={"all"}
+                selectionMode="multiple"
+                allOptions={{
+                  children: <p className="text-danger">all options</p>,
+                  textValue: "Todas las opciones"
+                }}
               />
+
               <RHFTextArea
                 name="area"
                 label="textArea"
