@@ -22,7 +22,7 @@ jobs:
 
       # 3. Instalar dependencias
       - name: Install dependencies
-        run: npm ci --legacy-peer-deps
+        run: npm ci
 
       # 4. Construir el paquete
       - name: Build package
