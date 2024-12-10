@@ -27,7 +27,7 @@ const DataTable = ({
   const [rowsPerPage, setRowsPerPage] = useState(optionsPaginateNumber.includes(defaultPaginateNumber) ? defaultPaginateNumber : optionsPaginateNumber[0]);
   const [page, setPage] = useState<number>(1);
   const [selectedKeys, setSelectedKeys] = useState<Selection>(new Set(defaultSelectedKeys));
-  const [sortDescriptor, setSortDescriptor] = useState<SortDescriptor>(props.sortDescriptor ?? {});
+  const [sortDescriptor, setSortDescriptor] = useState<SortDescriptor>({ column: "", direction: "ascending" });
 
   const searchText = useDebounce(filterValue, 500);
 

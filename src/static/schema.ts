@@ -1,6 +1,7 @@
-import * as yup  from "yup";
+import * as yup from "yup";
 import { dateMinMaxValidate, dualDateValidate, dualTimeValidate } from "../helpers/yup/dates";
 import { TimeInputValue } from "@nextui-org/react";
+import { IForm } from "../types/app";
 
 const { endDateRule, startDateRule } = dualDateValidate({
   startDate: "date1",
@@ -25,7 +26,7 @@ const rangeValue = dateMinMaxValidate({
   minDate: "2024-09-02"
 })
 
-const schema = yup
+const schema: yup.ObjectSchema<IForm> = yup
   .object({
     input: yup.string().required(),
     date: rangeValue.required(),
@@ -40,6 +41,7 @@ const schema = yup
     radios: yup.string().required(),
     checkbox: yup.boolean().required().isTrue(),
     checkboxGroup: yup.array().required().min(2),
+    opt: yup.string().required().length(4)
   }).required();
 
 export default schema

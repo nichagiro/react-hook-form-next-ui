@@ -33,6 +33,7 @@ import RHFRadioGroup from "../components/RHFRadioGroup";
 import React from "react";
 import RHFCheckbox from "../components/RHFCheckbox";
 import RHFCheckboxGroup from "../components/RHFCheckboxGroup";
+import RHFInputOtp from "../components/RHFInputOtp";
 
 // const defaultRows: string[] = [];
 
@@ -70,6 +71,7 @@ const App = () => {
     setTimeout(() => {
       setLoading(false);
       methods.setValue("area", "test auto lorem", { shouldValidate: true })
+      // methods.setValue("opt", "092")
       methods.setValue("checkbox", true, { shouldValidate: true })
       // methods.setValue("radios", "2", { shouldValidate: true })
       // methods.setValue("autocomplete", "928", { shouldValidate: true })
@@ -149,6 +151,12 @@ const App = () => {
           </Panel>
           <Panel title="FORM WITH SCHEMA">
             <div className="grid grid-cols-3 gap-5">
+              <RHFInputOtp
+                name="opt"
+                length={4}
+                color="primary"
+                // rules={{ required: { message: "requerido pape", value: true } }}
+              />
               <RHFInput
                 name="input"
                 label="Input"

@@ -45,7 +45,7 @@ const RHFDualDate = ({ startDate, endDate }: RHFDualDateProps) => {
             {...field}
             value={field.value}
             errorMessage={errors[startName] ? errors[startName]?.message : ""}
-            isInvalid={Boolean(errors[startName])}
+            isInvalid={Boolean(errors[startName])}            
           />
         )}
       />
@@ -60,7 +60,7 @@ const RHFDualDate = ({ startDate, endDate }: RHFDualDateProps) => {
             {...field}
             value={field.value}
             errorMessage={errors[endName] ? errors[endName]?.message : ""}
-            isInvalid={Boolean(errors[endName])}
+            isInvalid={Boolean(errors[endName])}            
           />
         )}
       />

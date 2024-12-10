@@ -13,6 +13,7 @@ export interface IForm {
   autocomplete: string;
   radios: string;
   checkbox: true,
-  checkboxGroup: string[],
+  checkboxGroup: string[];
+  opt: string;
 }
 
