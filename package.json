@@ -36,13 +36,14 @@
   },
   "peerDependencies": {
     "@formkit/tempo": "^0.1.2",
-    "@hookform/resolvers": "^3.9.0",
-    "@nextui-org/react": "^2.4.6",
-    "framer-motion": "^11.5.4",
+    "@hookform/resolvers": "^3.9.1",
+    "@hookform/devtools": "^4.3.1",
+    "@nextui-org/react": "^2.6.7",
+    "framer-motion": "^11.13.5",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-hook-form": "^7.53.0",
-    "yup": "^1.4.0"
+    "react-hook-form": "^7.54.0",
+    "yup": "^1.5.0"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^3.2.2",
