@@ -16,6 +16,5 @@ export { default as RHFCheckboxGroup } from './components/RHFCheckboxGroup';
 export { default as Modal } from './components/Modal';
 
 export * as validation from './helpers/yup/dates';
-
-
+export *  from "./components/dataTable/types"
 
