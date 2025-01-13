@@ -6,7 +6,7 @@ import {
 
 import React, { ReactNode, useEffect, useState } from "react";
 
-interface ButtonModalFooter extends Omit<ButtonProps, "onClick"> {
+interface AcceptButton extends Omit<ButtonProps, "onClick"> {
   onClick: () => void | Promise<void>;
 }
 
@@ -14,8 +14,8 @@ interface RHFNextUiModalProps extends ModalProps {
   display: boolean;
   onCancel: () => void;
   title?: string;
-  cancelButton?: Omit<ButtonModalFooter, "onClick">;
-  acceptButton?: ButtonModalFooter;
+  cancelButton?: ButtonProps;
+  acceptButton?: AcceptButton;
   children: ReactNode
 }
 
@@ -77,7 +77,7 @@ export default function Modal({
                 <Button
                   {...acceptButton}
                   isLoading={loading}
-                  onClick={() => onAccept()}
+                  onPress={() => onAccept()}
                 >
                   {acceptButton.name ?? "Aceptar"}
                 </Button>

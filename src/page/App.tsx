@@ -4,7 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 // ui
 import { DevTool } from "@hookform/devtools"
-import { Button } from "@nextui-org/react";
+import { Button, DatePicker } from "@nextui-org/react";
 import RHFInput from "../components/RHFInput";
 import RHFTime from "../components/RHFTime";
 import RHFDate from "../components/RHFDate";
@@ -113,8 +113,10 @@ const App = () => {
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(onSubmit)}>
           <Panel title="FORM WITHOUT SCHEMA" collapse>
+            <DatePicker className="max-w-[284px]" label="Birth date"         {...{ ref: undefined }}
+            />
             <div className="mb-5">
-              <Button color="secondary" onClick={() => setModal(true)}>
+              <Button color="secondary" onPress={() => setModal(true)}>
                 Modal
               </Button>
             </div>
@@ -155,7 +157,7 @@ const App = () => {
                 name="opt"
                 length={4}
                 color="primary"
-                // rules={{ required: { message: "requerido pape", value: true } }}
+              // rules={{ required: { message: "requerido pape", value: true } }}
               />
               <RHFInput
                 name="input"
@@ -235,7 +237,7 @@ const App = () => {
             </div>
             <div className="my-8 gap-5 flex">
               <Button type="submit">Click</Button>
-              <Button onClick={() => methods.reset()} color="danger">reset</Button>
+              <Button onPress={() => methods.reset()} color="danger">reset</Button>
             </div>
           </Panel >
           <Panel title="Table Component" >
