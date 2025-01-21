@@ -1,4 +1,4 @@
-import { DateValue, TimeInputValue } from "@nextui-org/react";
+import { DateValue, TimeInputValue } from "@heroui/react";
 import { TestContext } from "yup";
 
 export type TypeRangeDateValue = "days" | "months" | "years";

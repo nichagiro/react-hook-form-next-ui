@@ -1,4 +1,4 @@
-import { DateValue, TimeInputValue } from "@nextui-org/react";
+import { DateValue, TimeInputValue } from "@heroui/react";
 
 export interface IForm {
   input: string;

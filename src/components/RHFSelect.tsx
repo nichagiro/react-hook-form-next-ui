@@ -1,8 +1,8 @@
 import React, { useCallback, useMemo } from "react";
-import { Select, SelectedItems, SelectItem, SelectItemProps, SelectProps, SharedSelection } from "@nextui-org/react"
+import { Select, SelectedItems, SelectItem, SelectItemProps, SelectProps, SharedSelection } from "@heroui/react"
 import { Controller, RegisterOptions, useFormContext } from "react-hook-form"
 
-interface RHFSelectProps extends Omit<SelectProps, "children"> {
+interface RHFSelectProps extends Omit<SelectProps, "children" | "items" | "selectedKeys" | "errorMessage" | "isInvalid"> {
   name: string;
   rules?: RegisterOptions;
   data: SelectItemProps[];
@@ -10,7 +10,7 @@ interface RHFSelectProps extends Omit<SelectProps, "children"> {
   allSelectText?: string;
 }
 
-const RHFSelect = ({ name, data, rules, defaultSelectedKeys, allOptions, allSelectText, onSelectionChange, ...props }: RHFSelectProps) => {
+const RHFSelect = ({ name, data, rules, defaultSelectedKeys, disabledKeys, renderValue, allOptions, allSelectText, onSelectionChange, ...props }: RHFSelectProps) => {
   const { control, setValue } = useFormContext<{ [key: string]: string }>();
 
   const isMultiple = useMemo(() => props.selectionMode === "multiple", [props.selectionMode])
@@ -29,26 +29,29 @@ const RHFSelect = ({ name, data, rules, defaultSelectedKeys, allOptions, allSele
   const selectionChange = useCallback((values: SharedSelection) => {
     setTimeout(() => {
       const options = new Set(values)
+      const disableds = new Set(disabledKeys)
       const include = options.has("all")
+
+      const dataOptions = data.filter(item => !disableds.has(item.key as string))
+
       let items: SharedSelection = values
 
       if (include) {
-        if (options.size === data.length + 1) {
+        if (options.size - 1 === dataOptions.length) {
           setValue(name, "")
           items = new Set()
         }
         else {
-          setValue(name, data.map(item => item.key).filter(item => item !== "all").toString())
+          const vals = dataOptions.map(x => x.key).filter(item => item !== "all")
+          setValue(name, vals.toString())
           items = "all"
         }
-
       }
 
-      const returnValue = data.length === options.size ? "all" : items
-      onSelectionChange?.(returnValue)
+      onSelectionChange?.(options.size === dataOptions.length ? "all" : items)
 
     }, 250)
-  }, [data, name, onSelectionChange, setValue])
+  }, [data, name, onSelectionChange, setValue, disabledKeys])
 
   const RenderValue = useCallback((items: SelectedItems) => (
     <span>
@@ -77,7 +80,8 @@ const RHFSelect = ({ name, data, rules, defaultSelectedKeys, allOptions, allSele
           errorMessage={errors[name]?.message || ""}
           onSelectionChange={values => selectionChange(values)}
           isInvalid={Boolean(errors[name])}
-          renderValue={isMultiple ? RenderValue : undefined}
+          renderValue={renderValue ?? isMultiple ? RenderValue : undefined}
+          disabledKeys={disabledKeys}
         >
           {item => <SelectItem {...item} key={item.key} />}
         </Select>

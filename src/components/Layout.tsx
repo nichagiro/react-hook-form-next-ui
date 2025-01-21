@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react"
 import { Icolor } from "../types/global"
-import { Divider } from "@nextui-org/react"
+import { Divider } from "@heroui/react"
 
 type RHFNextUiLayoutProps = {
   children: ReactNode,

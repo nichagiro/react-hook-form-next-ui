@@ -1,15 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import Modal from '../components/Modal';
-import React from 'react';
+import React, { useState } from 'react';
+import { Button } from '@heroui/react';
 
 const meta = {
   title: 'Containers/Modal',
   component: Modal,
   tags: ['autodocs'],
-  argTypes: {
-    cancelButton: { description: "Custom cancel button - ButtonProps" },
-    acceptButton: { description: "Custom Confirm button - ButtonProps" },
-  },
 } satisfies Meta<typeof Modal>;
 
 export default meta;
@@ -19,9 +16,20 @@ export const modal: Story = {
   args: {
     display: false,
     children: <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>,
-    cancelButton: { name: "Cerrar", color: "danger" },
-    acceptButton: { "name": "Aceptar", onClick: () => alert(true), color: "primary" },
+    cancelButton: { children: "Cerrar", color: "danger" },
+    acceptButton: { "children": "Aceptar", onPress: () => alert(true), color: "primary" },
     title: "Modal Component",
-    onCancel: () => null,
+    onClose: () => null,
   },
+  render: (args) => <ModalWithState {...args} />
+};
+
+const ModalWithState: React.FC<typeof modal.args> = (args) => {
+  const [display, setDisplay] = useState(args.display);
+  return (
+    <>
+      <Button onPress={() => setDisplay(true)}>Open Modal</Button>
+      <Modal {...args} display={display} onClose={() => setDisplay(false)} />
+    </>
+  );
 };

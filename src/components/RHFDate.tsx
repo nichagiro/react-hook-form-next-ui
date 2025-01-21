@@ -1,8 +1,8 @@
 import React from "react";
-import { DatePicker, DatePickerProps, DateValue } from "@nextui-org/react";
+import { DatePicker, DatePickerProps, DateValue } from "@heroui/react";
 import { Controller, RegisterOptions, useFormContext } from "react-hook-form";
 
-interface RHFDateProps extends DatePickerProps {
+interface RHFDateProps extends Omit<DatePickerProps, "value" | "errorMessage" | "isInvalid"> {
   name: string;
   rules?: RegisterOptions
 }

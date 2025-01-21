@@ -1,8 +1,8 @@
 import React from "react";
-import { Textarea, TextAreaProps } from "@nextui-org/react";
+import { Textarea, TextAreaProps } from "@heroui/react";
 import { Controller, RegisterOptions, useFormContext } from "react-hook-form";
 
-interface RHFTextAreaProps extends TextAreaProps {
+interface RHFTextAreaProps extends Omit<TextAreaProps, "errorMessage" | "isInvalid"> {
   name: string;
   rules?: RegisterOptions
 }

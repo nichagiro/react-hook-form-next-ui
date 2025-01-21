@@ -1,4 +1,4 @@
-import { Card, CardBody, CardHeader, Divider } from "@nextui-org/react"
+import { Card, CardBody, CardHeader, Divider } from "@heroui/react"
 import React, { ReactNode, useState } from "react";
 import { Icolor } from "../types/global";
 import DoubleArrowUp from "../icons/DoubleArrowUp";

@@ -1,6 +1,6 @@
 import * as yup from "yup";
 import { dateMinMaxValidate, dualDateValidate, dualTimeValidate } from "../helpers/yup/dates";
-import { TimeInputValue } from "@nextui-org/react";
+import { TimeInputValue } from "@heroui/react";
 import { IForm } from "../types/app";
 
 const { endDateRule, startDateRule } = dualDateValidate({

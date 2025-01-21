@@ -4,7 +4,7 @@ import React from "react";
 import {
   Table, TableHeader, TableColumn, TableBody, TableRow, TableCell,
   Button, Input, SortDescriptor, Selection, Pagination
-} from "@nextui-org/react";
+} from "@heroui/react";
 import TableSkeleton from "./TableSkeleton";
 
 // hooks

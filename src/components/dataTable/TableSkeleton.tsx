@@ -1,5 +1,5 @@
 import React from "react";
-import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Skeleton } from "@nextui-org/react";
+import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Skeleton } from "@heroui/react";
 import { SkeletonTableProps } from "./types";
 
 const TableSkeleton = ({ size, columns }: SkeletonTableProps) => {

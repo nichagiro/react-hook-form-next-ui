@@ -4,7 +4,7 @@ import DataTable from '../components/dataTable/DataTable';
 import { COLORS } from '../static/others';
 import { columns } from '../static/columns';
 import { fakerRows } from '../static/faker';
-import { Button } from '@nextui-org/react';
+import { Button } from "@heroui/react";
 import React from 'react';
 
 const meta = {

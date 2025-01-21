@@ -1,90 +1,46 @@
 import {
   Modal as ModalComponent, ModalContent, ModalHeader,
-  ModalBody, ModalFooter, Button, useDisclosure, ModalProps,
-  ButtonProps
-} from "@nextui-org/react";
+  ModalBody, ModalFooter, Button, ModalProps, ButtonProps
+} from "@heroui/react"
 
-import React, { ReactNode, useEffect, useState } from "react";
-
-interface AcceptButton extends Omit<ButtonProps, "onClick"> {
-  onClick: () => void | Promise<void>;
-}
-
-interface RHFNextUiModalProps extends ModalProps {
-  display: boolean;
-  onCancel: () => void;
-  title?: string;
-  cancelButton?: ButtonProps;
-  acceptButton?: AcceptButton;
+import React, { ReactNode } from "react";
+interface RHFNextUiModalProps extends Omit<ModalProps, "onOpenChange" | "isOpen"> {
+  display: boolean
   children: ReactNode
+  title?: string
+  onClose: () => void
+  cancelButton?: ButtonProps
+  acceptButton?: ButtonProps
 }
 
 export default function Modal({
-  display = false, children, title, onCancel,
-  cancelButton, acceptButton, ...props
+  display = false,
+  onClose,
+  children,
+  title = "",
+  cancelButton,
+  acceptButton,
+  ...props
 
 }: RHFNextUiModalProps) {
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    if (display) {
-      onOpen()
-    }
-  }, [display, onOpen])
-
-
-  const handleChange = () => {
-    onOpenChange();
-    onCancel();
-  }
-
-  const onAccept = async () => {
-    if (acceptButton?.onClick) {
-      setLoading(true);
-      await acceptButton.onClick();
-      setLoading(false);
-    }
-  }
 
   return (
-    <ModalComponent isOpen={isOpen} onOpenChange={handleChange} {...props}>
+    <ModalComponent isOpen={display} onOpenChange={onClose}  {...props}>
       <ModalContent>
-        {onClose => (
-          <>
-            {
-              title &&
-              <ModalHeader className="flex flex-col gap-1">
-                {title}
-              </ModalHeader>
-            }
-            <ModalBody>
-              {children}
-            </ModalBody>
-            <ModalFooter>
-              {
-                cancelButton &&
-                <Button
-                  {...cancelButton}
-                  isDisabled={loading}
-                  onPress={() => { onClose(); onCancel() }}
-                >
-                  {cancelButton?.name ?? "Cerrar"}
-                </Button>
-              }
-              {
-                acceptButton &&
-                <Button
-                  {...acceptButton}
-                  isLoading={loading}
-                  onPress={() => onAccept()}
-                >
-                  {acceptButton.name ?? "Aceptar"}
-                </Button>
-              }
-            </ModalFooter>
-          </>
-        )}
+
+        <ModalHeader className="flex flex-col gap-1">
+          {title}
+        </ModalHeader>
+
+        <ModalBody>
+          {children}
+        </ModalBody>
+
+        <ModalFooter>
+          {cancelButton && <Button {...cancelButton} onPress={onClose} />}
+          {acceptButton && <Button {...acceptButton} />}
+        </ModalFooter>
+
       </ModalContent>
     </ModalComponent>
   );

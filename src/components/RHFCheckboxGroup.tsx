@@ -1,8 +1,8 @@
 import React from "react";
 import { Controller, RegisterOptions, useFormContext } from "react-hook-form";
-import { Checkbox, CheckboxGroup, CheckboxGroupProps, CheckboxProps } from "@nextui-org/react";
+import { Checkbox, CheckboxGroup, CheckboxGroupProps, CheckboxProps } from "@heroui/react";
 
-interface RHFCheckboxProps extends CheckboxGroupProps {
+interface RHFCheckboxProps extends Omit<CheckboxGroupProps, "children" | "isInvalid"> {
   rules?: RegisterOptions;
   name: string;
   data: CheckboxProps[]

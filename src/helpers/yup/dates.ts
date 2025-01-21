@@ -1,4 +1,4 @@
-import { DateValue, TimeInputValue } from "@nextui-org/react";
+import { DateValue, TimeInputValue } from "@heroui/react";
 import { DateMinMaxValueProps, DualDateValidateProps, DualTimeValidateProps } from "./types";
 import { getErrorNameRange, testDateMinMax, testDualDate, testDualDateRange, testDualTimeRange } from "./test";
 import { mixed } from "yup"

@@ -4,7 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 // ui
 import { DevTool } from "@hookform/devtools"
-import { Button, DatePicker } from "@nextui-org/react";
+import { Button, DatePicker } from "@heroui/react";
 import RHFInput from "../components/RHFInput";
 import RHFTime from "../components/RHFTime";
 import RHFDate from "../components/RHFDate";
@@ -89,22 +89,21 @@ const App = () => {
         display={modal}
         title="Tabla de resultados"
         size="5xl"
-        onCancel={() => setModal(false)}
         acceptButton={{
-          name: "YEAH",
-          onClick: () => console.log("clic in accept button"),
-          color: "danger"
+          color: "danger",
+          onPress: () => console.log("first"),
+          children: "Aceptar",
         }}
         cancelButton={{
-          name: "cancelar",
-          variant: "light",
-          color: "danger"
+          color: "warning",
+          children: "Cancelar"
         }}
+        onClose={() => setModal(false)}
       >
         <DataTable
           selectionMode="multiple"
           onSelect={row => console.log(row)}
-          rows={data}
+          rows={[data[1]]}
           color="danger"
           loading={loading}
           columns={columns}
@@ -192,6 +191,7 @@ const App = () => {
                 label="Select"
                 placeholder="Seleccione..."
                 isLoading={loading}
+                disabledKeys={["10", "928"]}
                 data={options.map(item => ({ key: item.key, children: item.label }))}
                 onSelectionChange={e => console.log(e)}
                 selectionMode="multiple"

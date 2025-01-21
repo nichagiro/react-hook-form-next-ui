@@ -1,7 +1,7 @@
 import React from "react";
-import { Autocomplete, AutocompleteItem, AutocompleteItemProps, AutocompleteProps } from "@nextui-org/react"
+import { Autocomplete, AutocompleteItem, AutocompleteItemProps, AutocompleteProps } from "@heroui/react"
 import { Controller, RegisterOptions, useFormContext } from "react-hook-form";
-interface RHFAutocompleteProps extends Omit<AutocompleteProps, "children"> {
+interface RHFAutocompleteProps extends Omit<AutocompleteProps, "children" | "defaultItems" | "selectedKey" | "isInvalid" | "errorMessage"> {
   name: string;
   rules?: RegisterOptions;
   data: AutocompleteItemProps[];

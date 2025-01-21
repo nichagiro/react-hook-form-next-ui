@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { InputProps, TableProps, TableColumnProps } from "@nextui-org/react";
+import { InputProps, TableProps, TableColumnProps } from "@heroui/react";
 import { ReactNode } from "react";
 interface ColumnFormat {
   value: string;

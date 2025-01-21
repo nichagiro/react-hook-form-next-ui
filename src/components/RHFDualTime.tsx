@@ -1,8 +1,8 @@
-import { TimeInput, TimeInputProps, TimeInputValue } from "@nextui-org/react";
+import { TimeInput, TimeInputProps, TimeInputValue } from "@heroui/react";
 import React, { useEffect, useMemo } from "react";
 import { Controller, RegisterOptions, useFormContext, useWatch } from "react-hook-form";
 
-interface RHFTimeProps extends TimeInputProps {
+interface RHFTimeProps extends Omit<TimeInputProps, "value" | "errorMessage" | "isInvalid"> {
   rules?: RegisterOptions;
   name: string;
 }

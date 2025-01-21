@@ -25,7 +25,7 @@ export default defineConfig({
         'react',
         'react-dom',
         'react-hook-form',
-        '@nextui-org/react',
+        '@heroui/react',
         'framer-motion',
       ],
       output: {

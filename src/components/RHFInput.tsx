@@ -1,8 +1,8 @@
 import React from "react";
-import { Input, InputProps } from "@nextui-org/react";
+import { Input, InputProps } from "@heroui/react";
 import { Controller, RegisterOptions, useFormContext } from "react-hook-form";
 
-interface RHFInputProps extends InputProps {
+interface RHFInputProps extends Omit<InputProps, "errorMessage" | "isInvalid"> {
   name: string;
   rules?: RegisterOptions
 }
@@ -22,7 +22,7 @@ const RHFInput = ({ defaultValue = "", rules, name, classNames, ...props }: RHFI
           {...field}
           isInvalid={Boolean(errors[name])}
           errorMessage={errors[name] ? errors[name]?.message : ""}
-          classNames={{            
+          classNames={{
             ...classNames,
             input: `${classNames?.input || ""} ${errors[name] ? "placeholder:text-danger" : ""}`
           }}

@@ -1,8 +1,8 @@
 import React from "react";
-import {  InputOtp, InputOtpProps } from "@nextui-org/react";
+import {  InputOtp, InputOtpProps } from "@heroui/react";
 import { Controller, RegisterOptions, useFormContext } from "react-hook-form";
 
-interface RHFInputProps extends InputOtpProps {
+interface RHFInputProps extends Omit<InputOtpProps, "errorMessage" | "isInvalid"> {
   name: string;
   rules?: RegisterOptions
 }
