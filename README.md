@@ -18,16 +18,19 @@ npm i react-hook-form-next-ui
 It is important to import the styles from NextUI and this library.
 
 ```js
+//tailwind.config.js
+import { heroui } from "@heroui/react";
+
 export default {
   content: [
     "./node_modules/react-hook-form-next-ui/dist/**/*.{js,ts,jsx,tsx}",
-    "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     extend: {},
   },
   plugins: [
-    nextui()
+    heroui()
   ]
 }
 ```
@@ -36,7 +39,7 @@ export default {
 
 ```js
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form"
-import { Button } from "@nextui-org/react";
+import { Button } from "@heroui/react";
 import RHFInput from "../components/RHFInput";
 import schema from "../static/schema";
 import { yupResolver } from "@hookform/resolvers/yup";
