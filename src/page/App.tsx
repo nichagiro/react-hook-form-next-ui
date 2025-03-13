@@ -13,6 +13,14 @@ import DataTable from "../components/dataTable/DataTable";
 import Panel from "../components/Panel";
 import Layout from "../components/Layout";
 import RHFSelect from "../components/RHFSelect";
+import RHFTextArea from "../components/RHFTextArea";
+import RHFDualTime from "../components/RHFDualTime";
+import RHFAutocomplete from "../components/RHFAutocomplete";
+import Modal from "../components/Modal";
+import RHFRadioGroup from "../components/RHFRadioGroup";
+import RHFCheckbox from "../components/RHFCheckbox";
+import RHFCheckboxGroup from "../components/RHFCheckboxGroup";
+import RHFInputOtp from "../components/RHFInputOtp";
 
 // statics
 import schema from "../static/schema";
@@ -24,18 +32,8 @@ import { useEffect, useState } from "react";
 import { IForm } from "../types/app";
 
 // utils
-import { CalendarDate, Time } from "@internationalized/date";
-import RHFTextArea from "../components/RHFTextArea";
-import RHFDualTime from "../components/RHFDualTime";
-import RHFAutocomplete from "../components/RHFAutocomplete";
-import Modal from "../components/Modal";
-import RHFRadioGroup from "../components/RHFRadioGroup";
 import React from "react";
-import RHFCheckbox from "../components/RHFCheckbox";
-import RHFCheckboxGroup from "../components/RHFCheckboxGroup";
-import RHFInputOtp from "../components/RHFInputOtp";
-
-// const defaultRows: string[] = [];
+import { CalendarDate, Time } from "@internationalized/date";
 
 const App = () => {
   const [data, setData] = useState<IRows[]>([]);
@@ -52,8 +50,8 @@ const App = () => {
     console.log("🚀 ~ Event ~ data:", data)
   }
 
-  useEffect(() => {
-    const rows = fakerRows();
+  const getData = (index?: number) => {
+    const rows = fakerRows(index);
     const options = fakerUsers();
 
     setData(rows);
@@ -67,6 +65,10 @@ const App = () => {
     },
     ...options
     ])
+  }
+
+  useEffect(() => {
+    getData()
 
     setTimeout(() => {
       setLoading(false);
@@ -111,22 +113,29 @@ const App = () => {
       </Modal>
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(onSubmit)}>
+          <div className="flex gap-5 mb-5 justify-end">
+            <Button color="danger" onPress={() => getData(2)}>
+              submit
+            </Button>
+          </div>
           <Panel title="FORM WITHOUT SCHEMA" collapse>
-            <DatePicker className="max-w-[284px]" label="Birth date"         {...{ ref: undefined }}
-            />
-            <div className="mb-5">
-              <Button color="secondary" onPress={() => setModal(true)}>
-                Modal
-              </Button>
-            </div>
-            <div className="flex gap-5">
-              <RHFCheckbox name="checkbox" value={"check"}>NICOLAS</RHFCheckbox>
+            <div className="flex gap-5 mb-5">
               <RHFCheckboxGroup
                 name="checkboxGroup"
                 data={options.map(item => ({ children: item.label, value: item.key }))}
                 orientation="horizontal"
                 color="danger"
-                defaultValue={["928"]} />
+                defaultValue={["928"]}
+              />
+            </div>
+            <div className="flex gap-5">
+              <DatePicker className="max-w-[284px]" label="Birth date" />
+              <div className="mb-5">
+                <Button color="secondary" onPress={() => setModal(true)}>
+                  Modal
+                </Button>
+              </div>
+              <RHFCheckbox name="checkbox" value={"check"}>NICOLAS</RHFCheckbox>
               <RHFInput
                 name="inputR"
                 label="RULES INPUT"
@@ -244,23 +253,21 @@ const App = () => {
             <DataTable
               isStriped
               cellClass="whitespace-nowrap overflow-hidden overflow-ellipsis max-w-[150px]"
-              // defaultSelectedKeys={defaultRows}
-              defaultPaginateNumber={10}
-              optionsPaginateNumber={[5, 7, 10]}
-              sortDescriptor={{ column: "service", direction: "ascending" }}
-              inputSearch={{ variant: "bordered", color: "warning" }}
+              rowsPerPageOptions={{ default: 3, options: [3, 5, 7] }}                            
+              // sortDescriptor={{ column: "service", direction: "ascending" }}
+              // inputSearch={{ variant: "bordered", color: "warning" }}
               color="primary"
               selectionMode="multiple"
-              onSelect={row => console.log(row)}
+              // onSelect={row => console.log(row)}
               rows={data}
-              loading={loading}
+              // loading={loading}
               columns={columns}
-              extraTopContent={
-                <div className="flex gap-x-2">
-                  <Button color="warning">One</Button>
-                  <Button color="danger">Two</Button>
-                </div>
-              }
+            // extraTopContent={
+            //   <div className="flex gap-x-2">
+            //     <Button color="warning">One</Button>
+            //     <Button color="danger">Two</Button>
+            //   </div>
+            // }
             />
           </Panel>
         </form>

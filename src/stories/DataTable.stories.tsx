@@ -13,46 +13,41 @@ const meta = {
   tags: ['autodocs'],
   argTypes: {
     color: { options: COLORS, control: "select", type: "string" },
-    optionsPaginateNumber: { description: "Rows for pages" },
-    showHandlePaginate: { description: "Show optionsPaginateNumber " },
     itemsName: { description: "Display items name", control: "text" },
     inputSearch: { description: "Custon input search" },
-    showFilter: { description: "Show input search" },
+    hideFilterSearch: { description: "hide input search" },
     extraTopContent: { description: "Custom rigth content-top" },
     cellClass: { description: "ClassName for row" },
     keyRow: { description: "Key param in rows", control: "text" },
     selectionMode: { options: ["single", "none", "multiple"], control: "select" },
     onSelect: { description: "Return function with rows param" },
-    columns: { description: "Additional props: format, dateFormat" }
+    columns: { description: "Additional props: format, dateFormat" },
+    rowsPerPageOptions: { description: "RowsPerPage" }
   },
 } satisfies Meta<typeof DataTable>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-
 const ExtraTopContent = () => <Button color='danger'>Downoload</Button>
-
-const OptionsPaginateNumber = [1, 3, 5]
-
-const DefaultSelectedKeys = ["1", "5"]
 
 export const table: Story = {
   args: {
     columns: columns,
     rows: fakerRows(),
-    optionsPaginateNumber: OptionsPaginateNumber,
-    defaultPaginateNumber: 3,
     color: 'primary',
     cellClass: "whitespace-nowrap overflow-hidden overflow-ellipsis max-w-[150px]",
     loading: false,
-    showFilter: true,
+    hideFilterSearch: false,
     selectionMode: "multiple",
-    showHandlePaginate: true,
+    hideRowsPerPageOptions: false,
     onSelect: row => console.log(row),
     itemsName: "users",
     keyRow: "id",
     extraTopContent: <ExtraTopContent />,
-    defaultSelectedKeys: DefaultSelectedKeys,
+    rowsPerPageOptions: {
+      options: [5, 10, 15, 20, 25, 30],
+      default: 5
+    }
   },
 };

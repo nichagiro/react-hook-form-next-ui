@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from "react";
+import React, { useEffect } from "react";
 
 import {
   Table, TableHeader, TableColumn, TableBody, TableRow, TableCell,
@@ -18,16 +18,21 @@ import { parse } from "@formkit/tempo";
 import { DataTableProps } from "./types";
 
 const DataTable = ({
-  rows, columns, showFilter = true, loading = false, keyRow = "id", defaultSelectedKeys = [], itemsName,
-  selectionMode, inputSearch, showHandlePaginate = true, extraTopContent, cellClass,
-  onSelect, defaultPaginateNumber = 10, optionsPaginateNumber = [5, 10, 15], ...props
+  rows, columns, hideFilterSearch, loading = false, keyRow = "id", itemsName,
+  selectionMode, inputSearch, hideRowsPerPageOptions, extraTopContent, cellClass,
+  onSelect, rowsPerPageOptions = { default: 10, options: [5, 10, 15] }, ...props
 }: DataTableProps) => {
 
   const [filterValue, setFilterValue] = useState("");
-  const [rowsPerPage, setRowsPerPage] = useState(optionsPaginateNumber.includes(defaultPaginateNumber) ? defaultPaginateNumber : optionsPaginateNumber[0]);
+  const [rowsPerPage, setRowsPerPage] = useState(rowsPerPageOptions.default);
   const [page, setPage] = useState<number>(1);
-  const [selectedKeys, setSelectedKeys] = useState<Selection>(new Set(defaultSelectedKeys));
+  const [selectedKeys, setSelectedKeys] = useState<Selection>(new Set());
   const [sortDescriptor, setSortDescriptor] = useState<SortDescriptor>({ column: "", direction: "ascending" });
+
+  useEffect(() => {
+    setPage(1);
+    setSelectedKeys(new Set());
+  }, [rows])
 
   const searchText = useDebounce(filterValue, 500);
 
@@ -139,7 +144,7 @@ const DataTable = ({
   }, [page]);
 
   const onRowsPerPageChange = useCallback((e: ChangeEvent<HTMLSelectElement>) => {
-    setRowsPerPage(Number(e.target.value) as 5 | 10 | 15);
+    setRowsPerPage(Number(e.target.value));
     setPage(1);
   }, []);
 
@@ -208,7 +213,7 @@ const DataTable = ({
       <div className="flex flex-col gap-4 relative">
         <div className="flex justify-between gap-3 items-end">
           {
-            showFilter &&
+            !hideFilterSearch &&
             <Input
               {...inputSearch}
               className={inputSearch?.className ?? "w-full sm:max-w-[44%]"}
@@ -226,7 +231,7 @@ const DataTable = ({
             Total {rows.length} {itemsName ?? "datos"}
           </span>
           {
-            showHandlePaginate &&
+            !hideRowsPerPageOptions &&
             <label className="flex items-center text-default-400 text-small">
               Filas por página:
               <select
@@ -234,7 +239,7 @@ const DataTable = ({
                 onChange={onRowsPerPageChange}
                 defaultValue={rowsPerPage}
               >
-                {optionsPaginateNumber.map(number =>
+                {rowsPerPageOptions.options.map(number =>
                   <option key={number} value={number}>
                     {number}
                   </option>
@@ -248,7 +253,7 @@ const DataTable = ({
   }, [
     filterValue, rows.length, onClear, onRowsPerPageChange,
     inputSearch, extraTopContent, onSearchChange, rowsPerPage,
-    showFilter, showHandlePaginate, optionsPaginateNumber, itemsName
+    hideFilterSearch, hideRowsPerPageOptions, rowsPerPageOptions, itemsName
   ]);
 
   return (
