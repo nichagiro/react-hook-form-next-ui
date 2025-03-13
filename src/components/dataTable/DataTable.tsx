@@ -18,7 +18,7 @@ import { parse } from "@formkit/tempo";
 import { DataTableProps } from "./types";
 
 const DataTable = ({
-  rows, columns, hideFilterSearch, loading = false, keyRow = "id", itemsName,
+  rows, columns, hideFilterSearch, loading = false, keyRow = "id", itemsName = "datos",
   selectionMode, inputSearch, hideRowsPerPageOptions, extraTopContent, cellClass,
   onSelect, rowsPerPageOptions = { default: 10, options: [5, 10, 15] }, ...props
 }: DataTableProps) => {
@@ -228,7 +228,7 @@ const DataTable = ({
         </div>
         <div className="flex justify-between items-center">
           <span className="text-default-400 text-small">
-            Total {rows.length} {itemsName ?? "datos"}
+            Total {rows.length} {itemsName}
           </span>
           {
             !hideRowsPerPageOptions &&
