@@ -1,5 +1,5 @@
 import { TestDateRangeProps, TestDualDateProps, TestDualDateRangeProps, TypeRangeDateValue, TypeRangeTimeValue } from "./types";
-import { diffDays, diffHours, diffMonths, diffSeconds, diffYears, isAfter, isEqual, parse } from '@formkit/tempo';
+import { diffDays, diffHours, diffMinutes, diffMonths, diffYears, isAfter, isEqual, parse } from '@formkit/tempo';
 
 export const testDualDateRange = ({ value, context, name, range, rangeDate, type }: TestDualDateRangeProps) => {
   const field = context.parent[name];
@@ -69,7 +69,7 @@ export const testDualTimeRange = ({ value, context, name, range, rangeDate, type
   if (rangeDate === "hours") {
     diff = diffHours(end, start)
   } else {
-    diff = diffSeconds(end, start)
+    diff = diffMinutes(end, start)
   }
 
   return diff < range

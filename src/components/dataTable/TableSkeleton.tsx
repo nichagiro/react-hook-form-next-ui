@@ -2,7 +2,10 @@ import React from "react";
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Skeleton } from "@heroui/react";
 import { SkeletonTableProps } from "./types";
 
-const TableSkeleton = ({ size, columns }: SkeletonTableProps) => {
+const TableSkeleton = ({
+  size = 10,
+  columns = []
+}: SkeletonTableProps) => {
   return (
     <Table aria-label="Tabla de resultados">
       <TableHeader>
@@ -13,7 +16,7 @@ const TableSkeleton = ({ size, columns }: SkeletonTableProps) => {
         )}
       </TableHeader>
       <TableBody>
-        {Array.from({ length: size ?? 10 }, (_, index) =>
+        {Array.from({ length: size }, (_, index) =>
           <TableRow key={index}>
             {() =>
               <TableCell>

@@ -1,7 +1,7 @@
 {
    "name": "react-hook-form-next-ui",
    "type": "module",
-   "version": "3.0.3",
+   "version": "3.0.4",
    "main": "./dist/index.js",
    "module": "./dist/index.js",
    "keywords": [
@@ -51,7 +51,7 @@
       "@formkit/tempo": "^0.1.2",
       "@heroui/react": "^2.6.14",
       "@hookform/devtools": "^4.3.1",
-      "@hookform/resolvers": "^3.9.1",
+      "@hookform/resolvers": "^4.1.3",
       "@storybook/addon-essentials": "^8.4.7",
       "@storybook/addon-interactions": "^8.4.7",
       "@storybook/addon-onboarding": "^8.4.7",
@@ -69,8 +69,6 @@
       "eslint-plugin-react-refresh": "^0.4.16",
       "eslint-plugin-storybook": "^0.11.1",
       "framer-motion": "^12.0.1",
-      "globals": "^15.13.0",
-      "install": "^0.13.0",
       "postcss": "^8.4.49",
       "react": "^19.0.0",
       "react-dom": "^19.0.0",
@@ -88,5 +86,8 @@
       "extends": [
          "plugin:storybook/recommended"
       ]
+   },
+   "dependencies": {
+      "globals": "^16.0.0"
    }
 }

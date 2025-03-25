@@ -22,7 +22,8 @@ const meta = {
     selectionMode: { options: ["single", "none", "multiple"], control: "select" },
     onSelect: { description: "Return function with rows param" },
     columns: { description: "Additional props: format, dateFormat" },
-    rowsPerPageOptions: { description: "RowsPerPage" }
+    rowsPerPageOptions: { description: "RowsPerPage" },
+    isVirtualized: {description: "Virtualized table and remove pagination"}
   },
 } satisfies Meta<typeof DataTable>;
 
@@ -38,6 +39,7 @@ export const table: Story = {
     color: 'primary',
     cellClass: "whitespace-nowrap overflow-hidden overflow-ellipsis max-w-[150px]",
     loading: false,
+    isVirtualized: false,
     hideFilterSearch: false,
     selectionMode: "multiple",
     hideRowsPerPageOptions: false,

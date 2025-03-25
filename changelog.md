@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.0.4] - 2025-03-25
+In component <DataTable />, testYup
+
+### Added 
+- isVirtualized - props (Removed pagination when is in use)
+- Search incon in Input search table
+
+### Changed 
+- Bottom and Top component, outside of card layout
+
+## Fixed
+- local state - if onSelect normally row select in state
+- testDualTimeRange - diff in minutes time
+
 ## [3.0.2] - 2025-03-13
 In component <DataTable />
 

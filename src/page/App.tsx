@@ -68,7 +68,7 @@ const App = () => {
   }
 
   useEffect(() => {
-    getData()
+    getData(100)
 
     setTimeout(() => {
       setLoading(false);
@@ -251,9 +251,11 @@ const App = () => {
           </Panel >
           <Panel title="Table Component" >
             <DataTable
-              isStriped
-              cellClass="whitespace-nowrap overflow-hidden overflow-ellipsis max-w-[150px]"
-              rowsPerPageOptions={{ default: 3, options: [3, 5, 7] }}                            
+              isVirtualized
+              // maxTableHeight={500}
+              // isStriped
+              // cellClass="whitespace-nowrap overflow-hidden overflow-ellipsis max-w-[150px]"
+              // rowsPerPageOptions={{ default: 10, options: [3, 5, 7] }}
               // sortDescriptor={{ column: "service", direction: "ascending" }}
               // inputSearch={{ variant: "bordered", color: "warning" }}
               color="primary"

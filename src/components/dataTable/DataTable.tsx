@@ -7,20 +7,22 @@ import {
 } from "@heroui/react";
 import TableSkeleton from "./TableSkeleton";
 
-// hooks
+// uitls - // types - // icons // hooks
 import { ChangeEvent, useCallback, useMemo, useState } from 'react';
 import useDebounce from "../../helpers/hooks/useDebounce";
-
-// uitls
 import { parse } from "@formkit/tempo";
-
-// types
 import { DataTableProps } from "./types";
+import SearchIcon from "../../icons/SearchIcon";
 
 const DataTable = ({
-  rows, columns, hideFilterSearch, loading = false, keyRow = "id", itemsName = "datos",
+  hideFilterSearch, loading, isVirtualized, onSelect,
   selectionMode, inputSearch, hideRowsPerPageOptions, extraTopContent, cellClass,
-  onSelect, rowsPerPageOptions = { default: 10, options: [5, 10, 15] }, ...props
+  rows = [],
+  columns = [],
+  keyRow = "id",
+  itemsName = "datos",
+  rowsPerPageOptions = { default: 10, options: [5, 10, 15] },
+  ...props
 }: DataTableProps) => {
 
   const [filterValue, setFilterValue] = useState("");
@@ -40,7 +42,6 @@ const DataTable = ({
 
   const handleSelect = useCallback((row: Selection) => {
     setSelectedKeys(row);
-    if (!onSelect || selectionMode === "none") return;
 
     let data: any[] = [];
 
@@ -53,7 +54,8 @@ const DataTable = ({
       data = rows.filter(item => [...row].includes(item[keyRow])); //multi
     }
 
-    return onSelect(data);
+    if (onSelect) onSelect(data);
+
   }, [onSelect, rows, selectionMode, keyRow])
 
   const filteredItems: any[] = useMemo(() => {
@@ -120,10 +122,13 @@ const DataTable = ({
   }, [sortDescriptor, filteredItems, columns]);
 
   const dataRow = useMemo(() => {
+    if (isVirtualized) return sortedItems;
+
     const start = (page - 1) * rowsPerPage;
     const end = start + rowsPerPage;
+
     return sortedItems.slice(start, end)
-  }, [sortedItems, page, rowsPerPage])
+  }, [sortedItems, page, rowsPerPage, isVirtualized])
 
 
   const onClear = useCallback(() => {
@@ -178,7 +183,7 @@ const DataTable = ({
 
   const bottomContent = useMemo(() => {
     return (
-      <div className="py-2 px-2 flex justify-between items-center">
+      <div className="py-2 px-2 mt-2 flex justify-between items-center">
         <span className="w-[30%] text-small text-default-400">
           {[...selectedKeys].length > 0 &&
             <>
@@ -187,30 +192,35 @@ const DataTable = ({
                 : "filas seleccionadas"}
             </>}
         </span>
-        <Pagination
-          isCompact
-          showControls
-          showShadow
-          page={page}
-          total={pages}
-          onChange={setPage}
-          color={props.color}
-        />
-        <div className="hidden sm:flex w-[30%] justify-end gap-2">
-          <Button isDisabled={pages === 1} size="sm" variant="flat" onPress={onPreviousPage}>
-            Atrás
-          </Button>
-          <Button isDisabled={pages === 1} size="sm" variant="flat" onPress={onNextPage}>
-            Siguiente
-          </Button>
-        </div>
+        {
+          !isVirtualized &&
+          <>
+            <Pagination
+              isCompact
+              showControls
+              showShadow
+              page={page}
+              total={pages}
+              onChange={setPage}
+              color={props.color}
+            />
+            <div className="hidden sm:flex w-[30%] justify-end gap-2">
+              <Button isDisabled={pages === 1} size="sm" variant="flat" onPress={onPreviousPage}>
+                Atrás
+              </Button>
+              <Button isDisabled={pages === 1} size="sm" variant="flat" onPress={onNextPage}>
+                Siguiente
+              </Button>
+            </div>
+          </>
+        }
       </div >
     );
-  }, [page, pages, onNextPage, onPreviousPage, selectedKeys, props.color]);
+  }, [page, pages, onNextPage, onPreviousPage, selectedKeys, props.color, isVirtualized]);
 
   const topContent = useMemo(() => {
     return (
-      <div className="flex flex-col gap-4 relative">
+      <div className="flex flex-col gap-4 relative pb-2">
         <div className="flex justify-between gap-3 items-end">
           {
             !hideFilterSearch &&
@@ -218,6 +228,7 @@ const DataTable = ({
               {...inputSearch}
               className={inputSearch?.className ?? "w-full sm:max-w-[44%]"}
               placeholder={inputSearch?.placeholder ?? "Buscar..."}
+              startContent={<SearchIcon />}
               value={filterValue}
               onClear={() => onClear()}
               onValueChange={onSearchChange}
@@ -231,7 +242,7 @@ const DataTable = ({
             Total {rows.length} {itemsName}
           </span>
           {
-            !hideRowsPerPageOptions &&
+            !hideRowsPerPageOptions && !isVirtualized &&
             <label className="flex items-center text-default-400 text-small">
               Filas por página:
               <select
@@ -252,44 +263,46 @@ const DataTable = ({
     );
   }, [
     filterValue, rows.length, onClear, onRowsPerPageChange,
-    inputSearch, extraTopContent, onSearchChange, rowsPerPage,
+    inputSearch, extraTopContent, onSearchChange, rowsPerPage, isVirtualized,
     hideFilterSearch, hideRowsPerPageOptions, rowsPerPageOptions, itemsName
   ]);
 
   return (
     <>
-      {loading ? <TableSkeleton columns={columns} size={rowsPerPage} /> :
-        <Table
-          {...props}
-          isHeaderSticky={true}
-          aria-label={props["aria-label"] ?? "Tabla de resultados"}
-          bottomContent={rows.length > 0 ? bottomContent : undefined}
-          bottomContentPlacement="outside"
-          topContentPlacement="outside"
-          topContent={rows.length > 0 ? topContent : undefined}
-          sortDescriptor={sortDescriptor}
-          onSortChange={setSortDescriptor}
-          selectedKeys={selectedKeys}
-          onSelectionChange={handleSelect}
-          selectionMode={selectionMode}
-        >
-          <TableHeader columns={columns}>
-            {column => <TableColumn  {...column} children={undefined} key={column.key} />}
-          </TableHeader>
-          <TableBody emptyContent="No hay datos." items={dataRow}>
-            {
-              item =>
-                <TableRow key={item[keyRow]}>
-                  {
-                    columnKey =>
-                      <TableCell className={cellClass}>
-                        {renderCell(item, columnKey as string)}
-                      </TableCell>
-                  }
-                </TableRow>
-            }
-          </TableBody>
-        </Table>}
+      {
+        loading ? <TableSkeleton columns={columns} size={rowsPerPage} /> :
+          <>
+            {topContent}
+            <Table
+              {...props}
+              aria-label="Tabla de datos"
+              isVirtualized={isVirtualized}
+              sortDescriptor={sortDescriptor}
+              onSortChange={setSortDescriptor}
+              selectedKeys={selectedKeys}
+              onSelectionChange={handleSelect}
+              selectionMode={selectionMode}
+            >
+              <TableHeader columns={columns}>
+                {column => <TableColumn  {...column} children={undefined} key={column.key} />}
+              </TableHeader>
+              <TableBody emptyContent="No hay datos." items={dataRow}>
+                {
+                  item =>
+                    <TableRow key={item[keyRow]}>
+                      {
+                        columnKey =>
+                          <TableCell className={cellClass}>
+                            {renderCell(item, columnKey as string)}
+                          </TableCell>
+                      }
+                    </TableRow>
+                }
+              </TableBody>
+            </Table>
+            {bottomContent}
+          </>
+      }
     </>
   )
 };
