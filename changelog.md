@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.0.5] - 2025-04-03
+In component <Select />
+
+### Changed + Fixed
+- onSelectionChange: return SharedSelection | new Set(). remove "all"
+
 ## [3.0.4] - 2025-03-25
 In component <DataTable />, testYup
 

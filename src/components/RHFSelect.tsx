@@ -10,10 +10,10 @@ interface RHFSelectProps extends Omit<SelectProps, "children" | "items" | "selec
   allSelectText?: string;
 }
 
-const RHFSelect = ({ name, data, rules, defaultSelectedKeys, disabledKeys, renderValue, allOptions, allSelectText, onSelectionChange, ...props }: RHFSelectProps) => {
+const RHFSelect = ({ name, data, rules, defaultSelectedKeys, disabledKeys, renderValue, allOptions, allSelectText, onSelectionChange, selectionMode, ...props }: RHFSelectProps) => {
   const { control, setValue } = useFormContext<{ [key: string]: string }>();
 
-  const isMultiple = useMemo(() => props.selectionMode === "multiple", [props.selectionMode])
+  const isMultiple = useMemo(() => selectionMode === "multiple", [selectionMode])
 
   const dataSelect = useMemo(
     () => allOptions && isMultiple ? ([
@@ -32,26 +32,27 @@ const RHFSelect = ({ name, data, rules, defaultSelectedKeys, disabledKeys, rende
       const disableds = new Set(disabledKeys)
       const include = options.has("all")
 
-      const dataOptions = data.filter(item => !disableds.has(item.key as string))
-
       let items: SharedSelection = values
 
-      if (include) {
-        if (options.size - 1 === dataOptions.length) {
+      if (include && isMultiple) {
+        
+        // indica que ya viene seleccionado todo entonces se deselecciona
+        if (options.size - 1 === data.length) {
           setValue(name, "")
           items = new Set()
         }
         else {
-          const vals = dataOptions.map(x => x.key).filter(item => item !== "all")
+          const dataOptions = data.filter(item => !disableds.has(item.key as string))
+          const vals = dataOptions.map(x => x.key)
           setValue(name, vals.toString())
-          items = "all"
+          items = new Set(vals as string[])
         }
       }
 
-      onSelectionChange?.(options.size === dataOptions.length ? "all" : items)
+      onSelectionChange?.(items)
 
     }, 250)
-  }, [data, name, onSelectionChange, setValue, disabledKeys])
+  }, [data, name, onSelectionChange, setValue, disabledKeys, isMultiple])
 
   const RenderValue = useCallback((items: SelectedItems) => (
     <span>
@@ -78,6 +79,7 @@ const RHFSelect = ({ name, data, rules, defaultSelectedKeys, disabledKeys, rende
             field.value ? field.value.split(",") : []
           }
           errorMessage={errors[name]?.message || ""}
+          selectionMode={selectionMode}
           onSelectionChange={values => selectionChange(values)}
           isInvalid={Boolean(errors[name])}
           renderValue={renderValue ?? isMultiple ? RenderValue : undefined}

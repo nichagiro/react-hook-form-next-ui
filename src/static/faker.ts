@@ -26,7 +26,7 @@ export const fakerRows = (index?: number): iRows[] => Array.from({ length: index
   return data
 })
 
-export const fakerUsers = () => Array.from({ length: 10 }, () => ({
+export const fakerUsers = (index?: number) => Array.from({ length: index ?? 10 }, () => ({
   key: faker.string.nanoid(),
   label: faker.person.firstName()
 }))

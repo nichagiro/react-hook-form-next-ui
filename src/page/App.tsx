@@ -52,11 +52,12 @@ const App = () => {
 
   const getData = (index?: number) => {
     const rows = fakerRows(index);
-    const options = fakerUsers();
+    const options = fakerUsers(10);
 
     setData(rows);
 
-    setOptions([{
+    setOptions([
+      {
       key: "928",
       label: "Nicolas"
     }, {
@@ -200,10 +201,10 @@ const App = () => {
                 label="Select"
                 placeholder="Seleccione..."
                 isLoading={loading}
-                disabledKeys={["10", "928"]}
+                disabledKeys={["10"]}
                 data={options.map(item => ({ key: item.key, children: item.label }))}
                 onSelectionChange={e => console.log(e)}
-                selectionMode="multiple"
+                selectionMode="multiple"                
                 allOptions={{
                   children: <p className="text-danger">all options</p>,
                   textValue: "Todas las opciones"
