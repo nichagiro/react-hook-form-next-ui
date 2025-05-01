@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.0.6] - 2025-04-30
+In component <DataTable />
+
+### Changed 
+- SortDescriptor used in default state of component (order column)
+- Reset page(1) only when new rows.length/rowsPerPage is minor current paginate
+
 ## [3.0.5] - 2025-04-03
 In component <Select />
 

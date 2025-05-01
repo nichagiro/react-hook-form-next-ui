@@ -58,13 +58,13 @@ const App = () => {
 
     setOptions([
       {
-      key: "928",
-      label: "Nicolas"
-    }, {
-      key: "10",
-      label: "James"
-    },
-    ...options
+        key: "928",
+        label: "Nicolas"
+      }, {
+        key: "10",
+        label: "James"
+      },
+      ...options
     ])
   }
 
@@ -115,7 +115,7 @@ const App = () => {
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(onSubmit)}>
           <div className="flex gap-5 mb-5 justify-end">
-            <Button color="danger" onPress={() => getData(2)}>
+            <Button color="danger" onPress={() => getData(15)}>
               submit
             </Button>
           </div>
@@ -166,7 +166,7 @@ const App = () => {
                 name="opt"
                 length={4}
                 color="primary"
-              // rules={{ required: { message: "requerido pape", value: true } }}
+                rules={{ required: { message: "requerido pape", value: true } }}
               />
               <RHFInput
                 name="input"
@@ -204,7 +204,7 @@ const App = () => {
                 disabledKeys={["10"]}
                 data={options.map(item => ({ key: item.key, children: item.label }))}
                 onSelectionChange={e => console.log(e)}
-                selectionMode="multiple"                
+                selectionMode="multiple"
                 allOptions={{
                   children: <p className="text-danger">all options</p>,
                   textValue: "Todas las opciones"
@@ -252,12 +252,12 @@ const App = () => {
           </Panel >
           <Panel title="Table Component" >
             <DataTable
-              isVirtualized
+              // isVirtualized
               // maxTableHeight={500}
               // isStriped
               // cellClass="whitespace-nowrap overflow-hidden overflow-ellipsis max-w-[150px]"
               // rowsPerPageOptions={{ default: 10, options: [3, 5, 7] }}
-              // sortDescriptor={{ column: "service", direction: "ascending" }}
+              sortDescriptor={{ column: "service", direction: "ascending" }}
               // inputSearch={{ variant: "bordered", color: "warning" }}
               color="primary"
               selectionMode="multiple"

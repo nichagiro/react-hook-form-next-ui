@@ -29,11 +29,17 @@ const DataTable = ({
   const [rowsPerPage, setRowsPerPage] = useState(rowsPerPageOptions.default);
   const [page, setPage] = useState<number>(1);
   const [selectedKeys, setSelectedKeys] = useState<Selection>(new Set());
-  const [sortDescriptor, setSortDescriptor] = useState<SortDescriptor>({ column: "", direction: "ascending" });
+  const [sortDescriptor, setSortDescriptor] = useState<SortDescriptor>(props.sortDescriptor ?? { column: "", direction: "ascending" });
 
   useEffect(() => {
-    setPage(1);
+    const totalPages = Math.ceil(rows.length / rowsPerPage)
+
+    if (page > totalPages) {
+      setPage(1);
+    }
+
     setSelectedKeys(new Set());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rows])
 
   const searchText = useDebounce(filterValue, 500);
