@@ -1,18 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect } from "react";
+import React, { ChangeEvent, useCallback, useMemo, useState } from 'react';
 
 import {
   Table, TableHeader, TableColumn, TableBody, TableRow, TableCell,
   Button, Input, SortDescriptor, Selection, Pagination
 } from "@heroui/react";
-import TableSkeleton from "./TableSkeleton";
 
-// uitls - // types - // icons // hooks
-import { ChangeEvent, useCallback, useMemo, useState } from 'react';
-import useDebounce from "../../helpers/hooks/useDebounce";
-import { parse } from "@formkit/tempo";
-import { DataTableProps } from "./types";
+import TableSkeleton from "./TableSkeleton";
 import SearchIcon from "../../icons/SearchIcon";
+
+import { DataTableProps } from "./types";
+import useDebounce from "../../hooks/useDebounce";
 
 const DataTable = ({
   hideFilterSearch, loading, isVirtualized, onSelect,
@@ -20,7 +18,10 @@ const DataTable = ({
   rows = [],
   columns = [],
   keyRow = "id",
-  itemsName = "datos",
+  localText = {
+    emptyContent: "No hay datos.",
+    rowsPerPage: "Filas por pagina"
+  },
   rowsPerPageOptions = { default: 10, options: [5, 10, 15] },
   ...props
 }: DataTableProps) => {
@@ -29,22 +30,11 @@ const DataTable = ({
   const [rowsPerPage, setRowsPerPage] = useState(rowsPerPageOptions.default);
   const [page, setPage] = useState<number>(1);
   const [selectedKeys, setSelectedKeys] = useState<Selection>(new Set());
-  const [sortDescriptor, setSortDescriptor] = useState<SortDescriptor>(props.sortDescriptor ?? { column: "", direction: "ascending" });
-
-  useEffect(() => {
-    const totalPages = Math.ceil(rows.length / rowsPerPage)
-
-    if (page > totalPages) {
-      setPage(1);
-    }
-
-    setSelectedKeys(new Set());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [rows])
+  const [sortDescriptor, setSortDescriptor] = useState<SortDescriptor | undefined>();
 
   const searchText = useDebounce(filterValue, 500);
-
   const hasSearchFilter = Boolean(searchText);
+  const selectedCount = useMemo(() => [...selectedKeys].length, [selectedKeys])
 
   const handleSelect = useCallback((row: Selection) => {
     setSelectedKeys(row);
@@ -68,11 +58,12 @@ const DataTable = ({
     let data = [...rows];
 
     if (hasSearchFilter) {
-      data = data.filter((item) =>
+      data = data.filter(item =>
         Object.values(item as string | number).some((value, index) => {
           const param = Object.keys(item)[index];
+          const columnKey = columns.find(col => col.key == param)
 
-          if (!columns.map(col => col.key).includes(param)) {
+          if (!columnKey) {
             return false;
           }
 
@@ -80,7 +71,9 @@ const DataTable = ({
             return false;
           }
 
-          const data = value.toString().toLowerCase().includes(filterValue.toLowerCase())
+          const filter = columnKey.onFilter ? columnKey.onFilter(value) : value
+          const data = filter.toString().toLowerCase().includes(filterValue.toLowerCase())
+
           return data
         },
         )
@@ -92,9 +85,13 @@ const DataTable = ({
   const pages = Math.ceil(filteredItems.length / rowsPerPage) || 1;
 
   const sortedItems = useMemo(() => {
+    if (sortDescriptor === undefined) return filteredItems
+
     return [...filteredItems].sort((a, b) => {
-      const first: string | number | null = a[sortDescriptor.column as string | number]
-      const second: string | number | null = b[sortDescriptor.column as string | number]
+      const column = columns.find(col => col.key === sortDescriptor.column)
+
+      const first = column?.onOrder ? column.onOrder(a[sortDescriptor.column]) : a[sortDescriptor.column]
+      const second = column?.onOrder ? column.onOrder(b[sortDescriptor.column]) : b[sortDescriptor.column]
       let cmp: number = 0
 
       if (!first && !second) cmp = 0;
@@ -106,21 +103,7 @@ const DataTable = ({
       }
 
       if (typeof first === "string" && typeof second === "string") {
-        const column = columns.find(item => item.key === sortDescriptor.column)
-
-        if (first && second && column?.dateFormat) {
-          try {
-            const startDate = parse(first, column.dateFormat);
-            const endDate = parse(second, column.dateFormat);
-            cmp = startDate > endDate ? 1 : startDate < endDate ? -1 : 0;
-
-          } catch (error) {
-            console.warn("date format is not correct", error)
-          }
-
-        } else {
-          cmp = (first as string).localeCompare(second as string)
-        }
+        cmp = (first ?? "").localeCompare(second ?? "")
       }
 
       return sortDescriptor.direction === "descending" ? -cmp : cmp;
@@ -191,12 +174,11 @@ const DataTable = ({
     return (
       <div className="py-2 px-2 mt-2 flex justify-between items-center">
         <span className="w-[30%] text-small text-default-400">
-          {[...selectedKeys].length > 0 &&
+          {selectedCount > 0 &&
             <>
-              {[...selectedKeys].length} {[...selectedKeys].length === 1
-                ? "fila seleccionada"
-                : "filas seleccionadas"}
-            </>}
+              {selectedCount} {selectedCount === 1 ? (localText?.items?.[0] ?? "fila seleccionada") : (localText?.items?.[1] ?? "filas seleccionadas")}
+            </>
+          }
         </span>
         {
           !isVirtualized &&
@@ -211,18 +193,21 @@ const DataTable = ({
               color={props.color}
             />
             <div className="hidden sm:flex w-[30%] justify-end gap-2">
-              <Button isDisabled={pages === 1} size="sm" variant="flat" onPress={onPreviousPage}>
-                Atrás
+              <Button isDisabled={page === 1} size="sm" variant="flat" onPress={onPreviousPage}>
+                {localText.paginateButtons?.[0] ?? "Atrás"}
               </Button>
-              <Button isDisabled={pages === 1} size="sm" variant="flat" onPress={onNextPage}>
-                Siguiente
+              <Button isDisabled={page === pages} size="sm" variant="flat" onPress={onNextPage}>
+                {localText.paginateButtons?.[1] ?? "Siguiente"}
               </Button>
             </div>
           </>
         }
       </div >
     );
-  }, [page, pages, onNextPage, onPreviousPage, selectedKeys, props.color, isVirtualized]);
+  }, [
+    page, pages, onNextPage, onPreviousPage, selectedCount,
+    props.color, isVirtualized, localText.paginateButtons, localText.items]
+  );
 
   const topContent = useMemo(() => {
     return (
@@ -245,12 +230,12 @@ const DataTable = ({
         </div>
         <div className="flex justify-between items-center">
           <span className="text-default-400 text-small">
-            Total {rows.length} {itemsName}
+            Total {rows.length} {rows.length == 1 ? (localText?.items?.[0] ?? "dato") : (localText?.items?.[1] ?? "datos")}
           </span>
           {
             !hideRowsPerPageOptions && !isVirtualized &&
             <label className="flex items-center text-default-400 text-small">
-              Filas por página:
+              {localText.rowsPerPage}:
               <select
                 className="bg-transparent outline-none text-default-400 text-small"
                 onChange={onRowsPerPageChange}
@@ -268,9 +253,9 @@ const DataTable = ({
       </div>
     );
   }, [
-    filterValue, rows.length, onClear, onRowsPerPageChange,
+    filterValue, rows.length, onClear, onRowsPerPageChange, localText.rowsPerPage,
     inputSearch, extraTopContent, onSearchChange, rowsPerPage, isVirtualized,
-    hideFilterSearch, hideRowsPerPageOptions, rowsPerPageOptions, itemsName
+    hideFilterSearch, hideRowsPerPageOptions, rowsPerPageOptions, localText.items,
   ]);
 
   return (
@@ -279,9 +264,10 @@ const DataTable = ({
         loading ? <TableSkeleton columns={columns} size={rowsPerPage} /> :
           <>
             {topContent}
+
             <Table
               {...props}
-              aria-label="Tabla de datos"
+              aria-label={props["aria-label"] ?? "Tabla de resultados"}
               isVirtualized={isVirtualized}
               sortDescriptor={sortDescriptor}
               onSortChange={setSortDescriptor}
@@ -292,7 +278,8 @@ const DataTable = ({
               <TableHeader columns={columns}>
                 {column => <TableColumn  {...column} children={undefined} key={column.key} />}
               </TableHeader>
-              <TableBody emptyContent="No hay datos." items={dataRow}>
+
+              <TableBody emptyContent={localText.emptyContent} items={dataRow}>
                 {
                   item =>
                     <TableRow key={item[keyRow]}>
@@ -306,6 +293,7 @@ const DataTable = ({
                 }
               </TableBody>
             </Table>
+
             {bottomContent}
           </>
       }

@@ -1,6 +1,7 @@
 import React from "react";
+import { ColumnsTableProps } from "../components/dataTable/types";
 
-export const columns = [{
+export const columns: ColumnsTableProps[] = [{
   key: "service",
   title: "Servicio/Área",
   allowsSorting: true,
@@ -15,7 +16,9 @@ export const columns = [{
   title: "Fecha",
   allowsSorting: true,
   className: "text-danger",
-  dateFormat: "DD/MM/YYYY",
+  format: ({ value }) => new Date(value).toLocaleDateString(),
+  onFilter: (value) => new Date(value).toLocaleDateString(),
+
 }, {
   key: "value",
   title: "Valor",
@@ -26,6 +29,8 @@ export const columns = [{
   title: "Estado",
   allowsSorting: true,
   className: "text-danger",
+  onFilter: (value) => value === "Activo" ? "nico" : "angela",
+  onOrder: (value) => value === "Activo" ? "nico" : "angela"
 }, {
   key: "fake",
   title: "Render",

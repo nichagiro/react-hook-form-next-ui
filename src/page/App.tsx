@@ -4,17 +4,14 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 // ui
 import { DevTool } from "@hookform/devtools"
-import { Button, DatePicker } from "@heroui/react";
+import { Button, DatePicker, Divider } from "@heroui/react";
 import RHFInput from "../components/RHFInput";
 import RHFTime from "../components/RHFTime";
 import RHFDate from "../components/RHFDate";
-import RHFDualDate from "../components/RHFDualDate";
 import DataTable from "../components/dataTable/DataTable";
 import Panel from "../components/Panel";
-import Layout from "../components/Layout";
 import RHFSelect from "../components/RHFSelect";
 import RHFTextArea from "../components/RHFTextArea";
-import RHFDualTime from "../components/RHFDualTime";
 import RHFAutocomplete from "../components/RHFAutocomplete";
 import Modal from "../components/Modal";
 import RHFRadioGroup from "../components/RHFRadioGroup";
@@ -33,7 +30,7 @@ import { IForm } from "../types/app";
 
 // utils
 import React from "react";
-import { CalendarDate, Time } from "@internationalized/date";
+import { Time } from "@internationalized/date";
 
 const App = () => {
   const [data, setData] = useState<IRows[]>([]);
@@ -87,196 +84,188 @@ const App = () => {
   }, [methods])
 
   return (
-    <Layout title="REACT HOOK FORM + NEXTUI" color="primary">
-      <Modal
-        display={modal}
-        title="Tabla de resultados"
-        size="5xl"
-        acceptButton={{
-          color: "danger",
-          onPress: () => console.log("first"),
-          children: "Aceptar",
-        }}
-        cancelButton={{
-          color: "warning",
-          children: "Cancelar"
-        }}
-        onClose={() => setModal(false)}
-      >
-        <DataTable
-          selectionMode="multiple"
-          onSelect={row => console.log(row)}
-          rows={[data[1]]}
-          color="danger"
-          loading={loading}
-          columns={columns}
-        />
-      </Modal>
-      <FormProvider {...methods}>
-        <form onSubmit={methods.handleSubmit(onSubmit)}>
-          <div className="flex gap-5 mb-5 justify-end">
-            <Button color="danger" onPress={() => getData(15)}>
-              submit
-            </Button>
-          </div>
-          <Panel title="FORM WITHOUT SCHEMA" collapse>
-            <div className="flex gap-5 mb-5">
-              <RHFCheckboxGroup
-                name="checkboxGroup"
-                data={options.map(item => ({ children: item.label, value: item.key }))}
-                orientation="horizontal"
-                color="danger"
-                defaultValue={["928"]}
-              />
+    <>
+      <header className="bg-primary w-full text-center text-white py-5">
+        <h1 className="font-bold text-lg">
+          REACT HOOK FORM + NEXTU
+        </h1>
+      </header>
+      <Divider />
+      <main className="p-5 2xl:px-16 2xl:py-5 mx-auto">
+        <Modal
+          display={modal}
+          title="Tabla de resultados"
+          size="5xl"
+          acceptButton={{
+            color: "danger",
+            onPress: () => console.log("first"),
+            children: "Aceptar",
+          }}
+          cancelButton={{
+            color: "warning",
+            children: "Cancelar"
+          }}
+          onClose={() => setModal(false)}
+        >
+          <DataTable
+            selectionMode="multiple"
+            onSelect={row => console.log(row)}
+            rows={[data[1]]}
+            color="danger"
+            loading={loading}
+            columns={columns}
+          />
+        </Modal>
+        <FormProvider {...methods}>
+          <form onSubmit={methods.handleSubmit(onSubmit)}>
+            <div className="flex gap-5 mb-5 justify-end">
+              <Button color="danger" onPress={() => getData(15)}>
+                submit
+              </Button>
             </div>
-            <div className="flex gap-5">
-              <DatePicker className="max-w-[284px]" label="Birth date" />
-              <div className="mb-5">
-                <Button color="secondary" onPress={() => setModal(true)}>
-                  Modal
-                </Button>
+            <Panel title="FORM WITHOUT SCHEMA" collapse>
+              <div className="flex gap-5 mb-5">
+                <RHFCheckboxGroup
+                  name="checkboxGroup"
+                  data={options.map(item => ({ children: item.label, value: item.key }))}
+                  orientation="horizontal"
+                  color="danger"
+                  defaultValue={["928"]}
+                />
               </div>
-              <RHFCheckbox name="checkbox" value={"check"}>NICOLAS</RHFCheckbox>
-              <RHFInput
-                name="inputR"
-                label="RULES INPUT"
+              <div className="flex gap-5">
+                <DatePicker className="max-w-[284px]" label="Birth date" />
+                <div className="mb-5">
+                  <Button color="secondary" onPress={() => setModal(true)}>
+                    Modal
+                  </Button>
+                </div>
+                <RHFCheckbox name="checkbox" value={"check"}>NICOLAS</RHFCheckbox>
+                <RHFInput
+                  name="inputR"
+                  label="RULES INPUT"
+                  color="primary"
+                  rules={{
+                    maxLength: { message: "maximo 10 letras", value: 10 },
+                    minLength: { message: "minimo 4 letras", value: 4 },
+                    required: { message: "campo requerido", value: true },
+                  }}
+                />
+                <RHFInput
+                  name="inputR2"
+                  label="RULES INPUT NUMBER"
+                  color="primary"
+                  type="number"
+                  rules={{
+                    max: { message: "maximo 10", value: 10 },
+                    min: { message: "minimo 4", value: 4 },
+                    required: { message: "campo requerido", value: true },
+                  }}
+                />
+              </div>
+            </Panel>
+            <Panel title="FORM WITH SCHEMA">
+              <div className="grid grid-cols-3 gap-5">
+                <RHFInputOtp
+                  name="opt"
+                  length={4}
+                  color="primary"
+                  rules={{ required: { message: "requerido pape", value: true } }}
+                />
+                <RHFInput
+                  name="input"
+                  label="Input"
+                  placeholder="Write"
+                  variant="bordered"
+                  color="warning"
+                  onValueChange={e => console.log(e)}
+                  classNames={{ input: "text-end" }}
+                />
+                <RHFTime name="time" label="Time" color="primary" defaultValue={new Time(10, 10)} />
+                <RHFTime name="time2" label="Time2" color="secondary" />
+                <RHFDate name="dat3" label="Dat3e" color="primary" />
+                <RHFDate name="date" label="Date" color="success" rules={{ required: { value: true, message: "Campo Requerido" } }} />
+                <RHFSelect
+                  name="select"
+                  label="Select"
+                  placeholder="Seleccione..."
+                  isLoading={loading}
+                  disabledKeys={["10"]}
+                  data={options.map(item => ({ key: item.key, children: item.label }))}
+                  onSelectionChange={e => console.log(e)}
+                  selectionMode="multiple"
+                  allOptions={{
+                    children: <p className="text-danger">all options</p>,
+                    textValue: "Todas las opciones"
+                  }}
+                />
+                <RHFTextArea
+                  name="area"
+                  label="textArea"
+                  placeholder="escriba en el textArea"
+                  rules={{ required: { message: "obligado pape", value: true } }}
+                  onValueChange={e => console.log(e)}
+                />
+                <RHFAutocomplete
+                  name="autocomplete"
+                  label="Autocomplete"
+                  placeholder="Autocomplete"
+                  data={options.map(item => ({ children: item.label, key: item.key }))}
+                  disabledKeys={["10"]}
+                  defaultSelectedKey={"928"}
+                  rules={{ required: { value: true, message: "uyy zona" } }}
+                  onSelectionChange={e => console.log(e)}
+                />
+                <RHFRadioGroup
+                  name="radios"
+                  data={options.map(item => ({ value: item.key, children: item.label }))}
+                  label="Elementos Relacionados?"
+                  orientation="horizontal"
+                  onValueChange={value => console.log(value)}
+                  rules={{ required: { message: "mmmmmjuu", value: true } }}
+                  defaultValue={"928"}
+                />
+              </div>
+              <div className="my-8 gap-5 flex">
+                <Button type="submit">Click</Button>
+                <Button onPress={() => methods.reset()} color="danger">reset</Button>
+              </div>
+            </Panel >
+            <Panel title="Table Component" >
+              <DataTable
+                // isVirtualized
+                // maxTableHeight={500}
+                // isStriped
+                // cellClass="whitespace-nowrap overflow-hidden overflow-ellipsis max-w-[150px]"
+                // rowsPerPageOptions={{ default: 10, options: [3, 5, 7] }}
+                sortDescriptor={{ column: "service", direction: "ascending" }}
+                // inputSearch={{ variant: "bordered", color: "warning" }}
                 color="primary"
-                rules={{
-                  maxLength: { message: "maximo 10 letras", value: 10 },
-                  minLength: { message: "minimo 4 letras", value: 4 },
-                  required: { message: "campo requerido", value: true },
-                }}
-              />
-              <RHFInput
-                name="inputR2"
-                label="RULES INPUT NUMBER"
-                color="primary"
-                type="number"
-                rules={{
-                  max: { message: "maximo 10", value: 10 },
-                  min: { message: "minimo 4", value: 4 },
-                  required: { message: "campo requerido", value: true },
-                }}
-              />
-            </div>
-          </Panel>
-          <Panel title="FORM WITH SCHEMA">
-            <div className="grid grid-cols-3 gap-5">
-              <RHFInputOtp
-                name="opt"
-                length={4}
-                color="primary"
-                rules={{ required: { message: "requerido pape", value: true } }}
-              />
-              <RHFInput
-                name="input"
-                label="Input"
-                placeholder="Write"
-                variant="bordered"
-                color="warning"
-                onValueChange={e => console.log(e)}
-                classNames={{ input: "text-end" }}
-              />
-              <RHFTime name="time" label="Time" color="primary" defaultValue={new Time(10, 10)} />
-              <RHFTime name="time2" label="Time2" color="secondary" />
-              <RHFDate name="dat3" label="Dat3e" color="primary" />
-              <RHFDate name="date" label="Date" color="success" rules={{ required: { value: true, message: "Campo Requerido" } }} />
-              <RHFDualDate
-                startDate={{
-                  name: "date1",
-                  label: "Fecha Inicial",
-                  rules: { required: { value: true, message: "Campo Requerido" } },
-                  defaultValue: new CalendarDate(2024, 8, 1)
-                }}
-                endDate={{
-                  name: "date2",
-                  label: "Fecha Final",
-                  visibleMonths: 2,
-                  rules: { required: { value: true, message: "Campo Requerido" } },
-                  defaultValue: new CalendarDate(2024, 8, 31)
-                }}
-              />
-              <RHFSelect
-                name="select"
-                label="Select"
-                placeholder="Seleccione..."
-                isLoading={loading}
-                disabledKeys={["10"]}
-                data={options.map(item => ({ key: item.key, children: item.label }))}
-                onSelectionChange={e => console.log(e)}
                 selectionMode="multiple"
-                allOptions={{
-                  children: <p className="text-danger">all options</p>,
-                  textValue: "Todas las opciones"
+                onSelect={row => console.log(row)}
+                rows={data}
+                // loading={loading}
+                columns={columns}
+                localText={{
+                  emptyContent: "NICO",
+                  items: ["Nico", "Nicolas"],
+                  paginateButtons: ["NICOA", "ANgela"],
+                  rowsPerPage: "nico por pagina",
                 }}
+              // extraTopContent={
+              //   <div className="flex gap-x-2">
+              //     <Button color="warning">One</Button>
+              //     <Button color="danger">Two</Button>
+              //   </div>
+              // }
               />
+            </Panel>
+          </form>
+        </FormProvider>
+        <DevTool control={methods.control} />
+      </main>
+    </>
 
-              <RHFTextArea
-                name="area"
-                label="textArea"
-                placeholder="escriba en el textArea"
-                rules={{ required: { message: "obligado pape", value: true } }}
-                onValueChange={e => console.log(e)}
-              />
-              <RHFDualTime
-                startTime={{
-                  name: "dualtime1", label: "d-time-1", hourCycle: 24,
-                  rules: { required: { value: true, message: "que espaldita la mia" } }
-                }}
-                endTime={{ name: "dualtime2", label: "d-time-2", hourCycle: 24 }}
-              />
-              <RHFAutocomplete
-                name="autocomplete"
-                label="Autocomplete"
-                placeholder="Autocomplete"
-                data={options.map(item => ({ children: item.label, key: item.key }))}
-                disabledKeys={["10"]}
-                defaultSelectedKey={"928"}
-                rules={{ required: { value: true, message: "uyy zona" } }}
-                onSelectionChange={e => console.log(e)}
-              />
-              <RHFRadioGroup
-                name="radios"
-                data={options.map(item => ({ value: item.key, children: item.label }))}
-                label="Elementos Relacionados?"
-                orientation="horizontal"
-                onValueChange={value => console.log(value)}
-                rules={{ required: { message: "mmmmmjuu", value: true } }}
-                defaultValue={"928"}
-              />
-            </div>
-            <div className="my-8 gap-5 flex">
-              <Button type="submit">Click</Button>
-              <Button onPress={() => methods.reset()} color="danger">reset</Button>
-            </div>
-          </Panel >
-          <Panel title="Table Component" >
-            <DataTable
-              // isVirtualized
-              // maxTableHeight={500}
-              // isStriped
-              // cellClass="whitespace-nowrap overflow-hidden overflow-ellipsis max-w-[150px]"
-              // rowsPerPageOptions={{ default: 10, options: [3, 5, 7] }}
-              sortDescriptor={{ column: "service", direction: "ascending" }}
-              // inputSearch={{ variant: "bordered", color: "warning" }}
-              color="primary"
-              selectionMode="multiple"
-              // onSelect={row => console.log(row)}
-              rows={data}
-              // loading={loading}
-              columns={columns}
-            // extraTopContent={
-            //   <div className="flex gap-x-2">
-            //     <Button color="warning">One</Button>
-            //     <Button color="danger">Two</Button>
-            //   </div>
-            // }
-            />
-          </Panel>
-        </form>
-      </FormProvider>
-      <DevTool control={methods.control} />
-    </Layout >
   )
 }
 
