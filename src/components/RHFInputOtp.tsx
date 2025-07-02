@@ -1,5 +1,5 @@
 import React from "react";
-import {  InputOtp, InputOtpProps } from "@heroui/react";
+import { InputOtp, InputOtpProps } from "@heroui/react";
 import { Controller, RegisterOptions, useFormContext } from "react-hook-form";
 
 interface RHFInputProps extends Omit<InputOtpProps, "errorMessage" | "isInvalid"> {
@@ -20,9 +20,10 @@ const RHFInputOtp = ({ defaultValue = "", rules, name, classNames, ...props }: R
         <InputOtp
           {...props}
           {...field}
+          onChange={(value) => { field.onChange(value); props.onChange?.(value) }}
           isInvalid={Boolean(errors[name])}
           errorMessage={errors[name] ? errors[name]?.message : ""}
-          classNames={{            
+          classNames={{
             ...classNames,
             input: `${classNames?.input || ""} ${errors[name] ? "placeholder:text-danger" : ""}`
           }}

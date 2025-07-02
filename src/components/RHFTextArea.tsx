@@ -20,6 +20,7 @@ const RHFTextArea = ({ defaultValue = "", rules, name, classNames, ...props }: R
         <Textarea
           {...props}
           {...field}
+          onChange={(value) => { field.onChange(value); props.onChange?.(value) }}
           isInvalid={Boolean(errors[name])}
           errorMessage={errors[name] ? errors[name]?.message : ""}
           classNames={{

@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import RHFSelect from '../components/RHFSelect';
 import { fakerUsers } from '../static/faker';
-import React from 'react';
 
 const meta = {
   title: 'Form/Select/Select',
@@ -10,8 +9,6 @@ const meta = {
   argTypes: {
     rules: { description: "React Hook Form Props" },
     onSelectionChange: { description: "Return function with rows param" },
-    allOptions: { description: "SelectItemProps - NextUI" },
-    allSelectText: { description: "textValue when all options is selecteds" }
   }
 } satisfies Meta<typeof RHFSelect>;
 
@@ -27,10 +24,5 @@ export const Select: Story = {
     label: "SelectField",
     selectionMode: "multiple",
     onSelectionChange: value => console.log(value),
-    allOptions: {
-      children: <p className="text-danger">all options</p>,
-      textValue: "all Selected"
-    },
-    allSelectText: "All Users"
   },
 };

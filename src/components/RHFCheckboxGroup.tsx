@@ -22,6 +22,7 @@ const RHFCheckboxGroup = ({ defaultValue, rules, name, data, ...props }: RHFChec
           {...field}
           {...props}
           isInvalid={Boolean(errors[name])}
+          onChange={(value) => { field.onChange(value); props.onChange?.(value) }}
         >
           {
             data.map(item => (
@@ -33,7 +34,7 @@ const RHFCheckboxGroup = ({ defaultValue, rules, name, data, ...props }: RHFChec
           {
             Boolean(errors[name]) &&
             <div data-slot="error-message" className="text-tiny text-danger w-full">
-              {errors[name] ? errors[name]?.message : ""}
+              {errors[name]?.message ?? ""}
             </div>
           }
         </CheckboxGroup>

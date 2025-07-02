@@ -20,6 +20,7 @@ const RHFRadioGroup = ({ data, rules, name, defaultValue, ...props }: RHFRadioGr
         <RadioGroup
           {...field}
           {...props}
+          onChange={(value) => { field.onChange(value); props.onChange?.(value) }}
           isInvalid={Boolean(errors[name])}
           errorMessage={errors[name] ? errors[name]?.message : ""}
         >

@@ -20,6 +20,8 @@ const RHFTime = ({ name, rules, defaultValue, ...props }: RHFTimeProps) => {
           {...props}
           {...field}
           value={field.value}
+          onChange={(value) => { field.onChange(value); props.onChange?.(value) }}
+          onBlur={(value) => { field.onBlur(); props.onBlur?.(value) }}
           isInvalid={Boolean(errors[name])}
           errorMessage={errors[name] ? errors[name]?.message : ""}
         />

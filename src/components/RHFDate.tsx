@@ -20,6 +20,8 @@ const RHFDate = ({ name, rules, defaultValue = null, ...props }: RHFDateProps) =
         <DatePicker
           {...props}
           {...field}
+          onChange={(value) => { field.onChange(value); props.onChange?.(value) }}
+          onBlur={(value) => { field.onBlur(); props.onBlur?.(value) }}
           value={field.value}
           errorMessage={errors[name] ? errors[name]?.message : ""}
           isInvalid={Boolean(errors[name])}

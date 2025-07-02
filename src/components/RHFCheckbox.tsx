@@ -2,7 +2,7 @@ import React from "react";
 import { Controller, RegisterOptions, useFormContext } from "react-hook-form";
 import { Checkbox, CheckboxProps } from "@heroui/react";
 
-interface RHFCheckboxProps extends Omit<CheckboxProps, "isSelected" | "isInvalid"> {
+interface RHFCheckboxProps extends Omit<CheckboxProps, "isSelected" | "isInvalid" | "onChange"> {
   rules?: RegisterOptions;
   name: string;
 }

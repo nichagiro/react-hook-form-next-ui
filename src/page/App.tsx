@@ -41,6 +41,10 @@ const App = () => {
   const methods = useForm<IForm>({
     shouldFocusError: true,
     resolver: yupResolver(schema),
+    defaultValues: {
+      input: "CRACK",
+      "opt": "1234",
+    }
   });
 
   const onSubmit: SubmitHandler<IForm> = async data => {
@@ -49,7 +53,7 @@ const App = () => {
 
   const getData = (index?: number) => {
     const rows = fakerRows(index);
-    const options = fakerUsers(10);
+    const options = fakerUsers(1);
 
     setData(rows);
 
@@ -72,7 +76,7 @@ const App = () => {
       setLoading(false);
       methods.setValue("area", "test auto lorem", { shouldValidate: true })
       // methods.setValue("opt", "092")
-      methods.setValue("checkbox", true, { shouldValidate: true })
+      // methods.setValue("checkbox", true, { shouldValidate: true })
       // methods.setValue("radios", "2", { shouldValidate: true })
       // methods.setValue("autocomplete", "928", { shouldValidate: true })
       // methods.setValue("select", "10,928", { shouldValidate: true })
@@ -140,7 +144,7 @@ const App = () => {
                     Modal
                   </Button>
                 </div>
-                <RHFCheckbox name="checkbox" value={"check"}>NICOLAS</RHFCheckbox>
+                <RHFCheckbox name="checkbox" value={"check"}>PETROUSKY</RHFCheckbox>
                 <RHFInput
                   name="inputR"
                   label="RULES INPUT"
@@ -181,23 +185,19 @@ const App = () => {
                   onValueChange={e => console.log(e)}
                   classNames={{ input: "text-end" }}
                 />
-                <RHFTime name="time" label="Time" color="primary" defaultValue={new Time(10, 10)} />
+                <RHFTime name="time" label="Time" color="primary" defaultValue={new Time(10, 10)} onChange={e => console.log(e)} />
                 <RHFTime name="time2" label="Time2" color="secondary" />
-                <RHFDate name="dat3" label="Dat3e" color="primary" />
+                <RHFDate onBlur={e => console.log(e)} name="dat3" label="Dat3e" color="primary" />
                 <RHFDate name="date" label="Date" color="success" rules={{ required: { value: true, message: "Campo Requerido" } }} />
                 <RHFSelect
                   name="select"
                   label="Select"
                   placeholder="Seleccione..."
                   isLoading={loading}
-                  disabledKeys={["10"]}
+                  // disabledKeys={["10", "928"]}
                   data={options.map(item => ({ key: item.key, children: item.label }))}
                   onSelectionChange={e => console.log(e)}
                   selectionMode="multiple"
-                  allOptions={{
-                    children: <p className="text-danger">all options</p>,
-                    textValue: "Todas las opciones"
-                  }}
                 />
                 <RHFTextArea
                   name="area"
@@ -205,6 +205,7 @@ const App = () => {
                   placeholder="escriba en el textArea"
                   rules={{ required: { message: "obligado pape", value: true } }}
                   onValueChange={e => console.log(e)}
+                  onChange={e => console.log("oChange- ", e)}
                 />
                 <RHFAutocomplete
                   name="autocomplete"
@@ -233,18 +234,18 @@ const App = () => {
             </Panel >
             <Panel title="Table Component" >
               <DataTable
-                // isVirtualized
-                // maxTableHeight={500}
-                // isStriped
-                // cellClass="whitespace-nowrap overflow-hidden overflow-ellipsis max-w-[150px]"
-                // rowsPerPageOptions={{ default: 10, options: [3, 5, 7] }}
+                isVirtualized
+                maxTableHeight={500}
+                isStriped
+                cellClass="whitespace-nowrap overflow-hidden overflow-ellipsis max-w-[150px]"
+                rowsPerPageOptions={{ default: 3, options: [3, 5, 7] }}
                 sortDescriptor={{ column: "service", direction: "ascending" }}
-                // inputSearch={{ variant: "bordered", color: "warning" }}
+                inputSearch={{ variant: "bordered", color: "warning" }}
                 color="primary"
                 selectionMode="multiple"
                 onSelect={row => console.log(row)}
                 rows={data}
-                // loading={loading}
+                loading={loading}
                 columns={columns}
                 localText={{
                   emptyContent: "NICO",
@@ -252,12 +253,12 @@ const App = () => {
                   paginateButtons: ["NICOA", "ANgela"],
                   rowsPerPage: "nico por pagina",
                 }}
-              // extraTopContent={
-              //   <div className="flex gap-x-2">
-              //     <Button color="warning">One</Button>
-              //     <Button color="danger">Two</Button>
-              //   </div>
-              // }
+              extraTopContent={
+                <div className="flex gap-x-2">
+                  <Button color="warning">One</Button>
+                  <Button color="danger">Two</Button>
+                </div>
+              }
               />
             </Panel>
           </form>

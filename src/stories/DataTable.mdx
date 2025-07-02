@@ -1,0 +1,199 @@
+import { Meta, Canvas } from "@storybook/blocks";
+
+<Meta title="Data/DataTable/ExtraDocs" />
+
+# Columns Properties - ColumnsTableProps
+
+<table style={{ width: "100%", borderCollapse: "collapse", margin: "20px 0" }}>
+  <thead>
+    <tr>
+      <th style={{ border: "1px solid #ddd", padding: "8px" }}>Property</th>
+      <th style={{ border: "1px solid #ddd", padding: "8px" }}>Type</th>
+      <th style={{ border: "1px solid #ddd", padding: "8px" }}>Required</th>
+      <th style={{ border: "1px solid #ddd", padding: "8px" }}>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>format</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>ReactNode => string</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>No</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>JSX render or string.</td>
+    </tr>
+    <tr>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>onFilter</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}> (value: string | number) => string</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>No</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>Filter.</td>
+    </tr>
+    <tr>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>onOrder</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}> (value: string | number) => string | number</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>No</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>Sort - Order.</td>
+    </tr>
+  </tbody>
+</table>
+
+## Example
+
+```js
+import React from "react";
+import { ColumnsTableProps } from "../components/dataTable/types";
+
+export const columns: ColumnsTableProps[] = [{
+  key: "service",
+  title: "Servicio/Área",
+  allowsSorting: true,
+  className: "text-danger",
+}, {
+  key: "topic",
+  title: "Tema",
+  allowsSorting: true,
+  className: "text-danger",
+}, {
+  key: "date",
+  title: "Fecha",
+  allowsSorting: true,
+  className: "text-danger",
+  format: ({ value }) => new Date(value).toLocaleDateString(),
+  onFilter: (value) => new Date(value).toLocaleDateString(),
+
+}, {
+  key: "value",
+  title: "Valor",
+  allowsSorting: true,
+  className: "text-danger",
+}, {
+  key: "status",
+  title: "Estado",
+  allowsSorting: true,
+  className: "text-danger",
+  onFilter: (value) => value === "Activo" ? "nico" : "angela",
+  onOrder: (value) => value === "Activo" ? "nico" : "angela"
+}, {
+  key: "fake",
+  title: "Render",
+  className: "text-danger",
+  format: ({ row }: { row: IRows }) => {
+    const { status } = row
+    return (
+      <p className={`text-white ${status === "Activo" ? "bg-success" : "bg-danger"} w-16 rounded text-center my-0.5 p-0`}>
+        {status}
+      </p>
+    )
+  }
+}]
+```
+---
+
+# Table Properties
+
+<table style={{ width: "100%", borderCollapse: "collapse", margin: "20px 0" }}>
+  <thead>
+    <tr>
+      <th style={{ border: "1px solid #ddd", padding: "8px" }}>Property</th>
+      <th style={{ border: "1px solid #ddd", padding: "8px" }}>Type</th>
+      <th style={{ border: "1px solid #ddd", padding: "8px" }}>Required</th>
+      <th style={{ border: "1px solid #ddd", padding: "8px" }}>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>localText</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>Object (emptyContent, items, paginateButtons, rowsPerPage)</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>No</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>i18 in table</td>
+    </tr>
+    <tr>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>rowsPerPageOptions</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>RowsPerPageTableProps</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>No</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>Options view rows por page and default</td>
+    </tr>
+    <tr>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>keyRow</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>string | number</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>No</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>default "id"</td>
+    </tr>
+    <tr>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>rows</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>[ ] any</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>yes</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>rows</td>
+    </tr>
+    <tr>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>columns</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>ColumnsTableProps</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>yes</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>cols</td>
+    </tr>
+    <tr>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>hideRowsPerPageOptions</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>boolean</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>No</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>hidden filters rows por page"</td>
+    </tr>
+    <tr>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>inputSearch</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>InputProps (HeroUI)</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>No</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>component to filter rows</td>
+    </tr>
+    <tr>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>hideFilterSearch</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>boolean</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>No</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>hidden inputSearch"</td>
+    </tr>
+    <tr>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>extraTopContent</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>children</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>No</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>JSx render in top-end table</td>
+    </tr>
+    <tr>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>loading</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>boolean</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>No</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>render skeleton table</td>
+    </tr>
+    <tr>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>onSelect</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>(row: any) => void</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>No</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>return shared Array | Object (selectionMode)</td>
+    </tr>
+    <tr>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>cellClass</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>string</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>No</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>custom class cells</td>
+    </tr>
+  </tbody>
+</table>
+--
+
+## Example
+
+```js
+<DataTable
+  cellClass="whitespace-nowrap overflow-hidden overflow-ellipsis max-w-[150px]"
+  rowsPerPageOptions={{ default: 3, options: [3, 5, 7] }}
+  sortDescriptor={{ column: "service", direction: "ascending" }}
+  inputSearch={{ variant: "bordered", color: "warning" }}
+  selectionMode="multiple"
+  onSelect={row => console.log(row)}
+  rows={data}
+  loading={loading}
+  columns={columns}
+  localText={{
+    emptyContent: "no data",
+    items: ["user", "users"],
+    paginateButtons: ["prev", "next"],
+    rowsPerPage: "show rows",
+  }}
+/>
+```
+---

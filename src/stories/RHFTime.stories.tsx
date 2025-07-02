@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import RHFTime from '../components/RHFTime';
 
 const meta = {
-  title: 'Form/Time/Time',
+  title: 'Form/Date/Time',
   component: RHFTime,
   tags: ['autodocs'],
   argTypes: {

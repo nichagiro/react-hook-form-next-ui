@@ -13,7 +13,7 @@ const meta = {
   tags: ['autodocs'],
   argTypes: {
     color: { options: COLORS, control: "select", type: "string" },
-    itemsName: { description: "Display items name", control: "text" },
+    localText: { description: "Display local names" },
     inputSearch: { description: "Custon input search" },
     hideFilterSearch: { description: "hide input search" },
     extraTopContent: { description: "Custom rigth content-top" },
@@ -23,7 +23,7 @@ const meta = {
     onSelect: { description: "Return function with rows param" },
     columns: { description: "Additional props: format, dateFormat" },
     rowsPerPageOptions: { description: "RowsPerPage" },
-    isVirtualized: {description: "Virtualized table and remove pagination"}
+    isVirtualized: { description: "Virtualized table and remove pagination" }
   },
 } satisfies Meta<typeof DataTable>;
 
@@ -44,7 +44,12 @@ export const table: Story = {
     selectionMode: "multiple",
     hideRowsPerPageOptions: false,
     onSelect: row => console.log(row),
-    itemsName: "users",
+    localText: {
+      emptyContent: "No data...",
+      rowsPerPage: "Rows per page",
+      items: ["user", "users"],
+      paginateButtons: ["Previous", "Next"]
+    },
     keyRow: "id",
     extraTopContent: <ExtraTopContent />,
     rowsPerPageOptions: {

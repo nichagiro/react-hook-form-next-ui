@@ -237,7 +237,7 @@ const DataTable = ({
             <label className="flex items-center text-default-400 text-small">
               {localText.rowsPerPage}:
               <select
-                className="bg-transparent outline-none text-default-400 text-small"
+                className="bg-transparent outline-none text-default-400 text-small cursor-pointer"
                 onChange={onRowsPerPageChange}
                 defaultValue={rowsPerPage}
               >

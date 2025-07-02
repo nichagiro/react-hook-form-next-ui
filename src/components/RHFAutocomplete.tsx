@@ -1,19 +1,20 @@
 import React from "react";
 import { Autocomplete, AutocompleteItem, AutocompleteItemProps, AutocompleteProps } from "@heroui/react"
 import { Controller, RegisterOptions, useFormContext } from "react-hook-form";
-interface RHFAutocompleteProps extends Omit<AutocompleteProps, "children" | "defaultItems" | "selectedKey" | "isInvalid" | "errorMessage"> {
+interface RHFAutocompleteProps extends Omit<
+  AutocompleteProps,
+  "children" | "defaultItems" | "items" | "selectedKey" | "isInvalid" | "errorMessage" | "errorMessage"
+> {
   name: string;
   rules?: RegisterOptions;
   data: AutocompleteItemProps[];
 }
 
-const RHFAutocomplete = ({ onSelectionChange, defaultSelectedKey, name, data, rules, ...props }: RHFAutocompleteProps) => {
+const RHFAutocomplete = ({ onSelectionChange, defaultSelectedKey, name, data, rules, inputProps, ...props }: RHFAutocompleteProps) => {
   const { control } = useFormContext<{ [key: string]: string | number }>();
 
   const onChange = (e: string | number | null) => {
-    if (onSelectionChange) {
-      onSelectionChange(e)
-    }
+    if (onSelectionChange) onSelectionChange(e)
   }
 
   return (
@@ -29,15 +30,17 @@ const RHFAutocomplete = ({ onSelectionChange, defaultSelectedKey, name, data, ru
           selectedKey={field.value ?? ""}
           defaultItems={data}
           onSelectionChange={e => { field.onChange(e); onChange(e) }}
+          onBlur={(value) => { field.onBlur(); props.onBlur?.(value) }}
           isInvalid={Boolean(errors[name])}
           errorMessage={errors[name] ? errors[name]?.message : ""}
           inputProps={{
+            ...inputProps,
             classNames: {
               input: errors[name] ? "placeholder:text-danger" : ""
             }
           }}
         >
-          {data.map((item) => <AutocompleteItem {...item} key={item.key} />)}
+          {data.map(item => <AutocompleteItem {...item} key={item.key} />)}
         </Autocomplete>
       )}
     />

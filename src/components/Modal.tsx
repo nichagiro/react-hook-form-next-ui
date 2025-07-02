@@ -13,17 +13,7 @@ interface RHFNextUiModalProps extends Omit<ModalProps, "onOpenChange" | "isOpen"
   acceptButton?: ButtonProps
 }
 
-export default function Modal({
-  display = false,
-  onClose,
-  children,
-  title = "",
-  cancelButton,
-  acceptButton,
-  ...props
-
-}: RHFNextUiModalProps) {
-
+export default function Modal({ display, onClose, children, title, cancelButton, acceptButton, ...props }: RHFNextUiModalProps) {
   return (
     <ModalComponent isOpen={display} onOpenChange={onClose}  {...props}>
       <ModalContent>

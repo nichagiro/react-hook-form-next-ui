@@ -20,6 +20,7 @@ const RHFInput = ({ defaultValue = "", rules, name, classNames, ...props }: RHFI
         <Input
           {...props}
           {...field}
+          onChange={(value) => { field.onChange(value); props.onChange?.(value) }}
           isInvalid={Boolean(errors[name])}
           errorMessage={errors[name] ? errors[name]?.message : ""}
           classNames={{
