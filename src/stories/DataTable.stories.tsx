@@ -1,5 +1,5 @@
 
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import DataTable from '../components/dataTable/DataTable';
 import { COLORS } from '../static/others';
 import { columns } from '../static/columns';

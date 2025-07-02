@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import RHFAutocomplete from '../components/RHFAutocomplete';
 import { fakerUsers } from '../static/faker';
 

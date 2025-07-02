@@ -1,89 +1,98 @@
 {
-   "name": "react-hook-form-next-ui",
-   "type": "module",
-   "version": "3.0.6",
-   "main": "./dist/index.js",
-   "module": "./dist/index.js",
-   "keywords": [
-      "tailwind react components",
-      "nextui",
-      "heroui",
-      "react-hook-form-next-ui",
-      "react-components",
-      "components-react",
-      "nextui-components-rhf",
-      "heroui-components-rhf",
-      "RHF",
-      "react-hook-form",
-      "React Hook Form"
-   ],
-   "author": "Nicolas Chamorro Giron",
-   "description": "React Components with React Hook Form and HeroUI",
-   "license": "MIT",
-   "files": [
-      "dist"
-   ],
-   "exports": {
-      ".": {
-         "import": "./dist/index.js"
-      }
-   },
-   "scripts": {
-      "dev": "vite",
-      "build": "tsc -b && vite build",
-      "lint": "eslint .",
-      "preview": "vite preview",
-      "storybook": "storybook dev -p 6006",
-      "build-storybook": "storybook build"
-   },
-   "peerDependencies": {
-      "@heroui/react": ">=2.6.7",
-      "framer-motion": ">=11.0.0",
-      "react": ">=18.0.0",
-      "react-dom": ">=18.0.0",
-      "react-hook-form": ">=7.0.0"
-   },
-   "devDependencies": {
-      "@chromatic-com/storybook": "^3.2.2",
-      "@eslint/js": "^9.30.1",
-      "@faker-js/faker": "^9.9.0",
-      "@formkit/tempo": "^0.1.2",
-      "@heroui/react": "^2.6.14",
-      "@hookform/devtools": "^4.3.1",
-      "@hookform/resolvers": "^5.1.1",
-      "@storybook/addon-essentials": "^8.4.7",
-      "@storybook/addon-interactions": "^8.4.7",
-      "@storybook/addon-onboarding": "^8.4.7",
-      "@storybook/blocks": "^8.4.0",
-      "@storybook/react": "^8.4.0",
-      "@storybook/react-vite": "^8.4.7",
-      "@storybook/test": "^8.4.0",
-      "@types/node": "^24.0.10",
-      "@types/react": "^19.0.1",
-      "@types/react-dom": "^19.0.2",
-      "@typescript-eslint/eslint-plugin": "^8.18.0",
-      "autoprefixer": "^10.4.20",
-      "eslint": "^9.30.1",
-      "eslint-plugin-react-hooks": "^5.1.0",
-      "eslint-plugin-react-refresh": "^0.4.16",
-      "eslint-plugin-storybook": "^0.11.1",
-      "framer-motion": "^12.23.0",
-      "postcss": "^8.4.49",
-      "react": "^19.0.0",
-      "react-dom": "^19.0.0",
-      "react-hook-form": "^7.59.0",
-      "storybook": "^8.4.7",
-      "tailwindcss": "^3.4.16",
-      "typescript": "^5.7.2",
-      "typescript-eslint": "^8.35.1",
-      "vite": "^6.0.3",
-      "vite-bundle-analyzer": "^0.16.0",
-      "vite-plugin-dts": "^4.3.0",
-      "yup": "^1.5.0"
-   },
-   "eslintConfig": {
-      "extends": [
-         "plugin:storybook/recommended"
-      ]
-   }
+  "name": "rhf-hero-ui",
+  "type": "module",
+  "version": "1.0.0",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "keywords": [    
+    "tailwind react components",
+    "nextui",
+    "react-hook-form-next-ui",
+    "react-components",
+    "components-react",
+    "nextui-components-rhf",
+    "heroui-components-rhf",
+    "rhf-hero-ui",
+    "react-hook-form-hero-ui",
+    "react-hook-form-components",
+    "react-hook-form-components-hero-ui",
+    "react-hook-form-components-rhf",
+    "react-hook-form-components-nextui",
+    "react-hook-form-components-nextui-rhf",
+    "react-hook-form-components-heroui",
+    "react-hook-form-components-heroui-rhf",
+    "react-hook-form-components-tailwind",
+    "react-hook-form-components-tailwind-rhf",  
+    "RHF",
+    "HeroUI",
+    "HeroUI Components",
+    "HeroUI React Components",
+    "HeroUI React Components with React Hook Form",
+    "React Hook Form"
+  ],
+  "author": "Nicolas Chamorro Giron",
+  "description": "React Components with React Hook Form and HeroUI",
+  "license": "MIT",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
+  },
+  "peerDependencies": {
+    "@heroui/react": ">=2.6.14",
+    "framer-motion": ">=12.23.0",
+    "react": ">=19.0.0",
+    "react-dom": ">=19.0.0",
+    "react-hook-form": ">=7.59.0"
+  },
+  "devDependencies": {
+    "@chromatic-com/storybook": "^4.0.1",
+    "@eslint/js": "^9.30.1",
+    "@faker-js/faker": "^9.9.0",
+    "@formkit/tempo": "^0.1.2",
+    "@heroui/react": "^2.6.14",
+    "@hookform/devtools": "^4.3.1",
+    "@hookform/resolvers": "^5.1.1",
+    "@storybook/addon-onboarding": "^9.0.15",
+    "@storybook/react-vite": "^9.0.15",
+    "@types/node": "^24.0.10",
+    "@types/react": "^19.0.1",
+    "@types/react-dom": "^19.0.2",
+    "@typescript-eslint/eslint-plugin": "^8.18.0",
+    "autoprefixer": "^10.4.20",
+    "eslint": "^9.30.1",
+    "eslint-plugin-react-hooks": "^5.1.0",
+    "eslint-plugin-react-refresh": "^0.4.16",
+    "eslint-plugin-storybook": "^9.0.15",
+    "framer-motion": "^12.23.0",
+    "postcss": "^8.4.49",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-hook-form": "^7.59.0",
+    "storybook": "^9.0.15",
+    "tailwindcss": "^3.4.16",
+    "typescript": "^5.7.2",
+    "typescript-eslint": "^8.35.1",
+    "vite": "^7.0.0",
+    "vite-bundle-analyzer": "^1.0.0",
+    "vite-plugin-dts": "^4.3.0",
+    "yup": "^1.5.0",
+    "@storybook/addon-docs": "^9.0.15"
+  },
+  "eslintConfig": {
+    "extends": [
+      "plugin:storybook/recommended"
+    ]
+  }
 }

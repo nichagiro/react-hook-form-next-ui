@@ -1,5 +1,5 @@
 import React from "react";
-import type { Preview } from "@storybook/react";
+import type { Preview } from "@storybook/react-vite";
 import "../src/styles/index.css"
 import WrapperForm from "../src/stories/layouts/WrapperForm"
 
