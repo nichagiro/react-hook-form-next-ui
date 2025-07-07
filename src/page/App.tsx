@@ -232,11 +232,10 @@ const App = () => {
                   label="Select"
                   placeholder="Seleccione..."
                   isLoading={loading}
-                  // disabledKeys={["10", "928"]}
                   data={options.map(item => ({ key: item.key, children: item.label }))}
-                  // onSelectionChange={e => console.log(e)}
+                  onSelectionChange={e => console.log(e)}
                   onChange={e => console.log("onChange- ", e)}
-                // selectionMode="multiple"
+                  selectionMode="multiple"
                 />
                 <RHFTextArea
                   name="area"
@@ -264,7 +263,6 @@ const App = () => {
                   onValueChange={value => console.log(value)}
                   onChange={e => console.log("onChange- ", e)}
                   rules={{ required: { message: "mmmmmjuu", value: true } }}
-                // defaultValue={"928"}
                 />
               </div>
               <div className="my-8 gap-5 flex">

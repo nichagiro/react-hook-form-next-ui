@@ -14,6 +14,5 @@ export const TextArea: Story = {
   args: {
     name: "textAreaField",
     label: "textAreaField",
-    defaultValue: "Lorem, ipsum dolor sit amet consectetur adipisicing elit."
   },
 };

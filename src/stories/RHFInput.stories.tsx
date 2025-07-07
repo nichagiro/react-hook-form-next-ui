@@ -14,6 +14,5 @@ export const Input: Story = {
   args: {
     name: "inputField",
     label: "inputField",
-    defaultValue: "User-1547"
   },
 };

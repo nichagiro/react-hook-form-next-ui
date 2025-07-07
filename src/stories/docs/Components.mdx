@@ -1,0 +1,105 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Components" />
+
+# General
+
+All form components are based on React Hook Form and HeroUI. The components DataTable and Modal are pure HeroUI 
+components with more customization for faster and more functional reuse.
+
+All components inherit the same properties, except for a few that have been overridden to work with their own React Hook
+integration and form. Below are the types of each component that have been overridden:
+
+- value (field.value of react-hook-form)
+- errorMessage (schema validation | rules)
+- defaultValue (useForm(  ))
+- isInvalid (danger color when there's error)
+
+*Additionally these props in these components:*
+
+**RHFAutocomplete**: children, items, defaultItems, defaultSelectedKey, selectedKey <br/> <br/>
+**RHFSelect**: defaultValue, defaultSelectedKeys, children, items, selectedKeys <br/> <br/>
+**RHFCheckbox**: isSelected, onChange, defaultSelected  <br/> <br/>
+**RHFCheckboxGroup**:  defaultSelected, children <br/> <br/>
+
+## Additional Common Props
+
+- **name**: Required to register it in the react-hook-form context
+- **rules**: For schema-less validation (react-hook-form)
+- **data**: For components that render children (**RHFAutocomplete, RHFSelect, RHFCheckboxGroup**)
+
+## Outputting data from fields
+- **RHFDate, RHFTime:** ISO String 
+- **RHFSelect single/multi:** String | Array[String]
+- **RHFAutocomplete, RHFInput, RHFTextArea, RHFInputOpt, RHFRadioGroup:** String
+- **RHFCheckbox:** boolean
+- **RHFCheckboxGroup:** Array[String]
+
+
+## NOTE:
+
+- It is always necessary to wrap it in the **FormProvider** since the Controller component is used for its integration.
+
+- To initialize default values, use useForm() with defaultValues.
+
+- The Date and Time components are handled in isoString for convenience, avoiding setting a DateValue (the default in HeroUI).
+
+```js
+
+const methods = useForm<IForm>({
+  defaultValues: {
+    input: "job gibson",
+    select: "10",
+    autocomplete: "12",
+    checkbox: true,
+    area: "lorem ipsum dolor sit amet",
+    checkboxGroup: ["12", "10"],
+    date: "1997-09-28",
+    opt: "0123",
+    time: "14:28",
+    radios: "928",
+  }
+});
+
+<FormProvider {...methods}>
+  <RHFSelect
+    name="select"
+    label="Select"
+    placeholder="Seleccione..."
+    isLoading={loading}
+    data={options.map(item => ({ key: item.key, children: item.label }))}
+    onSelectionChange={e => console.log(e)}
+    onChange={e => console.log("onChange- ", e)}
+    selectionMode="multiple"
+  />
+  <RHFTextArea
+    name="area"
+    label="textArea"
+    placeholder="write..."
+    rules={{ required: { message: "field required", value: true } }}
+    onValueChange={e => console.log(e)}
+    onChange={e => console.log("oChange- ", e)}
+  />
+  <RHFAutocomplete
+    name="autocomplete"
+    label="Autocomplete"
+    placeholder="Autocomplete"
+    data={options.map(item => ({ children: item.label, key: item.key }))}
+    disabledKeys={["10"]}
+    rules={{ required: { value: true, message: "this field is required." } }}
+    onBlur={e => console.log("onBlur- ", e)}
+    onSelectionChange={e => console.log(e)}
+  />
+  <RHFRadioGroup
+    name="radios"
+    data={options.map(item => ({ value: item.key, children: item.label }))}
+    label="Radio Fields?"
+    orientation="horizontal"
+    onValueChange={value => console.log(value)}
+    onChange={e => console.log("onChange- ", e)}
+    rules={{ required: { message: "custom message", value: true } }}
+  />
+<FormProvider />
+
+```
+
