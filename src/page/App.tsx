@@ -30,7 +30,6 @@ import { IForm } from "../types/app";
 
 // utils
 import React from "react";
-import { Time } from "@internationalized/date";
 
 const App = () => {
   const [data, setData] = useState<IRows[]>([]);
@@ -43,7 +42,15 @@ const App = () => {
     resolver: yupResolver(schema),
     defaultValues: {
       input: "CRACK",
-      "opt": "1234",
+      select: "10",
+      autocomplete: "928",
+      checkbox: true,
+      area: "lorem ipsum dolor sit amet",
+      checkboxGroup: ["928", "10"],
+      date: "1997-09-28",
+      opt: "0928",
+      time: "14:28",
+      radios: "928",
     }
   });
 
@@ -74,13 +81,14 @@ const App = () => {
 
     setTimeout(() => {
       setLoading(false);
-      methods.setValue("area", "test auto lorem", { shouldValidate: true })
+      // methods.setValue("area", "test auto lorem", { shouldValidate: true })
       // methods.setValue("opt", "092")
       // methods.setValue("checkbox", true, { shouldValidate: true })
+      // methods.setValue("checkboxGroup", ["928", "10"], { shouldValidate: true })
       // methods.setValue("radios", "2", { shouldValidate: true })
       // methods.setValue("autocomplete", "928", { shouldValidate: true })
-      // methods.setValue("select", "10,928", { shouldValidate: true })
-      methods.setValue("input", "446545604650", { shouldValidate: true })
+      // methods.setValue("select", "928", { shouldValidate: true })
+      // methods.setValue("input", "446545604650", { shouldValidate: true })
       // methods.setValue("date", new CalendarDate(1997, 9, 28))
       // methods.setValue("date1", today(getLocalTimeZone()))
       // methods.setValue("time", new Time(14, 28))
@@ -134,7 +142,9 @@ const App = () => {
                   data={options.map(item => ({ children: item.label, value: item.key }))}
                   orientation="horizontal"
                   color="danger"
-                  defaultValue={["928"]}
+                  onChange={e => console.log("onchange", e)}
+                  onValueChange={e => console.log("onValueChange", e)}
+                // defaultValue={["928"]}
                 />
               </div>
               <div className="flex gap-5">
@@ -144,11 +154,18 @@ const App = () => {
                     Modal
                   </Button>
                 </div>
-                <RHFCheckbox name="checkbox" value={"check"}>PETROUSKY</RHFCheckbox>
+                <RHFCheckbox
+                  name="checkbox"
+                  onValueChange={e => console.log(e)}
+                >
+                  PETROUSKY
+                </RHFCheckbox>
                 <RHFInput
                   name="inputR"
                   label="RULES INPUT"
-                  color="primary"
+                  onChange={e => console.log(e)}
+                  color="danger"
+                  type="text"
                   rules={{
                     maxLength: { message: "maximo 10 letras", value: 10 },
                     minLength: { message: "minimo 4 letras", value: 4 },
@@ -170,9 +187,17 @@ const App = () => {
             </Panel>
             <Panel title="FORM WITH SCHEMA">
               <div className="grid grid-cols-3 gap-5">
+                <RHFTime
+                  name="time"
+                  label="Time"
+                  color="primary"
+                // granularity="second"
+                // onChange={e => console.log(e)}
+                />
                 <RHFInputOtp
                   name="opt"
                   length={4}
+                  onChange={e => console.log(e)}
                   color="primary"
                   rules={{ required: { message: "requerido pape", value: true } }}
                 />
@@ -185,10 +210,23 @@ const App = () => {
                   onValueChange={e => console.log(e)}
                   classNames={{ input: "text-end" }}
                 />
-                <RHFTime name="time" label="Time" color="primary" defaultValue={new Time(10, 10)} onChange={e => console.log(e)} />
                 <RHFTime name="time2" label="Time2" color="secondary" />
-                <RHFDate onBlur={e => console.log(e)} name="dat3" label="Dat3e" color="primary" />
-                <RHFDate name="date" label="Date" color="success" rules={{ required: { value: true, message: "Campo Requerido" } }} />
+                <RHFDate
+                  granularity="hour"
+                  hourCycle={12}
+                  // defaultValue={"1997-09-28"}
+                  // onBlur={e => console.log(e)}
+                  name="dat3"
+                  label="Dat3e"
+                  color="primary"
+                  onChange={e => console.log(e)}
+                />
+                <RHFDate
+                  name="date"
+                  label="Date"
+                  color="success"
+                  rules={{ required: { value: true, message: "Campo Requerido" } }}
+                />
                 <RHFSelect
                   name="select"
                   label="Select"
@@ -196,8 +234,9 @@ const App = () => {
                   isLoading={loading}
                   // disabledKeys={["10", "928"]}
                   data={options.map(item => ({ key: item.key, children: item.label }))}
-                  onSelectionChange={e => console.log(e)}
-                  selectionMode="multiple"
+                  // onSelectionChange={e => console.log(e)}
+                  onChange={e => console.log("onChange- ", e)}
+                // selectionMode="multiple"
                 />
                 <RHFTextArea
                   name="area"
@@ -213,8 +252,8 @@ const App = () => {
                   placeholder="Autocomplete"
                   data={options.map(item => ({ children: item.label, key: item.key }))}
                   disabledKeys={["10"]}
-                  defaultSelectedKey={"928"}
                   rules={{ required: { value: true, message: "uyy zona" } }}
+                  onBlur={e => console.log("onBlur- ", e)}
                   onSelectionChange={e => console.log(e)}
                 />
                 <RHFRadioGroup
@@ -223,8 +262,9 @@ const App = () => {
                   label="Elementos Relacionados?"
                   orientation="horizontal"
                   onValueChange={value => console.log(value)}
+                  onChange={e => console.log("onChange- ", e)}
                   rules={{ required: { message: "mmmmmjuu", value: true } }}
-                  defaultValue={"928"}
+                // defaultValue={"928"}
                 />
               </div>
               <div className="my-8 gap-5 flex">
@@ -253,12 +293,12 @@ const App = () => {
                   paginateButtons: ["NICOA", "ANgela"],
                   rowsPerPage: "nico por pagina",
                 }}
-              extraTopContent={
-                <div className="flex gap-x-2">
-                  <Button color="warning">One</Button>
-                  <Button color="danger">Two</Button>
-                </div>
-              }
+                extraTopContent={
+                  <div className="flex gap-x-2">
+                    <Button color="warning">One</Button>
+                    <Button color="danger">Two</Button>
+                  </div>
+                }
               />
             </Panel>
           </form>

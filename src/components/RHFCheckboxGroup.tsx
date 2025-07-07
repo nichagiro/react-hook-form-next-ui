@@ -1,28 +1,25 @@
 import React from "react";
-import { Controller, RegisterOptions, useFormContext } from "react-hook-form";
+import { Controller, RegisterOptions } from "react-hook-form";
 import { Checkbox, CheckboxGroup, CheckboxGroupProps, CheckboxProps } from "@heroui/react";
 
-interface RHFCheckboxProps extends Omit<CheckboxGroupProps, "children" | "isInvalid"> {
-  rules?: RegisterOptions;
-  name: string;
+interface RHFCheckboxProps extends Omit<CheckboxGroupProps, "defaultSelected" | "value" | "children" | "isInvalid" | "defaultValue"> {
+  rules?: RegisterOptions
+  name: string
   data: CheckboxProps[]
 }
 
-const RHFCheckboxGroup = ({ defaultValue, rules, name, data, ...props }: RHFCheckboxProps) => {
-  const { control } = useFormContext<{ [key: string]: string[] }>();
-
+const RHFCheckboxGroup = ({ onChange, rules, name, data, ...props }: RHFCheckboxProps) => {
   return (
     <Controller
-      control={control}
       rules={rules}
       name={name}
-      defaultValue={defaultValue ?? []}
+      defaultValue={[]}
       render={({ field, formState: { errors } }) => (
         <CheckboxGroup
-          {...field}
           {...props}
+          {...field}
           isInvalid={Boolean(errors[name])}
-          onChange={(value) => { field.onChange(value); props.onChange?.(value) }}
+          onChange={(value) => { field.onChange(value); onChange?.(value) }}
         >
           {
             data.map(item => (
@@ -34,7 +31,7 @@ const RHFCheckboxGroup = ({ defaultValue, rules, name, data, ...props }: RHFChec
           {
             Boolean(errors[name]) &&
             <div data-slot="error-message" className="text-tiny text-danger w-full">
-              {errors[name]?.message ?? ""}
+              {errors[name]?.message as string ?? ""}
             </div>
           }
         </CheckboxGroup>

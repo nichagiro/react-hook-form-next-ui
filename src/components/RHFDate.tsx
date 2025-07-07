@@ -1,30 +1,37 @@
-import React from "react";
-import { DatePicker, DatePickerProps, DateValue } from "@heroui/react";
-import { Controller, RegisterOptions, useFormContext } from "react-hook-form";
+import React, { useCallback } from "react";
+import { DatePicker, DatePickerProps } from "@heroui/react";
+import { Controller, RegisterOptions } from "react-hook-form";
+import { parseDate, parseDateTime } from '@internationalized/date';
 
-interface RHFDateProps extends Omit<DatePickerProps, "value" | "errorMessage" | "isInvalid"> {
-  name: string;
+interface RHFDateProps extends Omit<DatePickerProps, "value" | "errorMessage" | "defaultValue" | "isInvalid"> {
+  name: string
   rules?: RegisterOptions
 }
 
-const RHFDate = ({ name, rules, defaultValue = null, ...props }: RHFDateProps) => {
-  const { control } = useFormContext<{ [key: string]: DateValue | null }>();
+const RHFDate = ({ name, granularity, rules, ...props }: RHFDateProps) => {
+
+  const parseDateValue = useCallback((value: string) => {
+    return granularity === "day" || !granularity ? parseDate(value) : parseDateTime(value);
+  }, [granularity])
 
   return (
     <Controller
-      control={control}
+      defaultValue={""}
       name={name}
       rules={rules}
-      defaultValue={defaultValue}
       render={({ field, formState: { errors } }) => (
         <DatePicker
           {...props}
           {...field}
-          onChange={(value) => { field.onChange(value); props.onChange?.(value) }}
-          onBlur={(value) => { field.onBlur(); props.onBlur?.(value) }}
-          value={field.value}
-          errorMessage={errors[name] ? errors[name]?.message : ""}
+          value={field.value ? parseDateValue(field.value) : null}
+          onChange={value => {
+            field.onChange(value ? value.toString() : null);
+            props.onChange?.(value)
+          }}
+          onBlur={value => { field.onBlur(); props.onBlur?.(value) }}
+          errorMessage={errors[name] ? errors[name]?.message as string : ""}
           isInvalid={Boolean(errors[name])}
+          granularity={granularity}
         />
       )}
     />

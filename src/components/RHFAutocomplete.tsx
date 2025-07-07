@@ -1,39 +1,34 @@
 import React from "react";
 import { Autocomplete, AutocompleteItem, AutocompleteItemProps, AutocompleteProps } from "@heroui/react"
-import { Controller, RegisterOptions, useFormContext } from "react-hook-form";
-interface RHFAutocompleteProps extends Omit<AutocompleteProps, "children" | "defaultItems" | "items" | "selectedKey" | "isInvalid" | "errorMessage"> {
-  name: string;
-  rules?: RegisterOptions;
-  data: AutocompleteItemProps[];
+import { Controller, RegisterOptions } from "react-hook-form";
+interface RHFAutocompleteProps extends Omit<AutocompleteProps,
+  "value" | "children" | "items" | "defaultSelectedKey" | "selectedKey" | "defaultItems" | "isInvalid" | "errorMessage"
+> {
+  name: string
+  data: AutocompleteItemProps[]
+  rules?: RegisterOptions
 }
 
-const RHFAutocomplete = ({ onSelectionChange, defaultSelectedKey, name, data, rules, inputProps, ...props }: RHFAutocompleteProps) => {
-  const { control } = useFormContext<{ [key: string]: string | number }>();
-
-  const onChange = (e: string | number | null) => {
-    if (onSelectionChange) onSelectionChange(e)
-  }
-
+const RHFAutocomplete = ({ onSelectionChange, name, data, rules, inputProps, ...props }: RHFAutocompleteProps) => {
   return (
     <Controller
-      control={control}
-      defaultValue={defaultSelectedKey}
+      defaultValue={""}
       name={name}
       rules={rules}
       render={({ field, formState: { errors } }) => (
         <Autocomplete
-          {...props}
           {...field}
-          selectedKey={field.value ?? ""}
+          {...props}
+          selectedKey={field.value}
           defaultItems={data}
-          onSelectionChange={e => { field.onChange(e); onChange(e) }}
-          onBlur={(value) => { field.onBlur(); props.onBlur?.(value) }}
+          onSelectionChange={e => { field.onChange(e ?? ""); onSelectionChange?.(e ?? "") }}
+          onBlur={value => { field.onBlur(); props.onBlur?.(value) }}
           isInvalid={Boolean(errors[name])}
-          errorMessage={errors[name] ? errors[name]?.message : ""}
+          errorMessage={errors[name] ? errors[name]?.message as string : ""}
           inputProps={{
             ...inputProps,
             classNames: {
-              input: errors[name] ? "placeholder:text-danger" : ""
+              input: errors[name] ? "placeholder:text-danger" : "",
             }
           }}
         >

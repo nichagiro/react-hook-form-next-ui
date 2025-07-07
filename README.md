@@ -12,13 +12,33 @@ This library is based on NextUI and React-hook-form. Here you will find form com
 npm i rhf-hero-ui
 ```
 
+## Tailwind config
+```js
+// tailwind.config.js [v3]
+const { heroui } = require("@heroui/react");
+
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    // ...
+    "./node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}",  //library base UI
+    "./node_modules/rhf-hero-ui/dist/**/*.{js,ts,jsx,tsx}",  // our library
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
+  theme: {
+    extend: {},
+  },
+  darkMode: "class",
+  plugins: [heroui()]
+}
+```
+
 ## Example 
 
 ```js
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form"
 import { Button } from "@heroui/react";
 import RHFInput from "../components/RHFInput";
-import schema from "../static/schema";
 import { IForm } from "../types/app";
 
 const App = () => {

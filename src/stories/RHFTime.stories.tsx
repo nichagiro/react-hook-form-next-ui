@@ -5,9 +5,6 @@ const meta = {
   title: 'Form/Date/Time',
   component: RHFTime,
   tags: ['autodocs'],
-  argTypes: {
-    defaultValue: { description: "@internationalized/time", type: "string" }
-  },
 } satisfies Meta<typeof RHFTime>;
 
 export default meta;

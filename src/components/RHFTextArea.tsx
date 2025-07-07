@@ -1,19 +1,16 @@
 import React from "react";
 import { Textarea, TextAreaProps } from "@heroui/react";
-import { Controller, RegisterOptions, useFormContext } from "react-hook-form";
+import { Controller, RegisterOptions } from "react-hook-form";
 
-interface RHFTextAreaProps extends Omit<TextAreaProps, "errorMessage" | "isInvalid"> {
-  name: string;
+interface RHFTextAreaProps extends Omit<TextAreaProps, "errorMessage" | "isInvalid" | "defaultValue" | "value"> {
+  name: string
   rules?: RegisterOptions
 }
 
-const RHFTextArea = ({ defaultValue = "", rules, name, classNames, ...props }: RHFTextAreaProps) => {
-  const { control } = useFormContext<{ [key: string]: string }>();
-
+const RHFTextArea = ({ rules, name, classNames, ...props }: RHFTextAreaProps) => {
   return (
     <Controller
-      control={control}
-      defaultValue={defaultValue}
+      defaultValue={""}
       name={name}
       rules={rules}
       render={({ field, formState: { errors } }) => (
@@ -22,7 +19,7 @@ const RHFTextArea = ({ defaultValue = "", rules, name, classNames, ...props }: R
           {...field}
           onChange={(value) => { field.onChange(value); props.onChange?.(value) }}
           isInvalid={Boolean(errors[name])}
-          errorMessage={errors[name] ? errors[name]?.message : ""}
+          errorMessage={errors[name] ? errors[name]?.message as string : ""}
           classNames={{
             ...classNames,
             input: `${classNames?.input || ""} ${errors[name] ? "placeholder:text-danger" : ""}`

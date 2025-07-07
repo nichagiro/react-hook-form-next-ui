@@ -1,29 +1,48 @@
-import React from "react";
-import { TimeInput, TimeInputProps, TimeInputValue } from "@heroui/react";
-import { Controller, RegisterOptions, useFormContext } from "react-hook-form";
-interface RHFTimeProps extends Omit<TimeInputProps, "value" | "errorMessage" | "isInvalid"> {
-  name: string;
-  rules?: RegisterOptions;
+import React, { useCallback } from "react";
+import { TimeInput, TimeInputProps } from "@heroui/react";
+import { Controller, RegisterOptions } from "react-hook-form";
+import { Time } from '@internationalized/date';
+
+interface RHFTimeProps extends Omit<TimeInputProps, "defaultValue" | "value" | "errorMessage" | "isInvalid"> {
+  name: string
+  shouldUnregister?: boolean
+  rules?: RegisterOptions
 }
 
-const RHFTime = ({ name, rules, defaultValue, ...props }: RHFTimeProps) => {
-  const { control } = useFormContext<{ [key: string]: TimeInputValue | null }>();
+const RHFTime = ({ name, shouldUnregister, granularity, rules, ...props }: RHFTimeProps) => {
+
+  const parseTimeValue = useCallback((value: string) => {
+    if (granularity === "second") {
+      const [hours, minutes, seconds] = value.split(":").map(Number);
+      return new Time(hours, minutes, seconds);
+    } else if (granularity === "minute" || !granularity) {
+      const [hours, minutes] = value.split(":").map(Number);
+      return new Time(hours, minutes);
+    } else {
+      const [hours] = value.split(":").map(Number);
+      return new Time(hours);
+    }
+  }, [granularity])
 
   return (
     <Controller
-      control={control}
       name={name}
       rules={rules}
-      defaultValue={defaultValue ?? null}
+      shouldUnregister={shouldUnregister}
+      defaultValue=""
       render={({ field, formState: { errors } }) => (
         <TimeInput
           {...props}
           {...field}
-          value={field.value}
-          onChange={(value) => { field.onChange(value); props.onChange?.(value) }}
-          onBlur={(value) => { field.onBlur(); props.onBlur?.(value) }}
+          granularity={granularity}
+          value={field.value ? parseTimeValue(field.value) : null}
+          onChange={value => {
+            field.onChange(value ? value.toString() : null);
+            props.onChange?.(value)
+          }}
+          onBlur={value => { field.onBlur(); props.onBlur?.(value) }}
           isInvalid={Boolean(errors[name])}
-          errorMessage={errors[name] ? errors[name]?.message : ""}
+          errorMessage={errors[name] ? errors[name]?.message as string : ""}
         />
       )}
     />

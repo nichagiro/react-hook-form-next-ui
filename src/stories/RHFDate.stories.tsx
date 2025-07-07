@@ -5,9 +5,6 @@ const meta = {
   title: 'Form/Date/Calendar',
   component: RHFDate,
   tags: ['autodocs'],
-  argTypes: {
-    defaultValue: { description : "value: @internationalized/date"}
-  },
 } satisfies Meta<typeof RHFDate>;
 
 export default meta;

@@ -6,10 +6,6 @@ const meta = {
   title: 'Form/Select/Autocomplete',
   component: RHFAutocomplete,
   tags: ['autodocs'],
-  argTypes: {
-    rules: { description: "React Hook Form Props" },
-    onSelectionChange: { description: "Return function with rows param" }
-  }
 } satisfies Meta<typeof RHFAutocomplete>;
 
 export default meta;

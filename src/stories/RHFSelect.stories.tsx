@@ -6,10 +6,6 @@ const meta = {
   title: 'Form/Select/Select',
   component: RHFSelect,
   tags: ['autodocs'],
-  argTypes: {
-    rules: { description: "React Hook Form Props" },
-    onSelectionChange: { description: "Return function with rows param" },
-  }
 } satisfies Meta<typeof RHFSelect>;
 
 export default meta;

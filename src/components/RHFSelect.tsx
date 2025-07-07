@@ -1,31 +1,37 @@
 import React from "react";
 import { Select, SelectItem, SelectItemProps, SelectProps } from "@heroui/react"
-import { Controller, RegisterOptions, useFormContext } from "react-hook-form"
-
-interface RHFSelectProps extends Omit<SelectProps, "children" | "items" | "selectedKeys" | "errorMessage" | "isInvalid"> {
+import { Controller, RegisterOptions } from "react-hook-form"
+interface RHFSelectProps extends Omit<SelectProps, "defaultSelectedKeys" | "children" | "items" | "selectedKeys" | "errorMessage" | "isInvalid"> {
   name: string;
   rules?: RegisterOptions;
   data: SelectItemProps[]; // items[]
 }
 
-const RHFSelect = ({ name, rules, data, defaultSelectedKeys, disabledKeys, ...props }: RHFSelectProps) => {
-  const { control } = useFormContext<{ [key: string]: string }>();
-
+const RHFSelect = ({ selectionMode, name, rules, data, disabledKeys, onChange, ...props }: RHFSelectProps) => {
   return (
     <Controller
-      control={control}
       rules={rules}
       name={name}
-      defaultValue={defaultSelectedKeys?.toString() ?? undefined}
+      defaultValue={selectionMode === "multiple" ? [] : ""}
       render={({ field, formState: { errors } }) => (
         <Select
           {...props}
           {...field}
+          onChange={e => {
+            const value = e.target.value;
+            if (selectionMode === "multiple") {
+              field.onChange(value ? value.split(",") : []);
+            } else {
+              field.onChange(value ?? "");
+            }
+            onChange?.(e)
+          }}
           items={data}
-          selectedKeys={field.value ? field.value.split(",") : []}
-          errorMessage={errors[name]?.message || ""}
+          selectedKeys={selectionMode === "multiple" ? field.value : [field.value]}
+          errorMessage={errors[name]?.message as string || ""}
           isInvalid={Boolean(errors[name])}
           disabledKeys={disabledKeys}
+          selectionMode={selectionMode}
         >
           {item => <SelectItem {...item} key={item.key} />}
         </Select>

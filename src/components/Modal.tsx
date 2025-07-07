@@ -4,7 +4,7 @@ import {
 } from "@heroui/react"
 
 import React, { ReactNode } from "react";
-interface RHFNextUiModalProps extends Omit<ModalProps, "onOpenChange" | "isOpen"> {
+interface RHFHeroUIModalProps extends Omit<ModalProps, "onOpenChange" | "isOpen"> {
   display: boolean
   children: ReactNode
   title?: string
@@ -13,7 +13,7 @@ interface RHFNextUiModalProps extends Omit<ModalProps, "onOpenChange" | "isOpen"
   acceptButton?: ButtonProps
 }
 
-export default function Modal({ display, onClose, children, title, cancelButton, acceptButton, ...props }: RHFNextUiModalProps) {
+export default function Modal({ display, onClose, children, title, cancelButton, acceptButton, ...props }: RHFHeroUIModalProps) {
   return (
     <ModalComponent isOpen={display} onOpenChange={onClose}  {...props}>
       <ModalContent>

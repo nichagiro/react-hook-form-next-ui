@@ -185,9 +185,9 @@ export const columns: ColumnsTableProps[] = [{
   inputSearch={{ variant: "bordered", color: "warning" }}
   selectionMode="multiple"
   onSelect={row => console.log(row)}
-  rows={data}
-  loading={loading}
-  columns={columns}
+  loading={false}
+  rows={[{name: "jhon doe", email: "jh@gmail.com" }]}
+  columns={[{ key:"name", title: "first name" }]}
   localText={{
     emptyContent: "no data",
     items: ["user", "users"],
