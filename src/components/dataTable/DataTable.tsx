@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { ChangeEvent, useCallback, useMemo, useState } from 'react';
+import React, { ChangeEvent, useCallback, useEffect, useMemo, useState } from 'react';
 
 import {
   Table, TableHeader, TableColumn, TableBody, TableRow, TableCell,
@@ -13,7 +13,7 @@ import { DataTableProps } from "./types";
 import useDebounce from "../../hooks/useDebounce";
 
 const DataTable = ({
-  hideFilterSearch, loading, isVirtualized, onSelect,
+  reset, hideFilterSearch, loading, isVirtualized, onSelect,
   selectionMode, inputSearch, hideRowsPerPageOptions, extraTopContent, cellClass,
   rows = [],
   columns = [],
@@ -35,6 +35,13 @@ const DataTable = ({
   const searchText = useDebounce(filterValue, 500);
   const hasSearchFilter = Boolean(searchText);
   const selectedCount = useMemo(() => [...selectedKeys].length, [selectedKeys])
+
+  useEffect(() => {
+    if (reset) {
+      setFilterValue("");
+      handleSelect(new Set());
+    }
+  }, [reset])
 
   const handleSelect = useCallback((row: Selection) => {
     setSelectedKeys(row);

@@ -34,6 +34,7 @@ export interface DataTableProps extends TableProps {
   onSelect?: (row: any) => void
   cellClass?: string // clase de las celdas
   localText?: Partial<localeText>
+  reset?: boolean
 }
 export interface SkeletonTableProps {
   size: number // cantidad de filas a cargar con efecto loading
