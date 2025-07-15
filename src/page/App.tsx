@@ -285,7 +285,6 @@ const App = () => {
                 rows={data}
                 loading={loading}
                 columns={columns}
-                reset={methods.formState.isSubmitSuccessful}
                 localText={{
                   emptyContent: "NICO",
                   items: ["Nico", "Nicolas"],
