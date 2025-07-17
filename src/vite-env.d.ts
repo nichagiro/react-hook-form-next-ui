@@ -1,7 +1,7 @@
 /// <reference types="vite/client" />
 
 interface IRows {
-  id: string;
+  id: string | number;
   service: string;
   topic: string;
   date: string;

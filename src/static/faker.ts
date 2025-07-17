@@ -2,7 +2,7 @@
 import { faker } from '@faker-js/faker';
 
 interface iRows {
-  id: string;
+  id: string | number;
   service: string;
   topic: string;
   date: string;
@@ -19,7 +19,7 @@ export const fakerRows = (index?: number): iRows[] => Array.from({ length: index
     value: faker.number.int({ min: 100, max: 100000 }),
     date: faker.date.anytime().toISOString(),
     status: faker.helpers.arrayElement(["Activo", "Inactivo"]),
-    id: (index + 1).toString(),
+    id: (index + 1),
   }
 
   return data

@@ -13,7 +13,7 @@ import { DataTableProps } from "./types";
 import useDebounce from "../../hooks/useDebounce";
 
 const DataTable = ({
-  hideFilterSearch, loading, isVirtualized, onSelect,
+  hideFilterSearch, loading, isVirtualized, onSelect, onSelectionChange,
   selectionMode, inputSearch, hideRowsPerPageOptions, extraTopContent, cellClass,
   rows = [],
   columns = [],
@@ -45,14 +45,15 @@ const DataTable = ({
       data = rows.find(item => item[keyRow] == [...row][0]);
     } else if (row === "all") {
       data = rows;
-      setSelectedKeys(new Set(rows.map(item => item[keyRow]))); //for bug nextUI
+      setSelectedKeys(new Set(rows.map(item => item[keyRow].toString()))); //for bug nextUI
     } else {
-      data = rows.filter(item => [...row].includes(item[keyRow])); //multi
+      data = rows.filter(item => [...row].includes(item[keyRow].toString())); //multi
     }
 
     if (onSelect) onSelect(data);
+    if (onSelectionChange) onSelectionChange(row)
 
-  }, [onSelect, rows, selectionMode, keyRow])
+  }, [onSelect, rows, selectionMode, keyRow, onSelectionChange])
 
   const filteredItems: any[] = useMemo(() => {
     let data = [...rows];

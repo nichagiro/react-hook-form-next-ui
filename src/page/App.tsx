@@ -81,7 +81,7 @@ const App = () => {
 
     setTimeout(() => {
       setLoading(false);
-      // methods.setValue("area", "test auto lorem", { shouldValidate: true })
+      methods.setValue("area", "test auto lorem", { shouldValidate: true })
       // methods.setValue("opt", "092")
       // methods.setValue("checkbox", true, { shouldValidate: true })
       // methods.setValue("checkboxGroup", ["928", "10"], { shouldValidate: true })
@@ -282,6 +282,7 @@ const App = () => {
                 color="primary"
                 selectionMode="multiple"
                 onSelect={row => console.log(row)}
+                onSelectionChange={row => console.log("onSelectionChange", row)}
                 rows={data}
                 loading={loading}
                 columns={columns}
