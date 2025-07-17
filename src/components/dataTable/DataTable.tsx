@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { ChangeEvent, useCallback, useMemo, useState } from 'react';
+import React, { ChangeEvent, useCallback, useEffect, useMemo, useState } from 'react';
 
 import {
   Table, TableHeader, TableColumn, TableBody, TableRow, TableCell,
@@ -15,9 +15,7 @@ import useDebounce from "../../hooks/useDebounce";
 const DataTable = ({
   hideFilterSearch, loading, isVirtualized, onSelect, onSelectionChange,
   selectionMode, inputSearch, hideRowsPerPageOptions, extraTopContent, cellClass,
-  rows = [],
-  columns = [],
-  keyRow = "id",
+  rows = [], columns = [], keyRow = "id",
   localText = {
     emptyContent: "No hay datos.",
     rowsPerPage: "Filas por pagina"
@@ -35,6 +33,13 @@ const DataTable = ({
   const searchText = useDebounce(filterValue, 500);
   const hasSearchFilter = Boolean(searchText);
   const selectedCount = useMemo(() => [...selectedKeys].length, [selectedKeys])
+
+  useEffect(() => {
+    if (rows) {
+      setPage(1);
+      setSelectedKeys(new Set());
+    }
+  }, [rows])
 
   const handleSelect = useCallback((row: Selection) => {
     setSelectedKeys(row);
