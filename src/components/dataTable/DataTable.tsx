@@ -13,7 +13,7 @@ import { DataTableProps } from "./types";
 import useDebounce from "../../hooks/useDebounce";
 
 const DataTable = ({
-  hideFilterSearch, loading, isVirtualized, onSelect, onSelectionChange,
+  hideFilterSearch, loading, isVirtualized, onSelect, onSelectionChange, isHeaderSticky, classNames,
   selectionMode, inputSearch, hideRowsPerPageOptions, extraTopContent, cellClass,
   rows = [], columns = [], keyRow = "id",
   localText = {
@@ -234,7 +234,7 @@ const DataTable = ({
           }
           {extraTopContent}
         </div>
-        <div className="flex justify-between items-center">
+        <div className="flex flex-wrap justify-between items-center">
           <span className="text-default-400 text-small">
             Total {rows.length} {rows.length == 1 ? (localText?.items?.[0] ?? "dato") : (localText?.items?.[1] ?? "datos")}
           </span>
@@ -275,11 +275,16 @@ const DataTable = ({
               {...props}
               aria-label={props["aria-label"] ?? "Tabla de resultados"}
               isVirtualized={isVirtualized}
+              isHeaderSticky={isHeaderSticky}
               sortDescriptor={sortDescriptor}
               onSortChange={setSortDescriptor}
               selectedKeys={selectedKeys}
               onSelectionChange={handleSelect}
               selectionMode={selectionMode}
+              classNames={{
+                ...classNames,
+                wrapper: isVirtualized && isHeaderSticky ? "p-0" : classNames?.wrapper
+              }}
             >
               <TableHeader columns={columns}>
                 {column => <TableColumn  {...column} children={undefined} key={column.key} />}

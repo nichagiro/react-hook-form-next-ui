@@ -274,6 +274,7 @@ const App = () => {
               <DataTable
                 isVirtualized
                 maxTableHeight={500}
+                isHeaderSticky
                 isStriped
                 cellClass="whitespace-nowrap overflow-hidden overflow-ellipsis max-w-[150px]"
                 rowsPerPageOptions={{ default: 3, options: [3, 5, 7] }}

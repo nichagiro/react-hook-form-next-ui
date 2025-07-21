@@ -2,6 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.8] - 2025-07-21
+- update padding in wrapper of <DataTable> when props is present isHeaderSticky and isVirtualize; This prevents rows from being seen when scrolling past the header.
+
 ## [1.0.7] - 2025-07-17
 - add original parameter "*onSelectionChange*" and fix search onSelect when the **keyRow** is number type (toString)
 ```js
