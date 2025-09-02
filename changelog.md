@@ -2,6 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.9] - 2025-09-02
+- update <DataTable>, show localText.items ('300 users') only when data length > 0
+
 ## [1.0.8] - 2025-07-21
 - update padding in wrapper of <DataTable> when props is present isHeaderSticky and isVirtualize; This prevents rows from being seen when scrolling past the header.
 

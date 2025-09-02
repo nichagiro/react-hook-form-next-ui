@@ -235,9 +235,12 @@ const DataTable = ({
           {extraTopContent}
         </div>
         <div className="flex flex-wrap justify-between items-center">
-          <span className="text-default-400 text-small">
-            Total {rows.length} {rows.length == 1 ? (localText?.items?.[0] ?? "dato") : (localText?.items?.[1] ?? "datos")}
-          </span>
+          {
+            rows.length > 0 &&
+            <span className="text-default-400 text-small">
+              Total {rows.length} {rows.length == 1 ? (localText?.items?.[0] ?? "dato") : (localText?.items?.[1] ?? "datos")}
+            </span>
+          }
           {
             !hideRowsPerPageOptions && !isVirtualized &&
             <label className="flex items-center text-default-400 text-small">
