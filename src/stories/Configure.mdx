@@ -15,23 +15,9 @@ npm i rhf-hero-ui
 
 ## Tailwind config
 ```js
-// tailwind.config.js [v3]
-const { heroui } = require("@heroui/react");
-
-/** @type {import('tailwindcss').Config} */
-module.exports = {
-  content: [
-    // ...
-    "./node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}",  //library base UI
-    "./node_modules/rhf-hero-ui/dist/**/*.{js,ts,jsx,tsx}",  // our library
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
-  theme: {
-    extend: {},
-  },
-  darkMode: "class",
-  plugins: [heroui()]
-}
+// main.css 
+@import "tailwindcss"; // v4
+@source '../node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}';
 ```
 
 ## Example 

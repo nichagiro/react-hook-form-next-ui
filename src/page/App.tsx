@@ -235,7 +235,7 @@ const App = () => {
                   data={options.map(item => ({ key: item.key, children: item.label }))}
                   onSelectionChange={e => console.log(e)}
                   onChange={e => console.log("onChange- ", e)}
-                  // selectionMode="multiple"
+                // selectionMode="multiple"
                 />
                 <RHFTextArea
                   name="area"

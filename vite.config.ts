@@ -1,16 +1,18 @@
 import { defineConfig } from 'vite'
 import path from 'path';
 import dts from 'vite-plugin-dts'
-// import { analyzer } from 'vite-bundle-analyzer'
+import tailwindcss from "@tailwindcss/vite"
+import { analyzer } from 'vite-bundle-analyzer'
 
 export default defineConfig({
   plugins: [
+    tailwindcss(),
     dts({
       tsconfigPath: './tsconfig.app.json',
       rollupTypes: true,
       exclude: ['src/stories/**/*']
     }),
-    // analyzer()
+    analyzer()
   ],
   build: {
     lib: {

@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.1.0] - 2025-09-02
+- update tailwind v3 => v4
+- update all dependencies
+
 ## [1.0.9] - 2025-09-02
 - update <DataTable>, show localText.items ('300 users') only when data length > 0
 
