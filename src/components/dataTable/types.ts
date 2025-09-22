@@ -2,7 +2,7 @@
 import { InputProps, TableProps, TableColumnProps } from "@heroui/react";
 import { ReactNode } from "react";
 interface ColumnFormat {
-  value: string // valor del parametro en especidfico
+  value: any // valor del parametro en especidfico
   row: any  // valor de todo el registro "fila"
 }
 interface RowsPerPageTableProps {

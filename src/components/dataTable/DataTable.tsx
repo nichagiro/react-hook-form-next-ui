@@ -14,12 +14,8 @@ import useDebounce from "../../hooks/useDebounce";
 
 const DataTable = ({
   hideFilterSearch, loading, isVirtualized, onSelect, onSelectionChange, isHeaderSticky, classNames,
-  selectionMode, inputSearch, hideRowsPerPageOptions, extraTopContent, cellClass,
-  rows = [], columns = [], keyRow = "id",
-  localText = {
-    emptyContent: "No hay datos.",
-    rowsPerPage: "Filas por pagina"
-  },
+  selectionMode, inputSearch, hideRowsPerPageOptions, extraTopContent, cellClass, rows, columns, keyRow = "id",
+  localText = { emptyContent: "No hay datos.", rowsPerPage: "Filas por pagina" },
   rowsPerPageOptions = { default: 10, options: [5, 10, 15] },
   ...props
 }: DataTableProps) => {

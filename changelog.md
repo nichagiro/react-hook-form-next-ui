@@ -2,6 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.1.1] - 2025-09-22
+- update type ColumFormatter in value => any
+
 ## [1.1.0] - 2025-09-02
 - update tailwind v3 => v4
 - update all dependencies
