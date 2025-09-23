@@ -13,9 +13,9 @@ import { DataTableProps } from "./types";
 import useDebounce from "../../hooks/useDebounce";
 
 const DataTable = ({
-  hideFilterSearch, loading, isVirtualized, onSelect, onSelectionChange, isHeaderSticky, classNames,
+  hideFilterSearch, loading, isVirtualized, onSelect, onSelectionChange, isHeaderSticky, classNames, exportButton,
   selectionMode, inputSearch, hideRowsPerPageOptions, extraTopContent, cellClass, rows, columns, keyRow = "id",
-  localText = { emptyContent: "No hay datos.", rowsPerPage: "Filas por pagina" },
+  localText = { emptyContent: "No hay datos.", rowsPerPage: "Filas por pagina" }, onExport,
   rowsPerPageOptions = { default: 10, options: [5, 10, 15] },
   ...props
 }: DataTableProps) => {
@@ -211,6 +211,7 @@ const DataTable = ({
     props.color, isVirtualized, localText.paginateButtons, localText.items]
   );
 
+
   const topContent = useMemo(() => {
     return (
       <div className="flex flex-col gap-4 relative pb-2">
@@ -228,15 +229,18 @@ const DataTable = ({
               isClearable
             />
           }
-          {extraTopContent}
+          <div className='flex flex-wrap gap-2'>
+            {extraTopContent}
+            {
+              onExport &&
+              <Button {...exportButton} onPress={() => sortedItems.length > 0 && onExport(sortedItems)} />
+            }
+          </div>
         </div>
         <div className="flex flex-wrap justify-between items-center">
-          {
-            rows.length > 0 &&
-            <span className="text-default-400 text-small">
-              Total {rows.length} {rows.length == 1 ? (localText?.items?.[0] ?? "dato") : (localText?.items?.[1] ?? "datos")}
-            </span>
-          }
+          <span className="text-default-400 text-small">
+            Total {rows.length} {rows.length == 1 ? (localText?.items?.[0] ?? "dato") : (localText?.items?.[1] ?? "datos")}
+          </span>
           {
             !hideRowsPerPageOptions && !isVirtualized &&
             <label className="flex items-center text-default-400 text-small">
@@ -258,9 +262,9 @@ const DataTable = ({
       </div>
     );
   }, [
-    filterValue, rows.length, onClear, onRowsPerPageChange, localText.rowsPerPage,
-    inputSearch, extraTopContent, onSearchChange, rowsPerPage, isVirtualized,
-    hideFilterSearch, hideRowsPerPageOptions, rowsPerPageOptions, localText.items,
+    filterValue, rows.length, onClear, onRowsPerPageChange, localText.rowsPerPage, exportButton,
+    inputSearch, extraTopContent, onSearchChange, rowsPerPage, isVirtualized, sortedItems,
+    hideFilterSearch, hideRowsPerPageOptions, rowsPerPageOptions, localText.items, onExport
   ]);
 
   return (

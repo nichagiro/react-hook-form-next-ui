@@ -171,6 +171,18 @@ export const columns: ColumnsTableProps[] = [{
       <td style={{ border: "1px solid #ddd", padding: "8px" }}>No</td>
       <td style={{ border: "1px solid #ddd", padding: "8px" }}>custom class cells</td>
     </tr>
+    <tr>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>exportButton</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>ButtonProps</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>No</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>custom buttom export</td>
+    </tr>
+     <tr>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>onExport</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>(data: any[]) => void</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>No</td>
+      <td style={{ border: "1px solid #ddd", padding: "8px" }}>return rows: ordered + filtered</td>
+    </tr>
   </tbody>
 </table>
 --
@@ -194,6 +206,8 @@ export const columns: ColumnsTableProps[] = [{
     paginateButtons: ["prev", "next"],
     rowsPerPage: "show rows",
   }}
+  exportButton={{ color: "success", className: "text-white" }}
+	onExport={rows => console.log(rows)}
 />
 ```
 ---

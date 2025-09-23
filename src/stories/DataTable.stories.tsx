@@ -55,6 +55,8 @@ export const table: Story = {
     rowsPerPageOptions: {
       options: [5, 10, 15, 20, 25, 30],
       default: 5
-    }
+    },
+    onExport: rows => console.log(rows),
+    exportButton: { color: "success", className: "text-white", children:"Excel" }
   },
 };

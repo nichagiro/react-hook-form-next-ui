@@ -274,6 +274,12 @@ const App = () => {
               <DataTable
                 isVirtualized
                 maxTableHeight={500}
+                onExport={rows => console.log(rows)}
+                exportButton={{
+                  color: "success",
+                  className: "text-white",
+                  children: "Excel"
+                }}
                 isHeaderSticky
                 isStriped
                 cellClass="whitespace-nowrap overflow-hidden overflow-ellipsis max-w-[150px]"

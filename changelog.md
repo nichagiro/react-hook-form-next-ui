@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.1.2] - 2025-09-23
+- add *exportButton* (custom buttom) 
+- add *onExport* param in <DataTable>, Return <Button> in **TopContent** data in table ordered + filtered
+```js
+   <DataTable
+		onExport={rows => console.log(rows)}
+		exportButton={{ color: "success", className: "text-white" }}
+	/>
+```
+
 ## [1.1.1] - 2025-09-22
 - update type ColumFormatter in value => any
 
@@ -19,10 +29,10 @@ All notable changes to this project will be documented in this file.
 - add original parameter "*onSelectionChange*" and fix search onSelect when the **keyRow** is number type (toString)
 ```js
    <DataTable
-    selectionMode="multiple"
-    onSelect={row => console.log(row)}
-    onSelectionChange={row => console.log("onSelectionChange", row)}
-    />
+		selectionMode="multiple"
+		onSelect={row => console.log(row)}
+		onSelectionChange={row => console.log("onSelectionChange", row)}
+	/>
 ```
 
 - add effect when rows params change it's dataset, clean current page (pagination) and selecteds rows

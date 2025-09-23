@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { InputProps, TableProps, TableColumnProps } from "@heroui/react";
+import { InputProps, TableProps, TableColumnProps, ButtonProps } from "@heroui/react";
 import { ReactNode } from "react";
 interface ColumnFormat {
   value: any // valor del parametro en especidfico
@@ -21,6 +21,7 @@ interface localeText {
   paginateButtons: string[] //boton atras y siguiente [back, next]
   rowsPerPage: string
 }
+
 export interface DataTableProps extends TableProps {
   rows: any[]
   columns: ColumnsTableProps[]
@@ -34,6 +35,8 @@ export interface DataTableProps extends TableProps {
   onSelect?: (row: any) => void
   cellClass?: string // clase de las celdas
   localText?: Partial<localeText>
+  exportButton?: ButtonProps
+  onExport?: (data: any[]) => void
 }
 export interface SkeletonTableProps {
   size: number // cantidad de filas a cargar con efecto loading
