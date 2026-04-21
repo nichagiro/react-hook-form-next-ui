@@ -24,7 +24,7 @@ const DataTable = ({
   const [rowsPerPage, setRowsPerPage] = useState(rowsPerPageOptions.default);
   const [page, setPage] = useState<number>(1);
   const [selectedKeys, setSelectedKeys] = useState<Selection>(new Set());
-  const [sortDescriptor, setSortDescriptor] = useState<SortDescriptor | undefined>();
+  const [sortDescriptor, setSortDescriptor] = useState<SortDescriptor | undefined>(props.sortDescriptor);
 
   const searchText = useDebounce(filterValue, 500);
   const hasSearchFilter = Boolean(searchText);

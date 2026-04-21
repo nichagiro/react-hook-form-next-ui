@@ -284,7 +284,7 @@ const App = () => {
                 isStriped
                 cellClass="whitespace-nowrap overflow-hidden overflow-ellipsis max-w-[150px]"
                 rowsPerPageOptions={{ default: 3, options: [3, 5, 7] }}
-                sortDescriptor={{ column: "service", direction: "ascending" }}
+                sortDescriptor={{ column: "date", direction: "descending" }}
                 inputSearch={{ variant: "bordered", color: "warning" }}
                 color="primary"
                 selectionMode="multiple"

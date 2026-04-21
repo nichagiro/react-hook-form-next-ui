@@ -2,7 +2,7 @@ import { defineConfig } from 'vite'
 import path from 'path';
 import dts from 'vite-plugin-dts'
 import tailwindcss from "@tailwindcss/vite"
-import { analyzer } from 'vite-bundle-analyzer'
+// import { analyzer } from 'vite-bundle-analyzer'
 
 export default defineConfig({
   plugins: [
@@ -12,7 +12,7 @@ export default defineConfig({
       rollupTypes: true,
       exclude: ['src/stories/**/*']
     }),
-    analyzer()
+    // analyzer()
   ],
   build: {
     lib: {

@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+
+## [1.1.3] - 2026-04-21
+- fix *sortDescriptor* for table default state in props
+
 ## [1.1.2] - 2025-09-23
 - add *exportButton* (custom buttom) 
 - add *onExport* param in <DataTable>, Return <Button> in **TopContent** data in table ordered + filtered
